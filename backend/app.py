@@ -1,7 +1,12 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return "Hello, World!"
+# 取得停車場概覽資料
+@app.route("/parking/status")
+def getParkingStatus():
+    status = {
+        "car": 200,
+        "motor": 150,
+    }
+    return jsonify(status)
