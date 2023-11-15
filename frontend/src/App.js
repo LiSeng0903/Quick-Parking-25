@@ -1,10 +1,8 @@
 import React from 'react';
-import { ChakraProvider, Box, Text, Link, VStack, Code, Grid, theme, Heading, HStack, Button, Stack } from '@chakra-ui/react';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, Link as ReactRouterLink, NavLink } from 'react-router-dom'
+import { ChakraProvider, Box, VStack, Grid, theme } from '@chakra-ui/react';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Homepage from './Pages/Homepage.js';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { Logo } from './Logo';
 // import RootLayout from './Layouts/'
 // import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
 
