@@ -24,8 +24,10 @@ import {
   Highlight,
   Center,
 } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
 
-function Homepage() {
+
+const Homepage = () => {
   // let navigate = useNavigate();
   // const routeChange = () =>{
   //     let path = `/map`;
@@ -174,13 +176,16 @@ function Homepage() {
                     paddingRight={3}
                     paddingTop={1}
                     paddingBottom={1}
+                    rounded={10}
                   >
                     <Button variant="solid" colorScheme="green" w="10vw">
                       開車
                     </Button>
-                    <Button variant="ghost" colorScheme="green" w="10vw">
-                      停車
-                    </Button>
+                    <NavLink to="/parking-lot">
+                      <Button variant="ghost" colorScheme="green" w="10vw">
+                        停車
+                      </Button>
+                    </NavLink>
                   </ButtonGroup>
                 </HStack>
               </CardFooter>
