@@ -1,5 +1,6 @@
 import { Logo } from '../Logo';
 import { WarningTwoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardBody,
@@ -33,6 +34,19 @@ const Homepage = () => {
   //     let path = `/map`;
   //     navigate(path);
   // }
+  const [carString, setCarString] = useState('');
+  const [motorString, setMotorString] = useState('');
+
+  useEffect(() => {
+    fetch('/api/parking/status').then(
+      (res) => res.json().then(
+        data => {
+          setCarString('剩餘汽車車位：' + data.car);
+          setMotorString('剩餘機車車位：' + data.motor);
+        }
+      )
+    )
+  }, []);
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
@@ -83,7 +97,7 @@ const Homepage = () => {
                                   color: 'red',
                                 }}
                               >
-                                剩餘機車車位：N
+                                {motorString}
                               </Highlight>
                             </Text>
                           </HStack>
@@ -110,7 +124,7 @@ const Homepage = () => {
                                   color: 'red',
                                 }}
                               >
-                                剩餘汽車車位：N
+                                {carString}
                               </Highlight>
                             </Text>
                           </HStack>
