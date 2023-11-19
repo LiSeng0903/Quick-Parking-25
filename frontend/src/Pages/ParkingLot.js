@@ -7,7 +7,7 @@ const ParkingLot = () => {
     return (
       <Grid>
         <RootLayout />
-        <Box>我是停車格</Box>
+        {/* <Box>我是停車格</Box> */}
       </Grid>
     );
 }
