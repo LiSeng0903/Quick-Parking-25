@@ -46,7 +46,7 @@ for i in range(180):
 
     collection.insert_one(space_info)
 
-
+# Floor 2-5
 for floor in range(2, 6):
     for i in range(120):
         space_info = space_info = {
@@ -74,3 +74,19 @@ for floor in range(2, 6):
             space_info["zone"] = "C"
 
         collection.insert_one(space_info)
+
+collection = db["msg"]
+collection.delete_many({})
+
+# Insert messages
+collection.insert_one(
+    {
+        "message": "五樓整修中",
+    }
+)
+
+collection.insert_one(
+    {
+        "message": "四樓無障礙車位故障，請暫停使用",
+    }
+)

@@ -17,15 +17,24 @@ def get_parking_infos():
     collection = db["parkingSpace"]
 
     parking_infos = {
-        "scooter": len(list(collection.find({"type": "scooter", "occupied": False}))),
         "car": len(list(collection.find({"type": "car", "occupied": False}))),
+        "motor": len(list(collection.find({"type": "motor", "occupied": False}))),
         "disabled": len(list(collection.find({"type": "disabled", "occupied": False}))),
-        "pregnant": len(list(collection.find({"type": "pregnant", "occupied": False}))),
     }
 
-    return parking_infos
+    collection = db["msg"]
+    msgs = []
+    for m in collection.find({}):
+        msgs.append(m["message"])
+
+    return {
+        "car": parking_infos["car"],
+        "motor": parking_infos["motor"],
+        "disabled": parking_infos["disabled"],
+        "msgs": msgs,
+    }
 
 
 if __name__ == "__main__":
-    pass
-    # get_parking_infos()
+    # pass
+    print(get_parking_infos())
