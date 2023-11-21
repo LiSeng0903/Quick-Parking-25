@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 
 // components
 import Sidebar from '../Components/Sidebar';
-import Lots from '../Components/Lots';
+import LotsNoMotor from '../Components/LotsNoMotor';
 
-export default function RootLayout(props) {
+export default function SecLayout(props) {
   return (
     <Grid templateColumns="repeat(6, 1fr)" bg="gray.50">
       {/* sidebar */}
@@ -22,8 +22,7 @@ export default function RootLayout(props) {
       {/* main content & navbar */}
       <GridItem as="main" colSpan={{ base: 6, lg: 4, xl: 5 }} p="40px" width="100vw" height="100%">
         <Navbar setSelectedFloor = {props.setSelectedFloor}/>
-        <Lots />
-        <Outlet />
+        <LotsNoMotor />
       </GridItem>
     </Grid>
   );

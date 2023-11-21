@@ -12,7 +12,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 
-export default function Navbar() {
+export default function Navbar(props) {
   const toast = useToast();
 
   return (
@@ -36,7 +36,8 @@ export default function Navbar() {
             variant="outline"
             colorScheme="green"
             borderColor="green.500"
-            onClick={() =>
+            onClick={() =>{
+              props.setSelectedFloor(1);
               toast({
                 title: '這是第一樓',
                 // description: '這是第一樓',
@@ -47,6 +48,7 @@ export default function Navbar() {
                 icon: <BellIcon />,
               })
             }
+            }
           >
             第一樓
           </Button>
@@ -54,7 +56,8 @@ export default function Navbar() {
             variant="outline"
             colorScheme="green"
             borderColor="green.500"
-            onClick={() =>
+            onClick={() =>{
+              props.setSelectedFloor(2);
               toast({
                 title: '這是第二樓',
                 duration: 10000,
@@ -64,13 +67,15 @@ export default function Navbar() {
                 icon: <BellIcon />,
               })
             }
+            }
           >
             第二樓
           </Button>
           <Button
             variant="outline"
             colorScheme="green"
-            onClick={() =>
+            onClick={() =>{
+              props.setSelectedFloor(3);
               toast({
                 title: '這是第三樓',
                 // description: '這是第一樓',
@@ -81,13 +86,15 @@ export default function Navbar() {
                 icon: <BellIcon />,
               })
             }
+            }
           >
             第三樓
           </Button>
           <Button
             variant="outline"
             colorScheme="green"
-            onClick={() =>
+            onClick={() =>{
+              props.setSelectedFloor(4);
               toast({
                 title: '這是第四樓',
                 // description: '這是第一樓',
@@ -98,13 +105,15 @@ export default function Navbar() {
                 icon: <BellIcon />,
               })
             }
+            }
           >
             第四樓
           </Button>
           <Button
             variant="outline"
             colorScheme="green"
-            onClick={() =>
+            onClick={() =>{
+              props.setSelectedFloor(4);
               toast({
                 title: '這是第五樓',
                 // description: '這是第一樓',
@@ -114,6 +123,7 @@ export default function Navbar() {
                 status: 'success',
                 icon: <BellIcon />,
               })
+            } 
             }
           >
             第五樓
