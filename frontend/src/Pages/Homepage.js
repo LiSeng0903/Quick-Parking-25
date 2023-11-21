@@ -27,7 +27,6 @@ import {
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 
-
 const Homepage = () => {
   // let navigate = useNavigate();
   // const routeChange = () =>{
@@ -38,19 +37,17 @@ const Homepage = () => {
   const [motorString, setMotorString] = useState('');
 
   useEffect(() => {
-    fetch('/api/parking/status').then(
-      (res) => res.json().then(
-        data => {
-          setCarString('剩餘汽車車位：' + data.car);
-          setMotorString('剩餘機車車位：' + data.motor);
-        }
-      )
-    )
+    fetch('/api/parking/status').then(res =>
+      res.json().then(data => {
+        setCarString('剩餘汽車車位：' + data.car);
+        setMotorString('剩餘機車車位：' + data.motor);
+      })
+    );
   }, []);
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid maxH="80vh" p={0}>
+      <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={20}>
+        <Box maxH="80vh">
           <Logo
             h="30vh"
             pointerEvents="none"
@@ -64,21 +61,25 @@ const Homepage = () => {
             left="15vw"
             bottom="30vh"
             w="30vw"
+            rounded={40}
           >
             <CardBody>
               <Stack mt="6" spacing="3">
-                <Heading size="2xl" marginBottom={5}>
-                  <Highlight
-                    query="OOXX"
-                    styles={{
-                      px: '2',
-                      py: '1',
-                      rounded: '10px',
-                      color: 'green',
-                    }}
-                  >
-                    OOXX Parking Lot
-                  </Highlight>
+                <Heading
+                  size="2xl"
+                  textAlign="start"
+                  color="#779341"
+                  marginLeft={2}
+                >
+                  OOXX
+                </Heading>
+                <Heading
+                  size="2xl"
+                  marginLeft={2}
+                  marginBottom={3}
+                  textAlign="start"
+                >
+                  Parking Lot
                 </Heading>
                 <Box h="25vh" overflow="scroll">
                   <Accordion allowToggle>
@@ -185,18 +186,31 @@ const Homepage = () => {
               <CardFooter>
                 <HStack>
                   <ButtonGroup
-                    background="whiteAlpha.100"
-                    paddingLeft={3}
-                    paddingRight={3}
-                    paddingTop={1}
-                    paddingBottom={1}
-                    rounded={10}
+                    background="#E8F0D7"
+                    paddingLeft={6}
+                    paddingRight={6}
+                    paddingTop={2}
+                    paddingBottom={2}
+                    rounded={40}
                   >
-                    <Button variant="solid" colorScheme="green" w="10vw">
+                    <Button
+                      w="10vw"
+                      variant="ghost"
+                      color="#779341"
+                      rounded={30}
+                      fontSize={24}
+                    >
                       開車
                     </Button>
                     <NavLink to="/parking-lot">
-                      <Button variant="ghost" colorScheme="green" w="10vw">
+                      <Button
+                        variant="solid"
+                        bg="#779341"
+                        color="#FFFFFF"
+                        w="10vw"
+                        rounded={30}
+                        fontSize={24}
+                      >
                         停車
                       </Button>
                     </NavLink>
@@ -205,9 +219,9 @@ const Homepage = () => {
               </CardFooter>
             </Center>
           </Card>
-        </Grid>
-      </Box>
+        </Box>
+      </Grid>
     </ChakraProvider>
   );
-}
+};
 export default Homepage;
