@@ -22,7 +22,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
-        <Grid maxH="80vh">
+        <Grid>
           {/* <ColorModeSwitcher justifySelf="flex-end" m={5} /> */}
           <VStack>
             <RouterProvider router={router} />
