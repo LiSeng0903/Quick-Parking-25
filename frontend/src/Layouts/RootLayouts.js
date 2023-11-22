@@ -8,7 +8,7 @@ import Lots from '../Components/Lots';
 
 export default function RootLayout(props) {
   return (
-    <Grid templateColumns="repeat(6, 1fr)" bg="gray.50">
+    <Grid bg="#F0EFE5">
       {/* sidebar */}
       {/* <GridItem
         as="aside"
@@ -20,8 +20,16 @@ export default function RootLayout(props) {
         <Sidebar />
       </GridItem> */}
       {/* main content & navbar */}
-      <GridItem as="main" colSpan={{ base: 6, lg: 4, xl: 5 }} p="40px" width="100vw" height="100%">
-        <Navbar setSelectedFloor = {props.setSelectedFloor}/>
+      <GridItem
+        as="main"
+        // colSpan={{ base: 6, lg: 4, xl: 5 }}
+        p={10}
+        width="100vw"
+        height={'100vh'}
+        bg="#F0EFE5"
+        h="100vh"
+      >
+        <Navbar setSelectedFloor={props.setSelectedFloor} />
         <Lots />
         <Outlet />
       </GridItem>

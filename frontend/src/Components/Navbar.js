@@ -1,14 +1,10 @@
 import { BellIcon } from '@chakra-ui/icons';
 import {
   Flex,
-  Heading,
-  Text,
   Button,
   Spacer,
   HStack,
   useToast,
-  AvatarBadge,
-  Avatar,
   ButtonGroup,
 } from '@chakra-ui/react';
 
@@ -16,7 +12,7 @@ export default function Navbar(props) {
   const toast = useToast();
 
   return (
-    <Flex as="nav" p="10px" mb="60px" alignItems="left">
+    <Flex as="nav" p="10px" mb="10px" alignItems="left">
       {/* <Heading as="h1" fontSize="1.5em">
         Guard
       </Heading> */}
@@ -33,10 +29,10 @@ export default function Navbar(props) {
         {/* <Text>Guard log out</Text> */}
         <ButtonGroup>
           <Button
-            variant="outline"
-            colorScheme="green"
-            borderColor="green.500"
-            onClick={() =>{
+            variant="solid"
+            bg="#9E896A"
+            color={'white'}
+            onClick={() => {
               props.setSelectedFloor(1);
               toast({
                 title: '這是第一樓',
@@ -46,17 +42,16 @@ export default function Navbar(props) {
                 position: 'top',
                 status: 'success',
                 icon: <BellIcon />,
-              })
-            }
-            }
+              });
+            }}
           >
             第一樓
           </Button>
           <Button
-            variant="outline"
-            colorScheme="green"
-            borderColor="green.500"
-            onClick={() =>{
+            variant="solid"
+            bg="#9E896A"
+            color={'white'}
+            onClick={() => {
               props.setSelectedFloor(2);
               toast({
                 title: '這是第二樓',
@@ -65,16 +60,16 @@ export default function Navbar(props) {
                 position: 'top',
                 status: 'success',
                 icon: <BellIcon />,
-              })
-            }
-            }
+              });
+            }}
           >
             第二樓
           </Button>
           <Button
-            variant="outline"
-            colorScheme="green"
-            onClick={() =>{
+            variant="solid"
+            bg="#9E896A"
+            color={'white'}
+            onClick={() => {
               props.setSelectedFloor(3);
               toast({
                 title: '這是第三樓',
@@ -84,16 +79,16 @@ export default function Navbar(props) {
                 position: 'top',
                 status: 'success',
                 icon: <BellIcon />,
-              })
-            }
-            }
+              });
+            }}
           >
             第三樓
           </Button>
           <Button
-            variant="outline"
-            colorScheme="green"
-            onClick={() =>{
+            variant="solid"
+            bg="#9E896A"
+            color={'white'}
+            onClick={() => {
               props.setSelectedFloor(4);
               toast({
                 title: '這是第四樓',
@@ -103,16 +98,16 @@ export default function Navbar(props) {
                 position: 'top',
                 status: 'success',
                 icon: <BellIcon />,
-              })
-            }
-            }
+              });
+            }}
           >
             第四樓
           </Button>
           <Button
-            variant="outline"
-            colorScheme="green"
-            onClick={() =>{
+            variant="solid"
+            bg="#9E896A"
+            color={'white'}
+            onClick={() => {
               props.setSelectedFloor(4);
               toast({
                 title: '這是第五樓',
@@ -122,9 +117,8 @@ export default function Navbar(props) {
                 position: 'top',
                 status: 'success',
                 icon: <BellIcon />,
-              })
-            } 
-            }
+              });
+            }}
           >
             第五樓
           </Button>

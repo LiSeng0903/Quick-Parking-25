@@ -105,9 +105,9 @@ const Homepage = () => {
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
-                      <AccordionPanel pb={4}>
+                      {/* <AccordionPanel pb={4}>
                         <Text>欸不要點開啦</Text>
-                      </AccordionPanel>
+                      </AccordionPanel> */}
                     </AccordionItem>
 
                     <AccordionItem>
@@ -132,9 +132,9 @@ const Homepage = () => {
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
-                      <AccordionPanel pb={4}>
+                      {/* <AccordionPanel pb={4}>
                         <Text>欸不要點開啦</Text>
-                      </AccordionPanel>
+                      </AccordionPanel> */}
                     </AccordionItem>
                     <AccordionItem>
                       <AccordionButton>
@@ -146,9 +146,9 @@ const Homepage = () => {
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
-                      <AccordionPanel pb={4}>
+                      {/* <AccordionPanel pb={4}>
                         <Text>不要停</Text>
-                      </AccordionPanel>
+                      </AccordionPanel> */}
                     </AccordionItem>
 
                     <AccordionItem>
@@ -162,7 +162,7 @@ const Homepage = () => {
                         <AccordionIcon />
                       </AccordionButton>
 
-                      <AccordionPanel pb={2}>快去停</AccordionPanel>
+                      {/* <AccordionPanel pb={2}>快去停</AccordionPanel> */}
                     </AccordionItem>
                     <AccordionItem>
                       <AccordionButton>
@@ -175,7 +175,7 @@ const Homepage = () => {
                         <AccordionIcon />
                       </AccordionButton>
 
-                      <AccordionPanel pb={2}>ㄏㄏㄏ</AccordionPanel>
+                      {/* <AccordionPanel pb={2}>ㄏㄏㄏ</AccordionPanel> */}
                     </AccordionItem>
                   </Accordion>
                 </Box>
