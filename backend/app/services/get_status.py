@@ -22,6 +22,7 @@ def get_parking_info():
     """
     
     try:
+        # 連接資料庫
         db_interface = DBInterface()
 
         # 取得汽車、機車、身障車位數量
