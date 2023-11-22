@@ -46,7 +46,7 @@ const Homepage = () => {
   }, []);
   return (
     <ChakraProvider theme={theme}>
-      <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={20}>
+      <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={'20vh'}>
         <Box maxH="80vh">
           <Logo
             h="30vh"
