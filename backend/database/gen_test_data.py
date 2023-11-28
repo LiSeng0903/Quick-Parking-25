@@ -1,92 +1,106 @@
 import os
 
+import mongoengine
+import pymongo
 from dotenv import load_dotenv
-from pymongo import MongoClient
+from mongoengine import Document, DynamicDocument
+from schema import Manager, Message, ParkingSpace
 
 # Load environment variables from .env file
 load_dotenv()
 username = os.environ.get("DB_USERNAME")
 password = os.environ.get("DB_PASSWORD")
 
-client = MongoClient(f"mongodb+srv://{username}:{password}@cluster0.hcp2app.mongodb.net/?retryWrites=true&w=majority")
+# Connect to mongoDB Atlas
+mongoengine.connect(
+    "QuickParking",
+    host=f"mongodb+srv://{username}:{password}@cluster0.hcp2app.mongodb.net/?retryWrites=true&w=majority",
+)
 
-db = client["QuickParking"]
-collection = db["parkingSpace"]
+# 刪除舊資料
+document_classes = Document.__subclasses__()
+for document_class in document_classes:
+    if issubclass(document_class, Document) and document_class not in [Document, DynamicDocument]:
+        document_class.objects.delete()
 
-# Clear all data
-collection.delete_many({})
-
-# Floor 1
+# 停車格資料
+# 一樓
 for i in range(180):
-    space_info = {
-        "space_id": "1" + str(i + 1).zfill(3),
-        "occupied": False,
-        "type": "",
-        "floor": 1,
-        "status": "OK",
-        "history": [],
-        "zone": "",
-    }
+    space_id = "1" + str(i + 1).zfill(3)
+    occupied = False
+    type = ""
+    floor = 1
+    status = "OK"
+    history = []
+    zone = ""
 
     # Set type
     if i in range(120):
-        space_info["type"] = "motor"
+        type = "motor"
     elif i in range(120, 130):
-        space_info["type"] = "disabled"
+        type = "disabled"
     elif i in range(130, 180):
-        space_info["type"] = "car"
+        type = "car"
 
     # Set zone
     if i in range(60):
-        space_info["zone"] = "A"
+        zone = "A"
     elif i in range(60, 120):
-        space_info["zone"] = "B"
-    elif i in range(60, 120):
-        space_info["zone"] = "C"
+        zone = "B"
+    elif i in range(120, 180):
+        zone = "C"
 
-    collection.insert_one(space_info)
+    # Instantiate a ParkingSpace object
+    parking_space = ParkingSpace(
+        space_id=space_id,
+        occupied=occupied,
+        type=type,
+        floor=floor,
+        status=status,
+        history=history,
+        zone=zone,
+    )
 
-# Floor 2-5
+    parking_space.save()
+
+# 二樓到五樓
 for floor in range(2, 6):
     for i in range(120):
-        space_info = space_info = {
-            "space_id": str(floor) + str(i + 1).zfill(3),
-            "occupied": False,
-            "type": "",
-            "floor": floor,
-            "status": "OK",
-            "history": [],
-            "zone": "",
-        }
+        space_id = str(floor) + str(i + 1).zfill(3)
+        occupied = False
+        type = ""
+        floor = floor
+        status = "OK"
+        history = []
+        zone = ""
 
         # Set type
         if i in range(10):
-            space_info["type"] = "disabled"
+            type = "disabled"
         elif i in range(10, 120):
-            space_info["type"] = "car"
+            type = "car"
 
         # Set zone
         if i in range(40):
-            space_info["zone"] = "A"
+            zone = "A"
         elif i in range(40, 80):
-            space_info["zone"] = "B"
+            zone = "B"
         elif i in range(80, 120):
-            space_info["zone"] = "C"
+            zone = "C"
 
-        collection.insert_one(space_info)
+        parking_space = ParkingSpace(
+            space_id=space_id,
+            occupied=occupied,
+            type=type,
+            floor=floor,
+            status=status,
+            history=history,
+            zone=zone,
+        )
 
-collection = db["msg"]
-collection.delete_many({})
+        parking_space.save()
 
-# Insert messages
-collection.insert_one(
-    {
-        "message": "五樓整修中",
-    }
-)
-
-collection.insert_one(
-    {
-        "message": "四樓無障礙車位故障，請暫停使用",
-    }
-)
+# 警告訊息資料
+msgs = [Message(content="五樓整修中"), Message(content="四樓無障礙車位故障，請暫停使用")]
+for msg in msgs:
+    msg.save()
