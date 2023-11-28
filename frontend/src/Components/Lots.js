@@ -112,8 +112,9 @@ export default function Lots() {
             // marginTop={'5vh'}
             marginBottom={'5vh'}
             borderColor={isOccupiedColor}
+            color={'black'}
           >
-            Guard
+            警衛室
           </Box>
           <Box display={'flex'} flexDirection={'row'}>
             <Box
@@ -137,7 +138,11 @@ export default function Lots() {
                   ))}
                 </Wrap>
               </Stack>
-              <Box style={{ writingMode: 'vertical-rl' }} bg={'white'}>
+              <Box
+                style={{ writingMode: 'vertical-rl' }}
+                bg={'white'}
+                color={'black'}
+              >
                 ZONE
               </Box>
             </Box>
@@ -162,7 +167,11 @@ export default function Lots() {
                   ))}
                 </Wrap>
               </Stack>
-              <Box style={{ writingMode: 'vertical-rl' }} bg={'white'}>
+              <Box
+                style={{ writingMode: 'vertical-rl' }}
+                bg={'white'}
+                color={'black'}
+              >
                 ZONE
               </Box>
             </Box>
@@ -181,7 +190,7 @@ export default function Lots() {
                 overflow={'scroll'}
                 borderColor={isOccupiedColor}
               >
-                <Box width={'100%'} bg={'white'}>
+                <Box width={'100%'} bg={'white'} color={'black'}>
                   ZONE
                 </Box>
                 <Stack direction="column">
