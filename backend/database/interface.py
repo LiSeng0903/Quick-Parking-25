@@ -11,7 +11,7 @@ sys.path.append(config_path)
 
 import mongoengine
 from config import Config
-from schema import Message, ParkingSpace
+from schema import History, Message, ParkingSpace
 
 
 class ParkingSpaceInterface:
@@ -41,12 +41,37 @@ class ParkingSpaceInterface:
 
     # Update
     # TODO
-    def update_car_park(space_id):
-        pass
+    @staticmethod
+    def update_car_park(space_id, license_plate_number, start_time):
+        parking_space = ParkingSpace.objects(space_id=space_id).first()
+
+        if parking_space == None:
+            return False
+
+        parking_space.history.append(
+            History(start_time=start_time, end_time=None, license_plate_number=license_plate_number)
+        )
+
+        parking_space.occupied = True
+
+        parking_space.save()
+
+        return True
 
     # TODO
-    def update_car_leave(space_id):
-        pass
+    @staticmethod
+    def update_car_leave(space_id, end_time):
+        parking_space = ParkingSpace.objects(space_id=space_id).first()
+
+        if parking_space == None:
+            return False
+
+        parking_space.history[-1].end_time = end_time
+        parking_space.occupied = False
+
+        parking_space.save()
+
+        return True
 
     # TODO
     def update_parking_space_status(status):
