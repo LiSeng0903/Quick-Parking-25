@@ -12,7 +12,7 @@ from mongoengine import (
 
 class History(EmbeddedDocument):
     start_time = DateTimeField(required=True)
-    end_time = DateTimeField(required=True)
+    end_time = DateTimeField()
     license_plate_number = StringField(required=True)
 
 
