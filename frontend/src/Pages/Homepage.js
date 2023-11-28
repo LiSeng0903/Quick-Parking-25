@@ -202,15 +202,17 @@ const Homepage = () => {
                     paddingBottom={2}
                     rounded={40}
                   >
-                    <Button
-                      w="10vw"
-                      variant="ghost"
-                      color="#779341"
-                      rounded={30}
-                      fontSize={24}
-                    >
-                      開車
-                    </Button>
+                    <NavLink to="/find-car">
+                      <Button
+                        w="10vw"
+                        variant="ghost"
+                        color="#779341"
+                        rounded={30}
+                        fontSize={24}
+                      >
+                        開車
+                      </Button>
+                    </NavLink>
                     <NavLink to="/parking-lot">
                       <Button
                         variant="solid"

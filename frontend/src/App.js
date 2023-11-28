@@ -6,6 +6,8 @@ import Homepage from './Pages/Homepage.js';
 import ParkingLot from './Pages/ParkingLot';
 // import RootLayout from './Layouts/'
 // import { Link as ChakraLink, LinkProps } from '@chakra-ui/react'
+import FindCar from './Pages/FindCar.js';
+import FindCarResult from './Pages/FindCarResult.js';
 
 // router and routes
 const router = createBrowserRouter(
@@ -14,6 +16,8 @@ const router = createBrowserRouter(
       <Route index element={<Homepage />} />
       <Route path="home" element={<Homepage />} />
       <Route path="parking-lot" element={<ParkingLot />} />
+      <Route path="find-car" element={<FindCar />} />
+      <Route path="find-car/result" element={<FindCarResult />} />
     </Route>
   )
 );
