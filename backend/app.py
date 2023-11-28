@@ -1,6 +1,7 @@
 import json
 from flask import Flask, jsonify
-from app.application.services import *
+# from app.application.services import *
+from app.application.services.get_status import get_parking_info
 
 app = Flask(__name__)
 
@@ -15,4 +16,4 @@ def getFloorMap(floor):
     return f"get floor {floor} map"
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=4000)
