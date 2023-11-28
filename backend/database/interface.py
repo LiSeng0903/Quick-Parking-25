@@ -58,10 +58,7 @@ class ParkingSpaceInterface:
 class MessageInterface:
     @staticmethod
     def connect_to_db():
-        mongoengine.connect(
-            "QuickParking",
-            host=f"mongodb+srv://{username}:{password}@cluster0.hcp2app.mongodb.net/?retryWrites=true&w=majority",
-        )
+        mongoengine.connect(Config.DB_NAME, host=Config.DB_URL)
 
     # Create
     # Read
