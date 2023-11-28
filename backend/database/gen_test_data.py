@@ -1,8 +1,8 @@
 import os
 
 import mongoengine
-import pymongo
 from dotenv import load_dotenv
+from interface import MessageInterface, ParkingSpaceInterface
 from mongoengine import Document, DynamicDocument
 from schema import Manager, Message, ParkingSpace
 
@@ -26,12 +26,8 @@ for document_class in document_classes:
 # 停車格資料
 # 一樓
 for i in range(180):
-    space_id = "1" + str(i + 1).zfill(3)
-    occupied = False
     type = ""
     floor = 1
-    status = "OK"
-    history = []
     zone = ""
 
     # Set type
@@ -50,28 +46,12 @@ for i in range(180):
     elif i in range(120, 180):
         zone = "C"
 
-    # Instantiate a ParkingSpace object
-    parking_space = ParkingSpace(
-        space_id=space_id,
-        occupied=occupied,
-        type=type,
-        floor=floor,
-        status=status,
-        history=history,
-        zone=zone,
-    )
-
-    parking_space.save()
+    ParkingSpaceInterface.create_empty_ps(floor, type, zone)
 
 # 二樓到五樓
 for floor in range(2, 6):
     for i in range(120):
-        space_id = str(floor) + str(i + 1).zfill(3)
-        occupied = False
         type = ""
-        floor = floor
-        status = "OK"
-        history = []
         zone = ""
 
         # Set type
@@ -88,17 +68,7 @@ for floor in range(2, 6):
         elif i in range(80, 120):
             zone = "C"
 
-        parking_space = ParkingSpace(
-            space_id=space_id,
-            occupied=occupied,
-            type=type,
-            floor=floor,
-            status=status,
-            history=history,
-            zone=zone,
-        )
-
-        parking_space.save()
+        ParkingSpaceInterface.create_empty_ps(floor, type, zone)
 
 # 警告訊息資料
 msgs = [Message(content="五樓整修中"), Message(content="四樓無障礙車位故障，請暫停使用")]
