@@ -20,9 +20,40 @@ class ParkingSpaceInterface:
         mongoengine.connect(Config.DB_NAME, host=Config.DB_URL)
 
     # Create
-    # TODO
-    def create_empty_ps(floor, type):
-        pass
+    @staticmethod
+    def create_empty_ps(floor, type, zone):
+        """
+        產生新的停車格資料
+
+        Args:
+            floor (int): 樓層
+            type (str): 停車格種類，有三種：car, motor, disabled
+            zone (str): 停車格區域，有三種：A, B, C
+        Returns:
+            bool: 是否成功
+        """
+
+        try:
+            # 看看目前該層樓有多少個停車位
+            floor_ps_cnt = len(ParkingSpaceInterface.read_ps_of_floor(floor))
+
+            # 產生停車位資料
+            parking_space = ParkingSpace(
+                space_id=str(floor) + str(floor_ps_cnt + 1).zfill(3),
+                occupied=False,
+                type=type,
+                floor=floor,
+                status="OK",
+                history=[],
+                zone=zone,
+            )
+
+            parking_space.save()
+            return True
+
+        except Exception as e:
+            print(e)
+            return False
 
     # Read
     @staticmethod
