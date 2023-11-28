@@ -12,6 +12,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useDisclosure } from '@chakra-ui/react';
+import ParkingEnterModal from './ParkingModal';
+import { useState } from 'react';
 
 export default function Lots() {
   const lotsCnt = 20;
@@ -78,6 +81,15 @@ export default function Lots() {
   const allLots = [motorLots, motorLots, carLots];
   const newMotorLots = motorLots.slice(0, 30);
   // console.log(duplicatedLots);
+
+  // modal setting
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [endModalOpen, setEndModelOpen] = useState(false);
+
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
+  // modal
+
   return (
     <ChakraProvider theme={theme}>
       <Box
@@ -91,6 +103,11 @@ export default function Lots() {
         height={'80vh'}
         maxWidth={'100vw'}
       >
+        {/* Pop-out Modal Section */}
+        {
+          (isOpen || !endModalOpen)?
+          <ParkingEnterModal isOpen={isOpen} onClose={onClose} initialRef={initialRef} finalRef={finalRef} endModalOpen={endModalOpen} setEndModelOpen={setEndModelOpen}/> : <></>
+        }
         {/* Left Section */}
         <Box
           //   display={'flex'}
@@ -202,6 +219,8 @@ export default function Lots() {
                           width={'1vw'}
                           height={'8vh'}
                           variant={'solid'}
+                          // onClick={function(){console.log('onclick');}}
+                          onClick={onOpen}
                         >
                           {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
                         </Button>
