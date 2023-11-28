@@ -18,7 +18,7 @@ def get_parking_infos():
 
     # Start query parking spaces
     ParkingSpaceInterface.connect_to_db()
-    all_parking_spaces = ParkingSpaceInterface.read_all_parking_spaces()
+    all_parking_spaces = ParkingSpaceInterface.read_all_ps()
     for ps in all_parking_spaces:
         if ps["occupied"] == True:
             continue
@@ -36,3 +36,21 @@ def get_parking_infos():
         parking_infos["msg"].append(msg["content"])
 
     return parking_infos
+
+
+def get_floor_map(floor):
+    pss = {"spaces": {"A": [], "B": [], "C": []}}
+
+    ParkingSpaceInterface.connect_to_db()
+    parking_spaces = ParkingSpaceInterface.read_ps_of_floor(floor)
+
+    for ps in parking_spaces:
+        ps_info = {
+            "space_id": ps["space_id"],
+            "type": ps["type"],
+            "occupied": ps["occupied"],
+        }
+
+        pss["spaces"][ps["zone"]].append(ps_info)
+
+    return pss
