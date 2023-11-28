@@ -1,15 +1,11 @@
 import {
-  Grid,
-  GridItem,
   Stack,
   Box,
   Wrap,
   WrapItem,
   Button,
-  ButtonGroup,
   ChakraProvider,
   theme,
-  Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -83,11 +79,11 @@ export default function Lots() {
   // console.log(duplicatedLots);
 
   // modal setting
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
 
-  const initialRef = React.useRef(null)
-  const finalRef = React.useRef(null)
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
   // modal
 
   return (
@@ -104,10 +100,18 @@ export default function Lots() {
         maxWidth={'100vw'}
       >
         {/* Pop-out Modal Section */}
-        {
-          (isOpen || !endModalOpen)?
-          <ParkingEnterModal isOpen={isOpen} onClose={onClose} initialRef={initialRef} finalRef={finalRef} endModalOpen={endModalOpen} setEndModelOpen={setEndModelOpen}/> : <></>
-        }
+        {isOpen || !endModalOpen ? (
+          <ParkingEnterModal
+            isOpen={isOpen}
+            onClose={onClose}
+            initialRef={initialRef}
+            finalRef={finalRef}
+            endModalOpen={endModalOpen}
+            setEndModelOpen={setEndModelOpen}
+          />
+        ) : (
+          <></>
+        )}
         {/* Left Section */}
         <Box
           //   display={'flex'}
@@ -150,6 +154,7 @@ export default function Lots() {
                         bg={isEmptyColor}
                         width={'100%'}
                         height={'3vh'}
+                        onClick={onOpen}
                       ></Button>
                     </WrapItem>
                   ))}
@@ -179,6 +184,7 @@ export default function Lots() {
                         bg={isOccupiedColor}
                         width={'100%'}
                         height={'3vh'}
+                        onClick={onOpen}
                       ></Button>
                     </WrapItem>
                   ))}

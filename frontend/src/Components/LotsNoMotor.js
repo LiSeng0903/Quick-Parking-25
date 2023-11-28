@@ -1,19 +1,19 @@
 import {
-  Grid,
-  GridItem,
   Stack,
   Box,
   Wrap,
   WrapItem,
   Button,
-  ButtonGroup,
   ChakraProvider,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useDisclosure } from '@chakra-ui/react';
+import ParkingEnterModal from './ParkingModal';
+import { useState } from 'react';
 
-export default function Lots() {
+export default function LotsNoMotor() {
   const lotsCnt = 20;
-  const lotsType = 'cars';
+  const lotsType = 'motors';
   const mockLots = [
     {
       lotId: '1',
@@ -66,6 +66,14 @@ export default function Lots() {
   const isOccupiedColor = '#9E896A';
   const bgColor = '#F0EFE5';
 
+  // modal setting
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [endModalOpen, setEndModelOpen] = useState(false);
+
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  // modal
+
   mockLots.forEach(lot => {
     for (let i = 0; i < numberOfDuplicates; i++) {
       motorLots.push({ ...lot });
@@ -73,8 +81,7 @@ export default function Lots() {
     }
   });
 
-  const allLots = [motorLots, motorLots, carLots];
-  const newMotorLots = motorLots.slice(0, 40);
+  const allLots = [carLots, carLots, carLots];
   // console.log(duplicatedLots);
   return (
     <ChakraProvider>
@@ -89,6 +96,19 @@ export default function Lots() {
         height={'80vh'}
         maxWidth={'100vw'}
       >
+        {/* Pop-out Modal Section */}
+        {isOpen || !endModalOpen ? (
+          <ParkingEnterModal
+            isOpen={isOpen}
+            onClose={onClose}
+            initialRef={initialRef}
+            finalRef={finalRef}
+            endModalOpen={endModalOpen}
+            setEndModelOpen={setEndModelOpen}
+          />
+        ) : (
+          <></>
+        )}
         {/* Left Section */}
         <Box
           display={'flex'}
@@ -134,6 +154,7 @@ export default function Lots() {
                           width={'1vw'}
                           height={'8vh'}
                           variant={'solid'}
+                          onClick={onOpen}
                         >
                           {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
                         </Button>
