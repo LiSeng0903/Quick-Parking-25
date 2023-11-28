@@ -21,12 +21,12 @@ class ParkingSpaceInterface:
 
     # Create
     # TODO
-    def create_empty_parking_space(floor, type):
+    def create_empty_ps(floor, type):
         pass
 
     # Read
     @staticmethod
-    def read_all_parking_spaces():
+    def read_all_ps():
         ps_mongo_objects = ParkingSpace.objects.all()
         ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
 
@@ -36,8 +36,15 @@ class ParkingSpaceInterface:
         return ps_dicts
 
     # TODO
-    def read_parking_spaces_by_floor(floor):
-        pass
+    def read_ps_of_floor(floor):
+        ps_mongo_objects = ParkingSpace.objects(floor=floor)
+
+        ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
+
+        for ps_dict in ps_dicts:
+            ps_dict.pop("_id", None)
+
+        return ps_dicts
 
     # Update
     # TODO
