@@ -6,18 +6,18 @@ import {
   HStack,
   useToast,
   ButtonGroup,
+  Center,
 } from '@chakra-ui/react';
 
 export default function Navbar(props) {
   const toast = useToast();
 
   return (
-    <Flex as="nav" p="10px" mb="10px" alignItems="left">
+    <Flex as="nav" p="10px" mb="10px" alignItems="center">
       {/* <Heading as="h1" fontSize="1.5em">
         Guard
       </Heading> */}
       <Spacer />
-
       <HStack spacing="20px">
         {/* <Avatar name="mario" src="/img/mario.png">
           <AvatarBadge width="1.3em" bg="teal.500">
@@ -27,11 +27,22 @@ export default function Navbar(props) {
           </AvatarBadge>
         </Avatar> */}
         {/* <Text>Guard log out</Text> */}
-        <ButtonGroup>
+
+        <ButtonGroup
+          spacing={5}
+          bg={'white'}
+          paddingLeft={6}
+          paddingRight={6}
+          paddingTop={2}
+          paddingBottom={2}
+          rounded={40}
+        >
           <Button
             variant="solid"
             bg="#9E896A"
             color={'white'}
+            rounded={30}
+            fontSize={24}
             onClick={() => {
               props.setSelectedFloor(1);
               toast({
@@ -47,10 +58,14 @@ export default function Navbar(props) {
           >
             第一樓
           </Button>
+          <Spacer />
+
           <Button
             variant="solid"
             bg="#9E896A"
             color={'white'}
+            rounded={30}
+            fontSize={24}
             onClick={() => {
               props.setSelectedFloor(2);
               toast({
@@ -65,10 +80,14 @@ export default function Navbar(props) {
           >
             第二樓
           </Button>
+          <Spacer />
+
           <Button
             variant="solid"
             bg="#9E896A"
             color={'white'}
+            rounded={30}
+            fontSize={24}
             onClick={() => {
               props.setSelectedFloor(3);
               toast({
@@ -84,10 +103,14 @@ export default function Navbar(props) {
           >
             第三樓
           </Button>
+          <Spacer />
+
           <Button
             variant="solid"
             bg="#9E896A"
             color={'white'}
+            rounded={30}
+            fontSize={24}
             onClick={() => {
               props.setSelectedFloor(4);
               toast({
@@ -103,10 +126,14 @@ export default function Navbar(props) {
           >
             第四樓
           </Button>
+          <Spacer />
+
           <Button
             variant="solid"
             bg="#9E896A"
             color={'white'}
+            rounded={30}
+            fontSize={24}
             onClick={() => {
               props.setSelectedFloor(4);
               toast({
@@ -124,6 +151,7 @@ export default function Navbar(props) {
           </Button>
         </ButtonGroup>
       </HStack>
+      <Spacer />
     </Flex>
   );
 }
