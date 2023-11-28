@@ -58,6 +58,15 @@ class ParkingSpaceInterface:
     # Read
     @staticmethod
     def read_all_ps():
+        """
+        讀取所有停車格的資料
+
+        Args:
+            None
+        Returns:
+            list: 所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同
+        """
+
         ps_mongo_objects = ParkingSpace.objects.all()
         ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
 
@@ -66,10 +75,18 @@ class ParkingSpaceInterface:
 
         return ps_dicts
 
-    # TODO
+    @staticmethod
     def read_ps_of_floor(floor):
-        ps_mongo_objects = ParkingSpace.objects(floor=floor)
+        """
+        讀取某一層樓的所有停車格資料
 
+        Args:
+            floor (int): 樓層
+        Returns:
+            list: 某一層樓的所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同
+        """
+
+        ps_mongo_objects = ParkingSpace.objects(floor=floor)
         ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
 
         for ps_dict in ps_dicts:
@@ -78,38 +95,75 @@ class ParkingSpaceInterface:
         return ps_dicts
 
     # Update
-    # TODO
     @staticmethod
     def update_car_park(space_id, license_plate_number, start_time):
+        """
+        更新停車格資料。車子停入停車格時，設定相關的資料。
+        包含
+        1. 新增一筆正在進行中的停車紀錄（沒有結束時間）
+        2. 將停車格的 occupied 設為 True
+
+        Args:
+            space_id (str): 停車格編號
+            license_plate_number (str): 車牌號碼
+            start_time (datetime): 車子停入停車格的時間
+        Returns:
+            None
+        Exceptions:
+            Exception: space_id 停車格不存在
+            Exception: space_id 停車格正在使用中
+        """
+
+        # 取得停車格
         parking_space = ParkingSpace.objects(space_id=space_id).first()
 
+        # 檢查不該停的狀況
         if parking_space == None:
-            return False
+            raise Exception(f"{space_id} 停車格不存在")
+        if parking_space.occupied == True:
+            raise Exception(f"{space_id} 正在使用中")
 
-        parking_space.history.append(
-            History(start_time=start_time, end_time=None, license_plate_number=license_plate_number)
-        )
-
+        # 新增進行中的停車紀錄
+        new_history = {
+            "start_time": start_time,
+            "end_time": None,
+            "license_plate_number": license_plate_number,
+        }
+        parking_space.history.append(new_history)
         parking_space.occupied = True
-
         parking_space.save()
 
-        return True
-
-    # TODO
     @staticmethod
     def update_car_leave(space_id, end_time):
+        """
+        更新停車格資料。車子離開停車格時，設定相關的資料。
+        包含
+        1. 更新正在進行中的停車紀錄（新增結束時間）
+        2. 將停車格的 occupied 設為 False
+
+        Args:
+            space_id (str): 停車格編號
+            end_time (datetime): 車子離開停車格的時間
+        Returns:
+            None
+        Exceptions:
+            Exception: space_id 停車格不存在
+            Exception: space_id 並非使用中
+        """
+
+        # 取得停車格
         parking_space = ParkingSpace.objects(space_id=space_id).first()
 
+        # 檢查不該使車子離開的狀況
         if parking_space == None:
-            return False
+            raise Exception(f"{space_id} 停車格不存在")
+        if parking_space.occupied == False:
+            raise Exception(f"{space_id} 並非使用中")
 
+        # 更新進行中的停車紀錄
         parking_space.history[-1].end_time = end_time
         parking_space.occupied = False
-
         parking_space.save()
-
-        return True
 
     # TODO
     def update_parking_space_status(status):
