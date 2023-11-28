@@ -124,11 +124,11 @@ class ParkingSpaceInterface:
             raise Exception(f"{space_id} 正在使用中")
 
         # 新增進行中的停車紀錄
-        new_history = {
-            "start_time": start_time,
-            "end_time": None,
-            "license_plate_number": license_plate_number,
-        }
+        new_history = History(
+            start_time=start_time,
+            end_time=None,
+            license_plate_number=license_plate_number,
+        )
         parking_space.history.append(new_history)
         parking_space.occupied = True
         parking_space.save()
