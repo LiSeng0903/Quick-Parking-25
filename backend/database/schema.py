@@ -38,6 +38,6 @@ class Manager(Document):
 
 
 class Message(Document):
-    msg = StringField(required=True)
+    content = StringField(required=True)
 
     meta = {"collection": "message"}

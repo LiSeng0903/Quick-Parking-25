@@ -101,6 +101,6 @@ for floor in range(2, 6):
         parking_space.save()
 
 # 警告訊息資料
-msgs = [Message(msg="五樓整修中"), Message(msg="四樓無障礙車位故障，請暫停使用")]
+msgs = [Message(content="五樓整修中"), Message(content="四樓無障礙車位故障，請暫停使用")]
 for msg in msgs:
     msg.save()
