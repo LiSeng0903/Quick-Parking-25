@@ -1,40 +1,38 @@
 import os
+import sys
 
-from dotenv import load_dotenv
-from pymongo import MongoClient
+cwd = os.path.dirname(os.path.abspath(__file__))
+interface_path = cwd
 
-load_dotenv()
-username = os.environ.get("DB_USERNAME")
-password = os.environ.get("DB_PASSWORD")
+sys.path.append(interface_path)
+from interface import MessageInterface, ParkingSpaceInterface
 
 
 def get_parking_infos():
-    client = MongoClient(
-        f"mongodb+srv://{username}:{password}@cluster0.hcp2app.mongodb.net/?retryWrites=true&w=majority"
-    )
-
-    db = client["QuickParking"]
-    collection = db["parkingSpace"]
-
     parking_infos = {
-        "car": len(list(collection.find({"type": "car", "occupied": False}))),
-        "motor": len(list(collection.find({"type": "motor", "occupied": False}))),
-        "disabled": len(list(collection.find({"type": "disabled", "occupied": False}))),
+        "car": 0,
+        "motor": 0,
+        "disabled": 0,
+        "msg": [],
     }
 
-    collection = db["msg"]
-    msgs = []
-    for m in collection.find({}):
-        msgs.append(m["message"])
+    # Start query parking spaces
+    ParkingSpaceInterface.connect_to_db()
+    all_parking_spaces = ParkingSpaceInterface.read_all_parking_spaces()
+    for ps in all_parking_spaces:
+        if ps["occupied"] == True:
+            continue
 
-    return {
-        "car": parking_infos["car"],
-        "motor": parking_infos["motor"],
-        "disabled": parking_infos["disabled"],
-        "msgs": msgs,
-    }
+        if ps["type"] == "car":
+            parking_infos["car"] += 1
+        elif ps["type"] == "motor":
+            parking_infos["motor"] += 1
+        elif ps["type"] == "disabled":
+            parking_infos["disabled"] += 1
 
+    MessageInterface.connect_to_db()
+    all_messages = MessageInterface.read_all_messages()
+    for msg in all_messages:
+        parking_infos["msg"].append(msg["content"])
 
-if __name__ == "__main__":
-    # pass
-    print(get_parking_infos())
+    return parking_infos
