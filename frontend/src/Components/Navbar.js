@@ -7,16 +7,32 @@ import {
   useToast,
   ButtonGroup,
   Center,
+  Image
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Navbar(props) {
   const toast = useToast();
+  const navigate = useNavigate();
+  const navigateToHome = () => {
+    let path = `/home`;
+    navigate(path);
+  };
 
   return (
     <Flex as="nav" p="10px" mb="10px" alignItems="center">
       {/* <Heading as="h1" fontSize="1.5em">
         Guard
       </Heading> */}
+      <Image
+        borderRadius="10px"
+        boxSize="50px"
+        src={'https://img.icons8.com/isometric/512/1FB141/home.png'}
+        alt={'ok'}
+        cursor={'pointer'}
+        onClick={navigateToHome}
+      />
       <Spacer />
       <HStack spacing="20px">
         {/* <Avatar name="mario" src="/img/mario.png">
