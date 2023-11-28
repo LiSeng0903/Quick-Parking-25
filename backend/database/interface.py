@@ -2,25 +2,22 @@ import os
 import sys
 
 cwd = os.path.dirname(os.path.abspath(__file__))
+
 schema_path = cwd
 sys.path.append(schema_path)
 
-import mongoengine
-from dotenv import load_dotenv
-from schema import Message, ParkingSpace
+config_path = os.path.join(cwd, "../config")
+sys.path.append(config_path)
 
-load_dotenv()
-username = os.environ.get("DB_USERNAME")
-password = os.environ.get("DB_PASSWORD")
+import mongoengine
+from config import Config
+from schema import Message, ParkingSpace
 
 
 class ParkingSpaceInterface:
     @staticmethod
     def connect_to_db():
-        mongoengine.connect(
-            "QuickParking",
-            host=f"mongodb+srv://{username}:{password}@cluster0.hcp2app.mongodb.net/?retryWrites=true&w=majority",
-        )
+        mongoengine.connect(Config.DB_NAME, host=Config.DB_URL)
 
     # Create
     # TODO
