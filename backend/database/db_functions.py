@@ -58,7 +58,24 @@ def get_floor_map(floor):
     return pss
 
 
-def park_into_parking_space(space_id, car_id):
+def get_car_id_ps(car_id):
+    """
+    取得 car_id 所在的車位資訊
+
+    Args:
+        car_id (str): 車輛編號
+    Returns:
+        dict: 車位資訊
+    """
+
+    ParkingSpaceInterface.connect_to_db()
+
+    ps = ParkingSpaceInterface.read_ps_by_car_id(car_id)
+
+    return ps
+
+
+def park(space_id, car_id):
     """
     將車輛停入指定的車位。只需輸入停車格編號及車牌號，停入時間以呼叫本函式的時間為準。
 
@@ -74,26 +91,41 @@ def park_into_parking_space(space_id, car_id):
 
     ParkingSpaceInterface.connect_to_db()
     success = False
-    message = ""
+    result = ""
 
     # 檢查是否可以停車
     ps = ParkingSpaceInterface.read_ps_by_space_id(space_id)
     if ps["occupied"] == True:
         # 車位已經被佔用
         success = False
-        message = f"車位 {space_id} 正在使用中"
+        result = f"車位 {space_id} 正在使用中"
     elif ParkingSpaceInterface.read_ps_by_car_id(car_id) != None:
         # 車輛已經停在其他車位
         success = False
-        message = f"車輛 {car_id} 已經停在其他車位"
+        result = f"車輛 {car_id} 已經停在其他車位"
     else:
         try:
             # 更新停車格資料
             ParkingSpaceInterface.update_car_park(space_id, car_id, current_time)
             success = True
-            message = f"車輛 {car_id} 成功停在車位 {space_id}"
+            result = f"車輛 {car_id} 成功停在車位 {space_id}"
         except Exception as e:
             success = False
-            message = f"車輛 {car_id} 停在車位 {space_id} 失敗，因為 {e}"
+            result = f"車輛 {car_id} 停在車位 {space_id} 失敗，因為 {e}"
 
-    return success, message
+    return success, result
+
+
+def leave(car_id):
+    success = False
+    result = ""
+
+    current_time = datetime.datetime.now()
+    ParkingSpaceInterface.connect_to_db()
+
+    # 檢查是否可以離開
+    # 車子沒有停在車位上
+
+    ParkingSpaceInterface.update_car_leave(car_id, current_time)
+
+    pass
