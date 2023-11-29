@@ -42,7 +42,7 @@ def get_floor_map(floor):
     pss = {"spaces": {"A": [], "B": [], "C": []}}
 
     ParkingSpaceInterface.connect_to_db()
-    parking_spaces = ParkingSpaceInterface.read_ps_of_floor(floor)
+    parking_spaces = ParkingSpaceInterface.read_ps_by_floor(floor)
 
     for ps in parking_spaces:
         ps_info = {
