@@ -29,7 +29,7 @@ class MessageInterface:
         try:
             new_msg = Message(content=msg["content"])
             new_msg.save()
-            return True, "Create Message Succes"
+            return True, "Create Message Success"
         except Exception as e:
             return False, f"Create Message Fail: {e}"
 

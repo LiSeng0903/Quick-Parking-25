@@ -12,6 +12,67 @@ from schema import History, ParkingSpace
 class ParkingSpaceInterface:
     # Create
     @staticmethod
+    def create_ps(parking_space):
+        try:
+            new_parking_space = ParkingSpace(
+                space_id=parking_space["space_id"],
+                occupied=False,
+                current_car_id=None,
+                type=parking_space["space_type"],
+                floor=parking_space["floor"],
+                status="OK",
+                zone=parking_space["zone"],
+                history=[],
+            )
+
+            new_parking_space.save()
+            return True, "Create parking space Success"
+        except Exception as e:
+            return False, f"Create parking space failed: {e}"
+
+    # Read
+    def read_ps_by_space_id(space_id):
+        pass
+
+    def read_ps_by_current_car_id(car_id):
+        pass
+
+    def read_ps_by_floor(floor):
+        pass
+
+    def read_all_ps():
+        pass
+
+    # Update
+    def update_ps_type(space_id, type):
+        pass
+
+    def update_ps_floor(space_id, floor):
+        pass
+
+    def update_ps_zone(space_id, zone):
+        pass
+
+    def update_ps_occupied(space_id, occupied):
+        pass
+
+    def update_ps_current_car_id(space_id, car_id):
+        pass
+
+    def update_ps_status(space_id, status):
+        pass
+
+    def update_ps_history(space_id, new_histories):
+        pass
+
+    # Delete
+    def delete_ps(space_id):
+        pass
+
+
+class ParkingSpaceInterface_:
+    # Create
+    @staticmethod
     def create_empty_ps(floor, space_type, zone):
         """
         產生新的停車格資料
