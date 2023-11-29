@@ -11,6 +11,28 @@ from schema import Message
 
 class MessageInterface:
     # Create
+    @staticmethod
+    def create_message(msg):
+        """
+        創造新的訊息
+
+        Args:
+            msg (dict): 訊息資料，格式為
+                {
+                    "content": str
+                }
+        Returns:
+            bool: 是否成功
+            str: 回傳訊息
+        """
+
+        try:
+            new_msg = Message(content=msg["content"])
+            new_msg.save()
+            return True, "Create Message Succes"
+        except Exception as e:
+            return False, f"Create Message Fail: {e}"
+
     # Read
     @staticmethod
     def read_all_messages():
