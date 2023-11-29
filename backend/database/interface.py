@@ -11,7 +11,7 @@ sys.path.append(config_path)
 
 import mongoengine
 from config import Config
-from schema import History, Message, ParkingSpace
+from schema import History, Manager, Message, ParkingSpace
 
 
 class ParkingSpaceInterface:
@@ -244,4 +244,32 @@ class MessageInterface:
         return msg_dicts
 
     # Update
+    # Delete
+
+
+class ManagerInterface:
+    @staticmethod
+    def connect_to_db():
+        mongoengine.connect(Config.DB_NAME, host=Config.DB_URL)
+
+    # Create
+    # Read
+    @staticmethod
+    def read_manger_password(account):
+        manager = Manager.objects(account=account).first()
+        if manager == None:
+            return None
+
+        return manager.password
+
+    # Update
+    @staticmethod
+    def update_login(account, login):
+        manager = Manager.objects(account=account).first()
+        if manager == None:
+            raise Exception(f"{account} 帳號不存在")
+
+        manager.login = login
+        manager.save()
+
     # Delete

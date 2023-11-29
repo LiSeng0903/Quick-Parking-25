@@ -7,7 +7,8 @@ sys.path.append(interface_path)
 
 import datetime
 
-from interface import MessageInterface, ParkingSpaceInterface
+import bcrypt
+from interface import ManagerInterface, MessageInterface, ParkingSpaceInterface
 
 
 def get_parking_infos():
@@ -129,3 +130,33 @@ def leave(car_id):
     ParkingSpaceInterface.update_car_leave(car_id, current_time)
 
     pass
+
+
+def manager_login(account, password):
+    """
+    管理員登入
+    """
+
+    ManagerInterface.connect_to_db()
+
+    hashed_password = ManagerInterface.read_manger_password(account)
+
+    if hashed_password == None:
+        return False, "登入失敗：帳號錯誤"
+
+    if bcrypt.checkpw(password.encode(), hashed_password.encode()) == False:
+        return False, "登入失敗：密碼錯誤"
+    else:
+        ManagerInterface.update_login(account, True)
+        return True, "登入成功"
+
+
+def manager_logout(account):
+    """
+    管理員登出
+    """
+
+    ManagerInterface.connect_to_db()
+    ManagerInterface.update_login(account, False)
+
+    return True, "登出成功"
