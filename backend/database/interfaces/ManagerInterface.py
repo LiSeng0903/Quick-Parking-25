@@ -56,7 +56,7 @@ class ManagerInterface:
 
     # Update
     @staticmethod
-    def update_manager(new_manager):
+    def update_manager_info(new_manager):
         try:
             manager = Manager.objects(account=new_manager["account"]).first()
             if manager == None:
@@ -64,6 +64,19 @@ class ManagerInterface:
 
             manager.password = new_manager["password"]
             manager.name = new_manager["name"]
+            manager.save()
+
+            return True, "Update Manager Succes"
+        except Exception as e:
+            return False, f"Update Manager Fail: {e}"
+
+    def update_manager_login(account, login):
+        try:
+            manager = Manager.objects(account=account).first()
+            if manager == None:
+                raise Exception(f"{account} 帳號不存在")
+
+            manager.login = login
             manager.save()
 
             return True, "Update Manager Succes"
