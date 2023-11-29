@@ -34,12 +34,10 @@ const enterCarNum = async (carId, carSpaceId) => {
       console.log(
         `Car with number ${carId} entered successfully into parking space ${carSpaceId}.`
       );
-      return { statusCode };
     } else {
       console.log(
         `Entering car with number ${carId} into parking space ${carSpaceId} failed.`
       );
-      return { statusCode };
     }
   } catch (error) {
     console.log(
@@ -65,10 +63,8 @@ const carExit = async carId => {
     const response = await instance.get(`/car/exit`, { params: { carId } });
     if (response.data.success) {
       console.log(`Car with number ${carId} left successfully.`);
-      return { statusCode };
     } else {
       console.log(`Car with number ${carId} left failed.`);
-      return { statusCode };
     }
   } catch (error) {
     console.log(`Error for car number ${carId} to leave. ${error}`);
@@ -81,10 +77,8 @@ const carParkIn = async carSpaceId => {
     const response = await instance.post('/car/park', { carSpaceId });
     if (response.data.success) {
       console.log(`Park space ${carSpaceId} was parked successfully.`);
-      return { statusCode };
     } else {
       console.log(`Park space ${carSpaceId} was parked failed.`);
-      return { statusCode };
     }
   } catch (error) {
     console.log(`Error for park space ${carSpaceId} be parked. ${error}`);
@@ -92,17 +86,15 @@ const carParkIn = async carSpaceId => {
   }
 };
 
-const guardLogIn = async (account, passward) => {
+const guardLogIn = async (account, password) => {
   try {
     const response = await instance.get('/guard/login', {
       params: { account, password },
     });
     if (response.data.success) {
       console.log(`Guard ${account} login successfully.`);
-      return { statusCode };
     } else {
       console.log(`Guard ${account} login failed.`);
-      return { statusCode };
     }
   } catch (error) {
     console.log(`Error for guard ${account} to login. ${error}`);
@@ -124,7 +116,7 @@ const getGuardFloorMap = async floor => {
 
 const getGuardCarSpace = async (carId, carSpaceId) => {
   try {
-    const response = await instance.get(`guard/check/${carSpace}`, {
+    const response = await instance.get(`guard/check/${carSpaceId}`, {
       params: { carId, carSpaceId },
     });
     return response.data; // retrun car or park grid information for guard
@@ -156,5 +148,5 @@ export {
   guardLogIn,
   getGuardFloorMap,
   getGuardCarSpace,
-  getAllFloors
+  getAllFloors,
 };
