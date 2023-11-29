@@ -20,7 +20,7 @@ class ParkingSpace(Document):
     space_id = StringField(required=True, unique=True)
     occupied = BooleanField(required=True)
     current_car_id = StringField()
-    space_type = StringField(required=True, choices=["car", "motor", "disabled"])
+    type = StringField(required=True, choices=["car", "motor", "disabled"])
     floor = IntField(required=True)
     status = StringField(required=True, choices=["OK", "WARNING"])
     zone = StringField(required=True, choices=["A", "B", "C"])
