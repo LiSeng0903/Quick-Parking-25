@@ -18,7 +18,7 @@ class ParkingSpaceInterface:
                 space_id=parking_space["space_id"],
                 occupied=False,
                 current_car_id=None,
-                type=parking_space["space_type"],
+                space_type=parking_space["space_type"],
                 floor=parking_space["floor"],
                 status="OK",
                 zone=parking_space["zone"],
