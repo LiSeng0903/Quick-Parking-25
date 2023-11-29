@@ -21,13 +21,13 @@ class ParkingSpaceInterface:
 
     # Create
     @staticmethod
-    def create_empty_ps(floor, type, zone):
+    def create_empty_ps(floor, space_type, zone):
         """
         產生新的停車格資料
 
         Args:
             floor (int): 樓層
-            type (str): 停車格種類，有三種：car, motor, disabled
+            space_type (str): 停車格種類，有三種：car, motor, disabled
             zone (str): 停車格區域，有三種：A, B, C
         Returns:
             bool: 是否成功
@@ -42,7 +42,7 @@ class ParkingSpaceInterface:
                 space_id=str(floor) + str(floor_ps_cnt + 1).zfill(3),
                 occupied=False,
                 current_car_id=None,
-                type=type,
+                space_type=space_type,
                 floor=floor,
                 status="OK",
                 history=[],
