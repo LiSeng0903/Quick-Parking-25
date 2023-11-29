@@ -42,7 +42,7 @@ class ParkingSpaceInterface:
                 space_id=str(floor) + str(floor_ps_cnt + 1).zfill(3),
                 occupied=False,
                 current_car_id=None,
-                space_type=space_type,
+                type=space_type,
                 floor=floor,
                 status="OK",
                 history=[],
