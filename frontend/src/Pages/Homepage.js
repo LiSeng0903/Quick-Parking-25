@@ -25,6 +25,8 @@ import {
   Stack,
   Highlight,
   Center,
+  Image,
+  Spacer
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 
@@ -55,22 +57,29 @@ const Homepage = () => {
   return (
     <ChakraProvider theme={theme}>
       <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={'20vh'}>
-        <Box maxH="80vh">
-          <Logo
+        <HStack maxH="80vh">
+          <Image
+            borderRadius="10px"
+            boxSize="400px"
+            src={'https://img.icons8.com/isometric/512/1FB141/car-theft.png'}
+            alt={'ok'}
+            cursor={'pointer'}
+            marginRight={10}
+          />
+          {/* <Logo
             h="30vh"
             pointerEvents="none"
             position="relative"
             right="10vw"
             top="8vw"
-          />
-          <Card
-            maxW="sm"
-            position="relative"
-            left="15vw"
-            bottom="30vh"
-            w="30vw"
-            rounded={40}
-          >
+          /> */}
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Card maxW="sm" position="relative" w="30vw" rounded={40}>
             <CardBody>
               <Stack mt="6" spacing="3">
                 <Heading
@@ -201,15 +210,17 @@ const Homepage = () => {
                     paddingBottom={2}
                     rounded={40}
                   >
-                    <Button
-                      w="10vw"
-                      variant="ghost"
-                      color="#779341"
-                      rounded={30}
-                      fontSize={24}
-                    >
-                      開車
-                    </Button>
+                    <NavLink to="/find-car">
+                      <Button
+                        w="10vw"
+                        variant="ghost"
+                        color="#779341"
+                        rounded={30}
+                        fontSize={24}
+                      >
+                        開車
+                      </Button>
+                    </NavLink>
                     <NavLink to="/parking-lot">
                       <Button
                         variant="solid"
@@ -227,7 +238,7 @@ const Homepage = () => {
               </CardFooter>
             </Center>
           </Card>
-        </Box>
+        </HStack>
       </Grid>
     </ChakraProvider>
   );
