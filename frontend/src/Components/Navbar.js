@@ -35,15 +35,6 @@ export default function Navbar(props) {
       />
       <Spacer />
       <HStack spacing="20px">
-        {/* <Avatar name="mario" src="/img/mario.png">
-          <AvatarBadge width="1.3em" bg="teal.500">
-            <Text fontSize="xs" color="white">
-              3
-            </Text>
-          </AvatarBadge>
-        </Avatar> */}
-        {/* <Text>Guard log out</Text> */}
-
         <ButtonGroup
           spacing={5}
           bg={'white'}
