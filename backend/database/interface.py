@@ -65,13 +65,13 @@ class ParkingSpaceInterface:
         Args:
             space_id (str): 停車格編號
         Returns:
-            dict: 停車格資料，內容與 schema 規範的相同
+            dict: 停車格資料，內容與 schema 規範的相同。如果沒有找到的話會回傳 None
         """
 
         ps_mongo_object = ParkingSpace.objects(space_id=space_id).first()
 
         if ps_mongo_object == None:
-            raise Exception(f"{space_id} 停車格不存在")
+            return None
 
         ps_dict = ps_mongo_object.to_mongo().to_dict()
         ps_dict.pop("_id", None)
@@ -86,13 +86,13 @@ class ParkingSpaceInterface:
         Args:
             car_id (str): 車牌號碼
         Returns:
-            dict: 停車格資料，內容與 schema 規範的相同
+            dict: 停車格資料，內容與 schema 規範的相同。如果沒有找到的話會回傳 None。
         """
 
         ps_mongo_object = ParkingSpace.objects(current_car_id=car_id).first()
 
         if ps_mongo_object == None:
-            raise Exception(f"{car_id} 並沒有停在任何停車格中")
+            return None
 
         ps_dict = ps_mongo_object.to_mongo().to_dict()
         ps_dict.pop("_id", None)
@@ -107,7 +107,7 @@ class ParkingSpaceInterface:
         Args:
             floor (int): 樓層
         Returns:
-            list[dict]: 某一層樓的所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同
+            list[dict]: 某一層樓的所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同。如果沒有找到的話會回傳 []
         """
 
         ps_mongo_objects = ParkingSpace.objects(floor=floor)
