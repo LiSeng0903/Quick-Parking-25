@@ -41,6 +41,7 @@ class ParkingSpaceInterface:
             parking_space = ParkingSpace(
                 space_id=str(floor) + str(floor_ps_cnt + 1).zfill(3),
                 occupied=False,
+                current_car_id=None,
                 type=type,
                 floor=floor,
                 status="OK",
@@ -71,6 +72,27 @@ class ParkingSpaceInterface:
 
         if ps_mongo_object == None:
             raise Exception(f"{space_id} 停車格不存在")
+
+        ps_dict = ps_mongo_object.to_mongo().to_dict()
+        ps_dict.pop("_id", None)
+
+        return ps_dict
+
+    @staticmethod
+    def read_ps_by_car_id(car_id: str):
+        """
+        讀取車牌號碼為 car_id 的車子的停車格資料
+
+        Args:
+            car_id (str): 車牌號碼
+        Returns:
+            dict: 停車格資料，內容與 schema 規範的相同
+        """
+
+        ps_mongo_object = ParkingSpace.objects(current_car_id=car_id).first()
+
+        if ps_mongo_object == None:
+            raise Exception(f"{car_id} 並沒有停在任何停車格中")
 
         ps_dict = ps_mongo_object.to_mongo().to_dict()
         ps_dict.pop("_id", None)
@@ -117,7 +139,7 @@ class ParkingSpaceInterface:
 
     # Update
     @staticmethod
-    def update_car_park_(space_id, license_plate_number, start_time):
+    def update_car_park(space_id, car_id, start_time):
         """
         更新停車格資料。車子停入停車格時，設定相關的資料。
         包含
@@ -139,19 +161,24 @@ class ParkingSpaceInterface:
         parking_space = ParkingSpace.objects(space_id=space_id).first()
 
         # 檢查不該停的狀況
+        # 停車格不存在
         if parking_space == None:
             raise Exception(f"{space_id} 停車格不存在")
+        # 停車格正在使用中
         if parking_space.occupied == True:
             raise Exception(f"{space_id} 正在使用中")
+        # TODO: 檢查開始時間是否在上一筆資料之後
 
         # 新增進行中的停車紀錄
         new_history = History(
             start_time=start_time,
             end_time=None,
-            license_plate_number=license_plate_number,
+            car_id=car_id,
         )
         parking_space.history.append(new_history)
         parking_space.occupied = True
+        parking_space.current_car_id = car_id
+
         parking_space.save()
 
     @staticmethod
@@ -170,6 +197,7 @@ class ParkingSpaceInterface:
         Exceptions:
             Exception: space_id 停車格不存在
             Exception: space_id 並非使用中
+            Exception: 結束時間比開始時間早
         """
 
         # 取得停車格
@@ -180,13 +208,18 @@ class ParkingSpaceInterface:
             raise Exception(f"{space_id} 停車格不存在")
         if parking_space.occupied == False:
             raise Exception(f"{space_id} 並非使用中")
+        if end_time < parking_space.history[-1].start_time:
+            raise Exception("結束時間早於開始時間")
 
         # 更新進行中的停車紀錄
         parking_space.history[-1].end_time = end_time
         parking_space.occupied = False
+        parking_space.current_car_id = None
+
         parking_space.save()
 
     # TODO
+    @staticmethod
     def update_parking_space_status(status):
         pass
 
