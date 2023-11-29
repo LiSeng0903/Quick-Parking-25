@@ -50,7 +50,7 @@ def get_floor_map(floor):
     for ps in parking_spaces:
         ps_info = {
             "space_id": ps["space_id"],
-            "type": ps["space_type"],
+            "type": ps["type"],
             "occupied": ps["occupied"],
         }
 
