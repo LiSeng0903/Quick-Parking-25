@@ -13,12 +13,13 @@ from mongoengine import (
 class History(EmbeddedDocument):
     start_time = DateTimeField(required=True)
     end_time = DateTimeField()
-    license_plate_number = StringField(required=True)
+    car_id = StringField(required=True)
 
 
 class ParkingSpace(Document):
     space_id = StringField(required=True, unique=True)
     occupied = BooleanField(required=True)
+    current_car_id = StringField()
     type = StringField(required=True, choices=["car", "motor", "disabled"])
     floor = IntField(required=True)
     status = StringField(required=True, choices=["OK", "WARNING"])
