@@ -25,11 +25,11 @@ def get_parking_infos():
         if ps["occupied"] == True:
             continue
 
-        if ps["type"] == "car":
+        if ps["space_type"] == "car":
             parking_infos["car"] += 1
-        elif ps["type"] == "motor":
+        elif ps["space_type"] == "motor":
             parking_infos["motor"] += 1
-        elif ps["type"] == "disabled":
+        elif ps["space_type"] == "disabled":
             parking_infos["disabled"] += 1
 
     MessageInterface.connect_to_db()
@@ -49,7 +49,7 @@ def get_floor_map(floor):
     for ps in parking_spaces:
         ps_info = {
             "space_id": ps["space_id"],
-            "type": ps["type"],
+            "type": ps["space_type"],
             "occupied": ps["occupied"],
         }
 
