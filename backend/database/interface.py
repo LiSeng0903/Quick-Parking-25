@@ -35,7 +35,7 @@ class ParkingSpaceInterface:
 
         try:
             # 看看目前該層樓有多少個停車位
-            floor_ps_cnt = len(ParkingSpaceInterface.read_ps_of_floor(floor))
+            floor_ps_cnt = len(ParkingSpaceInterface.read_ps_by_floor(floor))
 
             # 產生停車位資料
             parking_space = ParkingSpace(
@@ -76,7 +76,7 @@ class ParkingSpaceInterface:
         return ps_dicts
 
     @staticmethod
-    def read_ps_of_floor(floor):
+    def read_ps_by_floor(floor: int):
         """
         讀取某一層樓的所有停車格資料
 
