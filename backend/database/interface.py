@@ -57,6 +57,46 @@ class ParkingSpaceInterface:
 
     # Read
     @staticmethod
+    def read_ps_by_space_id(space_id: str):
+        """
+        讀取停車格 space_id 的資料
+
+        Args:
+            space_id (str): 停車格編號
+        Returns:
+            dict: 停車格資料，內容與 schema 規範的相同
+        """
+
+        ps_mongo_object = ParkingSpace.objects(space_id=space_id).first()
+
+        if ps_mongo_object == None:
+            raise Exception(f"{space_id} 停車格不存在")
+
+        ps_dict = ps_mongo_object.to_mongo().to_dict()
+        ps_dict.pop("_id", None)
+
+        return ps_dict
+
+    @staticmethod
+    def read_ps_by_floor(floor: int):
+        """
+        讀取某一層樓的所有停車格資料
+
+        Args:
+            floor (int): 樓層
+        Returns:
+            list[dict]: 某一層樓的所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同
+        """
+
+        ps_mongo_objects = ParkingSpace.objects(floor=floor)
+        ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
+
+        for ps_dict in ps_dicts:
+            ps_dict.pop("_id", None)
+
+        return ps_dicts
+
+    @staticmethod
     def read_all_ps():
         """
         讀取所有停車格的資料
@@ -75,28 +115,9 @@ class ParkingSpaceInterface:
 
         return ps_dicts
 
-    @staticmethod
-    def read_ps_by_floor(floor: int):
-        """
-        讀取某一層樓的所有停車格資料
-
-        Args:
-            floor (int): 樓層
-        Returns:
-            list: 某一層樓的所有停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同
-        """
-
-        ps_mongo_objects = ParkingSpace.objects(floor=floor)
-        ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
-
-        for ps_dict in ps_dicts:
-            ps_dict.pop("_id", None)
-
-        return ps_dicts
-
     # Update
     @staticmethod
-    def update_car_park(space_id, license_plate_number, start_time):
+    def update_car_park_(space_id, license_plate_number, start_time):
         """
         更新停車格資料。車子停入停車格時，設定相關的資料。
         包含
