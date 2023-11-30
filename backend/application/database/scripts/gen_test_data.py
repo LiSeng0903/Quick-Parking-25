@@ -57,7 +57,7 @@ def gen_parking_space_data():
             new_ps["zone"] = "C"
         elif i in range(140, 160):
             new_ps["zone"] = "D"
-        elif i in range(140, 160):
+        elif i in range(160, 180):
             new_ps["zone"] = "E"
 
         ParkingSpaceInterface.create_ps(new_ps)
@@ -130,5 +130,5 @@ def gen_all_data():
 
 if __name__ == "__main__":
     clear_all_data()
-    # gen_all_data()
-    gen_manager_accounts()
+    gen_all_data()
+    # gen_manager_accounts()
