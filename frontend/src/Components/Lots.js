@@ -178,14 +178,13 @@ export default function Lots() {
     }
   });
 
-  const allLots = [motorLots, motorLots, carLots];
+  const allLots = [carLots, carLots, carLots];
   const newMotorLots = motorLots.slice(0, 30);
   // console.log(duplicatedLots);
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
-
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   // modal
