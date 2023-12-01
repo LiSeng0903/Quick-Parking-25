@@ -26,3 +26,11 @@ def connect_to_db():
     except Exception as e:
         print(e)
         return False
+
+
+def connect_decorator(func):
+    def wrapper(*args, **kwargs):
+        connect_to_db()
+        return func(*args, **kwargs)
+
+    return wrapper

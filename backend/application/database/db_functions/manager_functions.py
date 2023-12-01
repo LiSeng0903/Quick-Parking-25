@@ -6,17 +6,17 @@ manager_interface_path = os.path.join(cwd, "../interfaces/")
 sys.path.append(manager_interface_path)
 
 import bcrypt
-from connection import connect_to_db
+from connection import connect_decorator
 from ManagerInterface import ManagerInterface
 
 
+@connect_decorator
 def manager_login(account, password):
     """
     管理員登入
     """
 
     try:
-        connect_to_db()
         manager = ManagerInterface.read_manager_by_account(account)
         if manager == None:
             raise Exception("帳號錯誤")
@@ -32,6 +32,7 @@ def manager_login(account, password):
         return False, f"登入失敗：{e}"
 
 
+@connect_decorator
 def manager_logout(account):
     """
     管理員登出
