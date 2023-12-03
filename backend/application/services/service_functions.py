@@ -45,3 +45,24 @@ def get_space_by_floor(floor: int):
 
     """
     return ps_func.get_parking_space_by_floor(floor)
+
+
+def park_car(space_id: str, car_id: str):
+    """
+    停車
+
+    Args:
+        space_id (str): 停車位 ID
+        car_id (str): 車輛 ID
+    Returns:
+        bool: 是否成功
+        str: 訊息
+    """
+
+    try:
+        ps_func.park_car(space_id, car_id)
+        msg = f"車輛 {car_id} 已停入停車位 {space_id}"
+        return True, msg
+    except Exception as e:
+        msg = str(e)
+        return False, msg
