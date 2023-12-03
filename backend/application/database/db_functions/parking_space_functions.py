@@ -26,5 +26,19 @@ def get_remain_space_cnt():
 
 @connect_decorator
 def get_parking_space_by_floor(floor: int):
-    ps = ParkingSpaceInterface.read_ps_by_floor(floor)
-    return ps
+    spaces = {}
+    ps_of_floor = ParkingSpaceInterface.read_ps_by_floor(floor)
+
+    for ps in ps_of_floor:
+        ps_info = {
+            "space_id": ps["space_id"],
+            "space_type": ps["space_type"],
+            "occupied": ps["occupied"],
+        }
+
+        if ps["zone"] in spaces.keys():
+            spaces[ps["zone"]].append(ps_info)
+        else:
+            spaces[ps["zone"]] = [ps_info]
+
+    return spaces
