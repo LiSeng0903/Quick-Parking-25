@@ -68,7 +68,7 @@ def gen_parking_space_data():
             new_ps = {
                 "space_id": str(floor) + str(i + 1).zfill(3),
                 "space_type": "",
-                "floor": 1,
+                "floor": floor,
                 "zone": "",
             }
 
