@@ -11,9 +11,10 @@ import { useDisclosure } from '@chakra-ui/react';
 import ParkingEnterModal from './ParkingModal';
 import { useState } from 'react';
 
-export default function LotsNoMotor() {
+export default function LotsNoMotor(props) {
   const lotsCnt = 20;
   const lotsType = 'motors';
+  const parkingMap = props.parkingMap; // 從 ParkingLot.js 傳入的 parkingMap
   const mockLots = [
     // {
     //   lotId: '1',

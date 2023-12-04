@@ -30,7 +30,7 @@ export default function RootLayout(props) {
         h="100vh"
       >
         <Navbar setSelectedFloor={props.setSelectedFloor} />
-        <Lots />
+        <Lots parkingMap={props.parkingMap}/>
         <Outlet />
       </GridItem>
     </Grid>

@@ -30,7 +30,7 @@ export default function SecLayout(props) {
         h="100vh"
       >
         <Navbar setSelectedFloor={props.setSelectedFloor} />
-        <LotsNoMotor />
+        <LotsNoMotor parkingMap={props.parkingMap}/>
       </GridItem>
     </Grid>
   );
