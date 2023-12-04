@@ -3,6 +3,7 @@ import sys
 
 cwd = os.path.dirname(os.path.abspath(__file__))
 db_function_path = os.path.join(cwd, "../database/db_functions/")
+sys.path.append(db_function_path)
 
 import manager_functions as mng_func
 import message_functions as msg_func
