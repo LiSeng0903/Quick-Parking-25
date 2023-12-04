@@ -47,7 +47,7 @@ def get_parking_space_by_floor(floor: int):
 @connect_decorator
 def park_car(space_id: str, car_id: str):
     # check the space is not occupied
-    ps = ParkingSpaceInterface.read_ps_by_id(space_id)
+    ps = ParkingSpaceInterface.read_ps_by_space_id(space_id)
 
     if ps == None:
         raise Exception(f"停車位 {space_id} 不存在")
