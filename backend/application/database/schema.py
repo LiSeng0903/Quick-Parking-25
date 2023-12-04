@@ -20,10 +20,10 @@ class ParkingSpace(Document):
     space_id = StringField(required=True, unique=True)
     occupied = BooleanField(required=True)
     current_car_id = StringField()
-    type = StringField(required=True, choices=["car", "motor", "disabled"])
+    space_type = StringField(required=True, choices=["car", "motor", "priority"])
     floor = IntField(required=True)
     status = StringField(required=True, choices=["OK", "WARNING"])
-    zone = StringField(required=True, choices=["A", "B", "C"])
+    zone = StringField(required=True, choices=["A", "B", "C", "D", "E"])
     history = ListField(EmbeddedDocumentField(History))
 
     meta = {"collection": "parkingSpace"}
