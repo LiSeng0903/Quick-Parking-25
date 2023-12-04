@@ -1,6 +1,7 @@
 import { Logo } from '../Logo';
 import { WarningTwoIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import { useState, useEffect } from 'react';
+import { getParkingStatus } from '../axios.js';
 import {
   Card,
   CardBody,
@@ -39,12 +40,19 @@ const Homepage = () => {
   const [motorString, setMotorString] = useState('');
 
   useEffect(() => {
-    fetch('/api/parking/status').then(res =>
-      res.json().then(data => {
-        setCarString('剩餘汽車車位：' + data.car);
-        setMotorString('剩餘機車車位：' + data.motor);
-      })
-    );
+    // var res = getParkingStatus()
+    // console.log(res)
+    // res.json().then(data => {
+    //   setCarString('剩餘汽車車位：' + data.car);
+    //   setMotorString('剩餘機車車位：' + data.motor);
+    // })
+
+    // fetch('/api/parking/status').then(res =>
+    //   res.json().then(data => {
+    //     setCarString('剩餘汽車車位：' + data.car);
+    //     setMotorString('剩餘機車車位：' + data.motor);
+    //   })
+    // );
   }, []);
   return (
     <ChakraProvider theme={theme}>

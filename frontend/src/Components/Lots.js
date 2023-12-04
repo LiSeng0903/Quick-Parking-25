@@ -16,14 +16,14 @@ export default function Lots() {
   const lotsCnt = 20;
   const lotsType = 'cars';
   const mockLots = [
-    {
-      lotId: '1',
-      isEmpty: true,
-      lotType: 'normal',
-      floor: 1,
-      status: true,
-      history: [],
-    },
+    // {
+    //   lotId: '1',
+    //   isEmpty: true,
+    //   lotType: 'normal',
+    //   floor: 1,
+    //   status: true,
+    //   history: [],
+    // },
     // {
     //   lotId: '2',
     //   isEmpty: false,
@@ -32,29 +32,133 @@ export default function Lots() {
     //   status: true,
     //   history: [],
     // },
+    // {
+    //   lotId: '2',
+    //   isEmpty: false,
+    //   lotType: 'priority',
+    //   floor: 1,
+    //   status: true,
+    //   history: [],
+    // },
+    // {
+    //   lotId: '3',
+    //   isEmpty: false,
+    //   lotType: 'normal',
+    //   floor: 1,
+    //   status: true,
+    //   history: [],
+    // },
+    // {
+    //   lotId: '4',
+    //   isEmpty: true,
+    //   lotType: 'normal',
+    //   floor: 1,
+    //   status: true,
+    //   history: [],
+    // },
     {
-      lotId: '2',
-      isEmpty: false,
-      lotType: 'priority',
+      space_id: '1001',
+      occupied: true,
+      current_car_id: 'BEP-1255',
+      space_type: 'motor',
       floor: 1,
-      status: true,
-      history: [],
+      status: 'OK',
+      zone: 'A',
+      history: [
+        {
+          start_time: {
+            $date: '2023-11-29T12:45:35.872Z',
+          },
+          end_time: {
+            $date: '2023-11-29T12:45:38.334Z',
+          },
+          car_id: 'BEP-1234',
+        },
+        {
+          start_time: {
+            $date: '2023-11-29T12:46:07.030Z',
+          },
+          car_id: 'BEP-1255',
+        },
+      ],
     },
     {
-      lotId: '3',
-      isEmpty: false,
-      lotType: 'normal',
-      floor: 1,
-      status: true,
-      history: [],
+      space_id: '1010',
+      occupied: false,
+      current_car_id: '',
+      space_type: 'car',
+      floor: 2,
+      status: 'OK',
+      zone: 'B',
+      history: [
+        {
+          start_time: {
+            $date: '',
+          },
+          end_time: {
+            $date: '',
+          },
+          car_id: '',
+        },
+        {
+          start_time: {
+            $date: '',
+          },
+          car_id: '',
+        },
+      ],
     },
     {
-      lotId: '4',
-      isEmpty: true,
-      lotType: 'normal',
+      space_id: '1059',
+      occupied: true,
+      current_car_id: 'B09705059',
+      space_type: 'car',
       floor: 1,
-      status: true,
-      history: [],
+      status: 'OK',
+      zone: 'B',
+      history: [
+        {
+          start_time: {
+            $date: '2023-11-29T12:45:35.872Z',
+          },
+          end_time: {
+            $date: '2023-11-29T12:45:38.334Z',
+          },
+          car_id: 'B09705059',
+        },
+        {
+          start_time: {
+            $date: '2023-11-29T12:46:07.030Z',
+          },
+          car_id: 'B09705059',
+        },
+      ],
+    },
+    {
+      space_id: '1010',
+      occupied: false,
+      current_car_id: '',
+      space_type: 'car',
+      floor: 2,
+      status: 'OK',
+      zone: 'B',
+      history: [
+        {
+          start_time: {
+            $date: '',
+          },
+          end_time: {
+            $date: '',
+          },
+          car_id: '',
+        },
+        {
+          start_time: {
+            $date: '',
+          },
+          car_id: '',
+        },
+      ],
     },
   ];
   // console.log(mockLots);
@@ -74,14 +178,13 @@ export default function Lots() {
     }
   });
 
-  const allLots = [motorLots, motorLots, carLots];
+  const allLots = [carLots, carLots, carLots];
   const newMotorLots = motorLots.slice(0, 30);
   // console.log(duplicatedLots);
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
-
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   // modal
@@ -221,7 +324,7 @@ export default function Lots() {
                     {lots.map(lot => (
                       <WrapItem key={lot.lotId} width={'3vw'} margin={'1px'}>
                         <Button
-                          bg={lot.isEmpty ? isEmptyColor : isOccupiedColor}
+                          bg={lot.occupied ? isOccupiedColor : isEmptyColor}
                           width={'1vw'}
                           height={'8vh'}
                           variant={'solid'}

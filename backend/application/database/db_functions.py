@@ -48,9 +48,10 @@ def get_floor_map(floor):
     parking_spaces = ParkingSpaceInterface.read_ps_by_floor(floor)
 
     for ps in parking_spaces:
+        # TODO: change field name
         ps_info = {
             "space_id": ps["space_id"],
-            "type": ps["space_type"],
+            "type": ps["type"],
             "occupied": ps["occupied"],
         }
 
