@@ -199,3 +199,40 @@ def find_car(space_id: str, car_id: str):
         pass
 
     return info
+
+
+def get_ps_all_info(space_id: str):
+    info = {
+        "parkingSpaceId": None,
+        "spaceType": None,
+        "currentCarId": None,
+        "parkTime": None,
+        "status": "",
+        "history": [
+            {
+                "startTime": datetime,
+                "carId": str,
+                "endTime": datetime,
+            },
+        ],
+    }
+
+    ps = PSI.read_ps_by_space_id(space_id)
+    info["parkingSpaceId"] = ps["space_id"]
+    info["spaceType"] = ps["space_type"]
+    info["status"] = ps["status"]
+    info["history"] = ps["history"]
+
+    # 把最後一筆 history 的 end_time 補上、計算 parkTime
+    try:
+        current_history = ps["history"][-1]  # 也許 ps["history"][-1] 沒有東西
+
+        # 正有車子停在停車位上
+        if current_history.get("end_time", None) == None:
+            info["currentCarId"] = ps["current_car_id"]
+            info["history"][-1]["end_time"] = None
+            info["parkTime"] = datetime.now() - current_history["start_time"]
+    except Exception as e:
+        pass
+
+    return info

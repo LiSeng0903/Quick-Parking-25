@@ -103,3 +103,8 @@ def find_car(space_id: str, car_id: str):
     """
 
     return ps_func.find_car(space_id, car_id)
+
+
+@connect_decorator
+def guardian_get_space_info_(space_id: str):
+    return ps_func.get_ps_all_info(space_id)
