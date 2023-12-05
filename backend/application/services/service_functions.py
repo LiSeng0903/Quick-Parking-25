@@ -132,3 +132,30 @@ def guard_login(account: str, password: str):
         "success": can_login,
         "message": msg,
     }
+
+
+@connect_decorator
+def guard_get_parking_infos():
+    """
+    警衛取得停車場空位資訊、異常的停車位編號
+
+    Args:
+        None
+    Returns:
+        dict: {
+            "car": int,
+            "motor": int,
+            "priority": int,
+            "warningParkingSpaceIds": list
+        }
+    """
+
+    remain_space_cnt = ps_func.get_remain_space_cnt()
+    warning_ps_ids = ps_func.get_warning_ps_ids()
+
+    return {
+        "car": remain_space_cnt["car"],
+        "motor": remain_space_cnt["motor"],
+        "priority": remain_space_cnt["priority"],
+        "warningParkingSpaceIds": warning_ps_ids,
+    }

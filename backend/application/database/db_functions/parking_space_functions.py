@@ -236,3 +236,22 @@ def get_ps_all_info(space_id: str):
         pass
 
     return info
+
+
+def get_warning_ps_ids():
+    """
+    取得所有狀態為 WARNING 的停車位 ID
+
+    Args:
+        None
+    Returns:
+        list[str]: 所有狀態為 WARNING 的停車位編號
+    """
+
+    warning_ids = []
+    warning_pss = PSI.read_ps_by_status("WARNING")
+
+    for ps in warning_pss:
+        warning_ids.append(ps["space_id"])
+
+    return warning_ids

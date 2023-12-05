@@ -107,6 +107,24 @@ class ParkingSpaceInterface:
 
         return ps_dicts
 
+    def read_ps_by_status(status: str):
+        """
+        讀取所有狀態異常的停車格資料
+
+        Args:
+            None
+        Returns:
+            list[dict]: 所有狀態異常的停車格資料的 list，每個停車格資料是一個 dict，內容與 schema 規範的相同。如果沒有找到的話會回傳 []
+        """
+
+        ps_mongo_objects = ParkingSpace.objects(status=status)
+        ps_dicts = [ps.to_mongo().to_dict() for ps in ps_mongo_objects]
+
+        for ps_dict in ps_dicts:
+            ps_dict.pop("_id", None)
+
+        return ps_dicts
+
     def read_all_ps():
         """
         讀取所有停車格的資料
