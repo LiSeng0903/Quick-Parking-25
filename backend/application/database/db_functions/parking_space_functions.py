@@ -147,6 +147,7 @@ def park_car(space_id: str, car_id: str):
             "end_time": None,
         }
     )
+    PSI.update_ps_history(space_id, history)
 
 
 @connect_decorator
