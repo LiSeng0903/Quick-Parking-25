@@ -1,91 +1,72 @@
-import { List, ListItem, ListIcon, Box } from '@chakra-ui/react';
-import { CalendarIcon, EditIcon, AtSignIcon } from '@chakra-ui/icons';
-import { NavLink } from 'react-router-dom';
-import { FcGlobe, FcMenu } from 'react-icons/fc';
-import { useState } from 'react';
-import SidebarItem from './SidebarItem';
-import menu from './menu';
+import React, { useState } from 'react';
+import { Box, Center, Image, Button, VStack, Text, Spacer } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import CustomButton from './CustomButton';
 
-// const Sidebar = ({ children }) => {
-//   const [isOpen, setIsOpen] = useState(true);
-//   const toggle = () => setIsOpen(!isOpen);
-
-//   return (
-//     <Box style={{ width: isOpen ? '230px' : '60px' }}>
-//       <List color="white" fontSize="1.2em" spacing={4}>
-//         <ListItem>
-//           <NavLink to="/">
-//             <ListIcon as={CalendarIcon} color="white" />
-//             Homepage
-//           </NavLink>
-//         </ListItem>
-//         {/* <ListItem>
-//         <NavLink to="create">
-//           <ListIcon as={EditIcon} color="white" />
-//           New Task
-//         </NavLink>
-//       </ListItem>
-//       <ListItem>
-//         <NavLink to="profile">
-//           <ListIcon as={AtSignIcon} color="white" />
-//           Profile
-//         </NavLink>
-//       </ListItem> */}
-//       </List>
-//     </Box>
-//   );
-// };
-const Sidebar = ({ children }) => {
+const Sidebar = (props)=> {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
 
+  const logout = async () => {
+    // await logoutUser();
+    // await dispatch(SET_LOGIN(false));
+    navigate('/');
+  };
   const goHome = () => {
+    // await logoutUser();
+    // await dispatch(SET_LOGIN(false));
     navigate('/');
   };
 
   return (
-    <Box className="layout">
-      <List
-        className="sidebar"
-        style={{ width: isOpen ? '230px' : '60px' }}
-        color="white"
-        fontSize="1.2em"
-        spacing={4}
-      >
-        <ListItem className="top_section">
-          <NavLink to="/">
-            <ListIcon
-              as={CalendarIcon}
-              color="white"
-              style={{ display: isOpen ? 'block' : 'none' }}
-              size={35}
-              style={{ cursor: 'pointer', marginTop: '10px' }}
-              onClick={goHome}
-            />
-            Homepage
-          </NavLink>
-        </ListItem>
-        <ListItem
-          className="bars"
-          style={{ marginLeft: isOpen ? '100px' : '0px' }}
+    <Box
+      className="layout"
+      left={0}
+      width={'10vw'}
+      background={'#FBFBF9'}
+      height={'100vh'}
+      style={{ width: isOpen ? '20vw' : '5vw', transition: 'all .5s' }}
+    >
+      <Button color={'black'} onClick={toggle} position={'revert'}>
+        <HamburgerIcon />
+      </Button>
+      <Center>
+        <VStack>
+          <Image
+            borderRadius="10px"
+            boxSize="150px"
+            src={'https://img.icons8.com/isometric/512/1FB141/user-female.png'}
+            alt={'guard'}
+            marginTop={'10vh'}
+            style={{ width: isOpen ? '150px' : '0vw' }}
+            cursor={'pointer'}
+            onClick={goHome}
+          />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Text
+            color={'#9E896A'}
+            style={{ display: isOpen ? 'flex' : 'none', transition: 'all .3s' }}
+          >
+            您好！辛苦了！
+          </Text>
+        </VStack>
+      </Center>
+
+      <Box>
+        <VStack
+          mt={'5vh'}
+          style={{ display: isOpen ? 'flex' : 'none', transition: 'all .3s' }}
         >
-          <ListIcon as={CalendarIcon} onClick={toggle}>
-            {menu.map((item, index) => {
-              return <SidebarItem key={index} item={item} isOpen={isOpen} />;
-            })}
-          </ListIcon>
-        </ListItem>
-        <Box
-          style={{
-            paddingLeft: isOpen ? '230px' : '60px',
-            transition: 'all .5s',
-          }}
-        >
-          {children}
-        </Box>
-      </List>
+          <CustomButton to="/guard/dashboard" label="一覽" />
+          <CustomButton to="/guard/search" label="查詢" />
+          <CustomButton to="/guard/map" label="地圖" />
+          <CustomButton to="/" label="登出" onClick={logout} />
+        </VStack>
+      </Box>
     </Box>
   );
 };

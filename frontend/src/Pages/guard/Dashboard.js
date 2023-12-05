@@ -4,7 +4,9 @@ import { Box, ChakraProvider, Heading } from '@chakra-ui/react';
 const Dashboard = () => {
   return (
     <ChakraProvider>
-      <Heading>Hi!</Heading>
+        <Box w={'80vw'}>
+          <Heading color={'black'}>Hi!</Heading>
+        </Box>
     </ChakraProvider>
   );
 };

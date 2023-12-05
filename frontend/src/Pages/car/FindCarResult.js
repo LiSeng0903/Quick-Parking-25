@@ -70,7 +70,7 @@ const FindCarResult = () => {
                 </FormControl>
               </Stack>
             </CardBody>
-            <CardFooter>
+            <CardFooter justifyContent={'center'}>
               <ButtonGroup
                 background="#E8F0D7"
                 paddingLeft={1}
