@@ -7,11 +7,9 @@ sys.path.append(message_interface_path)
 
 from datetime import datetime
 
-from connection import connect_decorator
 from ParkingSpaceInterface import ParkingSpaceInterface as PSI
 
 
-@connect_decorator
 def get_remain_space_cnt():
     """
     取得停車場剩餘空位數量
@@ -39,7 +37,6 @@ def get_remain_space_cnt():
     return remain_space_cnt
 
 
-@connect_decorator
 def get_parking_space_by_floor(floor: int):
     """
     回傳該層樓的停車位資訊
@@ -83,7 +80,6 @@ def get_parking_space_by_floor(floor: int):
     return spaces
 
 
-@connect_decorator
 def can_park(space_id: str, car_id: str):
     """
     檢查停車位 space_id 是否可以停入車輛 car_id
@@ -117,7 +113,6 @@ def can_park(space_id: str, car_id: str):
     return True, ""
 
 
-@connect_decorator
 def park_car(space_id: str, car_id: str):
     """
     停車，更新停車位資訊，會更新
@@ -150,7 +145,6 @@ def park_car(space_id: str, car_id: str):
     PSI.update_ps_history(space_id, history)
 
 
-@connect_decorator
 def find_car(space_id: str, car_id: str):
     """
     尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主

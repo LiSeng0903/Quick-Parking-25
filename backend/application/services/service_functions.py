@@ -3,13 +3,17 @@ import sys
 
 cwd = os.path.dirname(os.path.abspath(__file__))
 db_function_path = os.path.join(cwd, "../database/db_functions/")
+connect_path = os.path.join(cwd, "../database/interfaces/")
 sys.path.append(db_function_path)
+sys.path.append(connect_path)
 
 import manager_functions as mng_func
 import message_functions as msg_func
 import parking_space_functions as ps_func
+from connection import connect_decorator
 
 
+@connect_decorator
 def get_parking_infos():
     """
     取得停車場空位資訊
@@ -36,6 +40,7 @@ def get_parking_infos():
     }
 
 
+@connect_decorator
 def get_space_by_floor(floor: int):
     """
     取得某樓層的停車位資訊
@@ -48,6 +53,7 @@ def get_space_by_floor(floor: int):
     return ps_func.get_parking_space_by_floor(floor)
 
 
+@connect_decorator
 def park_car(space_id: str, car_id: str):
     """
     先檢查停車位存在且沒有被佔用、車子沒有停在別的停車位
@@ -74,6 +80,7 @@ def park_car(space_id: str, car_id: str):
         return False, str(e)
 
 
+@connect_decorator
 def find_car(space_id: str, car_id: str):
     """
     尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
