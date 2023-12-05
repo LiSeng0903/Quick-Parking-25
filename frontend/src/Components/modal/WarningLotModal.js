@@ -13,94 +13,169 @@ import {
   Image,
   Center,
   ButtonGroup,
+  Box,
   ChakraProvider,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  HStack,
+  Icon,
+  Highlight,
+  VStack,
+  Spacer,
 } from '@chakra-ui/react';
 import React from 'react';
+import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
+import { Chrono } from 'react-chrono';
 
-const WarningLotModalModal = ({
-  isOpenTest,
-  onCloseTest,
-  initialRefTest,
-  finalRefTest,
-}) => {
+const items = [
+  {
+    cardTitle: 'Now',
+    cardDetailedText: 'Occupied',
+  },
+  {
+    cardTitle: '20231012',
+    cardDetailedText: 'Empty',
+  },
+  {
+    cardTitle: '20231011',
+    cardDetailedText: 'ABC-4321',
+  },
+];
+const WarningLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   return (
     <ChakraProvider>
       <Modal
-        initialFocusRef={initialRefTest}
-        finalFocusRef={finalRefTest}
-        isOpen={isOpenTest}
-        onClose={onCloseTest}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
         isCentered
         size={'xs'}
-        rounded={50}
       >
         <ModalOverlay bg={'blackAlpha.900'} />
-        <ModalContent bg={'#FBFBF9'} color={'#9E896A'}>
-          <ModalCloseButton />
+        <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
+          <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#EBCC7A'}>
+            <Center>
+              <Text color={'white'}>1012</Text>
+            </Center>
+          </ModalHeader>
           <ModalBody
             pb={6}
-            paddingTop={'6vh'}
+            paddingTop={'3vh'}
             display={'flex'}
             flexDirection={'column'}
             justifyContent={'center'}
+            bg={'#F0EFE5'}
+            rounded={10}
           >
             <Center>
-              <Image
-                borderRadius="10px"
-                boxSize="150px"
-                src={'https://img.icons8.com/isometric/512/1FB141/car.png'}
-                alt={'car'}
-              />
+              <VStack>
+                <Text
+                  as="b"
+                  fontSize="lg"
+                  color={'blackAlpha.800'}
+                  mb={4}
+                  mt={2}
+                >
+                  車牌號碼
+                </Text>
+                <Box h="25vh" overflow="scroll" pb={5} pt={2}>
+                  <Accordion allowToggle>
+                    <AccordionItem
+                      bg={'#EB9316'}
+                      color={'white'}
+                      rounded={10}
+                      mb={2}
+                      w={'18vw'}
+                      shadow={'base'}
+                    >
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          <HStack>
+                            <Icon as={WarningTwoIcon} />
+                            <Text as={'b'}>未記名車牌</Text>
+                          </HStack>
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+
+                      {/* <AccordionPanel pb={2}>快去停</AccordionPanel> */}
+                    </AccordionItem>
+                    <Spacer />
+                    <AccordionItem
+                      bg={'white'}
+                      color={'#898989'}
+                      rounded={10}
+                      mb={2}
+                      w={'18vw'}
+                      shadow={'base'}
+                    >
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          <HStack>
+                            <Icon as={InfoOutlineIcon} />
+                            <Text as={'b'}>停放時間：？hr</Text>
+                          </HStack>
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </AccordionItem>
+
+                    <AccordionItem
+                      bg={'white'}
+                      rounded={10}
+                      w={'18vw'}
+                      shadow={'base'}
+                      color={'#898989'}
+                    >
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          <HStack>
+                            <Icon as={AddIcon} />
+                            <Text as={'b'}>車位歷史紀錄</Text>
+                          </HStack>
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel pb={4}>
+                        <Chrono
+                          items={items}
+                          slideShow
+                          mode="VERTICAL"
+                          // enableOutline
+                          cardHeight="2px"
+                          cardWidth="100px"
+                          fontSizes="5px"
+                          hideControls
+                          titleDateFormat
+                          disableClickOnCircle="true"
+                          enableBreakPoint="false"
+                          item
+                          theme={{
+                            cardBgColor: '#FFFFFF',
+                            cardForeColor: '#FFFFFF',
+                            titleColor: '#616161',
+                            titleColorActive: 'white',
+                            secondary: '#9C9C9C',
+                            primary: 'black',
+                          }}
+                        />
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
+                </Box>
+              </VStack>
             </Center>
-
-            <ModalHeader textAlign={'center'} color={'#9E896A'}>
-              Warning
-            </ModalHeader>
-            <FormControl>
-              <FormLabel color={'black'}>請輸入車牌號碼</FormLabel>
-              <Input
-                ref={initialRefTest}
-                placeholder="車號"
-                borderColor={'#9E896A'}
-                color={'gray.200'}
-              />
-            </FormControl>
           </ModalBody>
-
-          {/* <ModalFooter justifyContent={'center'} paddingBottom={'4vh'}>
-            <ButtonGroup
-              background="#E8F0D7"
-              paddingLeft={1}
-              paddingRight={1}
-              paddingTop={1}
-              paddingBottom={1}
-              rounded={40}
-            >
-              <Button
-                w="8vw"
-                variant="ghost"
-                color="#779341"
-                rounded={30}
-                onClick={onCloseTest}
-              >
-                取消
-              </Button>
-              <Button
-                w="8vw"
-                variant="solid"
-                bg="#779341"
-                color="#FFFFFF"
-                rounded={30}
-              >
-                確認
-              </Button>
-            </ButtonGroup>
-          </ModalFooter> */}
+          <ModalFooter bg={'#F0EFE5'} roundedBottom={10}></ModalFooter>
         </ModalContent>
       </Modal>
     </ChakraProvider>
   );
 };
-
 
 export default WarningLotModalModal;
