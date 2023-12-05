@@ -35,10 +35,7 @@ const Login = () => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
-  const userData = {
-    account,
-    password,
-  };
+
   const login = async e => {
     e.preventDefault();
 
@@ -118,7 +115,7 @@ const Login = () => {
                 </FormControl>
               </Stack>
             </CardBody>
-            <CardFooter>
+            <CardFooter justifyContent={'center'}>
               <ButtonGroup
                 background="#EEE8D7"
                 paddingLeft={1}
@@ -128,10 +125,16 @@ const Login = () => {
                 rounded={40}
               >
                 <NavLink to="/home">
+                  <Button w="8vw" variant="ghost" color="#9E896A" rounded={30}>
+                    取消
+                  </Button>
+                </NavLink>
+                <NavLink to={'/guard/dashboard'}>
                   <Button
                     w="8vw"
-                    variant="ghost"
-                    color="#9E896A"
+                    variant="solid"
+                    bg="#9E896A"
+                    color="#FFFFFF"
                     rounded={30}
                     onClick={() =>
                       toast({
@@ -141,17 +144,6 @@ const Login = () => {
                         position: 'top-right',
                       })
                     }
-                  >
-                    取消
-                  </Button>
-                </NavLink>
-                <NavLink to={'/dashboard'}>
-                  <Button
-                    w="8vw"
-                    variant="solid"
-                    bg="#9E896A"
-                    color="#FFFFFF"
-                    rounded={30}
                   >
                     登入
                   </Button>

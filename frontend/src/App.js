@@ -1,5 +1,12 @@
 import React from 'react';
-import { ChakraProvider, Box, VStack, Grid, theme } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  Box,
+  VStack,
+  Grid,
+  theme,
+  HStack,
+} from '@chakra-ui/react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -13,6 +20,8 @@ import FindCarResult from './Pages/car/FindCarResult.js';
 import Login from './Pages/guard/Login.js';
 import Dashboard from './Pages/guard/Dashboard.js';
 import Sidebar from './Components/sidebar/Sidebar.js';
+import Search from './Pages/guard/Search.js';
+import Map from './Pages/guard/Map.js';
 
 // router and routes
 const router = createBrowserRouter(
@@ -25,11 +34,30 @@ const router = createBrowserRouter(
       <Route path="find-car/result" element={<FindCarResult />} />
       <Route path="login" element={<Login />} />
       <Route
-        path="dashboard"
+        path="guard/dashboard"
         element={
-          <Sidebar>
+          <ChakraProvider>
+            <Sidebar />
             <Dashboard />
-          </Sidebar>
+          </ChakraProvider>
+        }
+      />
+      <Route
+        path="guard/search"
+        element={
+          <ChakraProvider>
+            <Sidebar />
+            <Search />
+          </ChakraProvider>
+        }
+      />
+      <Route
+        path="guard/map"
+        element={
+          <ChakraProvider>
+            <Sidebar />
+            <Map />
+          </ChakraProvider>
         }
       />
     </Route>
@@ -41,9 +69,9 @@ function App() {
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
         <Grid>
-          <VStack>
+          <HStack>
             <RouterProvider router={router} />
-          </VStack>
+          </HStack>
         </Grid>
       </Box>
     </ChakraProvider>

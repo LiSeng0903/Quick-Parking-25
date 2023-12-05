@@ -1,17 +1,13 @@
-import { BellIcon } from '@chakra-ui/icons';
 import { IoCaretForwardCircle } from 'react-icons/io5';
-
 import {
   Flex,
   Button,
   Spacer,
   HStack,
-  useToast,
   ButtonGroup,
-  Center,
   Image,
 } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import React, {  } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavBar(props) {
@@ -53,7 +49,8 @@ export default function NavBar(props) {
               key={index}
               variant="solid"
               bg={floorNumber === props.selectedFloor ? '#9E896A' : '#EBE2D5'}
-              color={floorNumber === props.selectedFloor ? 'white' : '#CDB89A'}
+              color={'white'}
+              // color={floorNumber === props.selectedFloor ? 'white' : '#CDB89A'}
               rounded={30}
               fontSize={24}
               rightIcon={<IoCaretForwardCircle />}

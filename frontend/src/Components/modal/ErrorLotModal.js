@@ -23,6 +23,7 @@ import React from 'react';
 import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 import { Chrono } from 'react-chrono';
 
+// 之後要改成可以回傳車車資訊進去 function
 const items = [
   {
     cardTitle: 'Now',
