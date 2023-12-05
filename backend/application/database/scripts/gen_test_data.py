@@ -107,17 +107,17 @@ def gen_guard_accounts():
     # 連接資料庫
     connect_to_db()
 
-    with open(os.path.join(cwd, "../guard_accounts"), "r", encoding="utf-8") as f:
-        managers = json.load(f)["guard"]
+    with open(os.path.join(cwd, "../guard_accounts.json"), "r", encoding="utf-8") as f:
+        guards = json.load(f)["guard"]
 
-    for manager in managers:
-        manager_dict = {
-            "account": manager["account"],
-            "password": bcrypt.hashpw(manager["password"].encode("utf-8"), bcrypt.gensalt()),
-            "name": manager["name"],
+    for guard in guards:
+        guard_dict = {
+            "account": guard["account"],
+            "password": bcrypt.hashpw(guard["password"].encode("utf-8"), bcrypt.gensalt()),
+            "name": guard["name"],
         }
 
-        ManagerInterface.create_manager(manager)
+        GuardInterface.create_guard(guard)
 
 
 def gen_all_data():
