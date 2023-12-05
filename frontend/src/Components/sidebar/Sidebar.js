@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Center, Image, Button, VStack, Text, Spacer } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Image,
+  Button,
+  VStack,
+  Text,
+  Spacer,
+} from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from './CustomButton';
+import format from 'date-fns/format';
 
-const Sidebar = (props)=> {
+const Sidebar = props => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
@@ -19,6 +28,16 @@ const Sidebar = (props)=> {
     // await dispatch(SET_LOGIN(false));
     navigate('/');
   };
+  const [time, setTime] = React.useState(new Date());
+  React.useEffect(() => {
+    const intervalID = window.setInterval(() => {
+      console.log('過一秒囉');
+      setTime(new Date());
+    }, 1000);
+    return () => {
+      clearInterval(intervalID);
+    };
+  }, []);
 
   return (
     <Box
@@ -47,11 +66,18 @@ const Sidebar = (props)=> {
           <Spacer />
           <Spacer />
           <Spacer />
-          <Text
+          {/* <Text
             color={'#9E896A'}
             style={{ display: isOpen ? 'flex' : 'none', transition: 'all .3s' }}
           >
             您好！辛苦了！
+          </Text> */}
+          <Text
+            as={'b'}
+            color={'#9E896A'}
+            style={{ display: isOpen ? 'flex' : 'none', transition: 'all .3s' }}
+          >
+            {format(time, 'hh:mm:ss a')}
           </Text>
         </VStack>
       </Center>

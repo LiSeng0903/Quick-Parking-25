@@ -114,7 +114,7 @@ const FindCar = () => {
                     rounded={30}
                     onClick={() =>
                       toast({
-                        title: 'Log in successfully!',
+                        title: 'Submitted uccessfully!',
                         status: 'success',
                         isClosable: true,
                         position: 'top-right',

@@ -28,6 +28,7 @@ import {
   HStack,
   Icon,
   Spacer,
+  useToast,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
@@ -49,8 +50,29 @@ const items = [
   },
 ];
 
+const initialState = {
+  spacesId: '',
+  carId: '',
+};
+
 const Search = () => {
+  const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  // handle search data
+  const [formData, setformData] = useState(initialState);
+  const { spacesId, carId } = formData;
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setformData({ ...formData, [name]: value });
+  };
+
+  const search = async e => {
+    e.preventDefault();
+    const userData = {
+      spacesId,
+      carId,
+    };
+  };
 
   return (
     <ChakraProvider>
@@ -74,7 +96,7 @@ const Search = () => {
                   />
                 </Center>
                 <Stack>
-                  <FormControl mt={2}>
+                  <FormControl mt={2} onSubmit={search}>
                     <FormLabel>請輸入車位</FormLabel>
                     <Input
                       type="text"
@@ -82,6 +104,7 @@ const Search = () => {
                       color={'gray.500'}
                       placeholder="B09"
                       fontWeight={600}
+                      onChange={handleInputChange}
                     />
                   </FormControl>
                   <FormControl mb={4}>
@@ -92,6 +115,7 @@ const Search = () => {
                       color={'gray.500'}
                       placeholder="B09705059"
                       fontWeight={600}
+                      onChange={handleInputChange}
                     />
                   </FormControl>
                 </Stack>
@@ -130,7 +154,9 @@ const Search = () => {
             {/* <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}> */}
             <CardHeader h={'8vh'} roundedTop={10} backgroundColor={'#A3C561'}>
               <Center>
-                <Text as={'b'} color={'white'}>1013</Text>
+                <Text as={'b'} color={'white'}>
+                  1013
+                </Text>
               </Center>
             </CardHeader>
             <CardBody
