@@ -256,7 +256,7 @@ class ParkingSpaceInterface:
             return False, f"Update parking space history failed: {e}"
 
     # Delete
-    def delete_ps(space_id):
+    def delete_ps(space_id: str):
         """
         刪除停車格 space_id
         """
@@ -270,3 +270,29 @@ class ParkingSpaceInterface:
             return True, "Delete parking space success"
         except Exception as e:
             return False, f"Delete parking space failed: {e}"
+
+    def reset_ps(space_id: str):
+        """
+        重置停車格 space_id
+
+        Args:
+            space_id (str): 停車格編號
+        Returns:
+            bool: 是否成功
+            str: 成功、失敗訊息
+        """
+
+        try:
+            ps = ParkingSpace.objects(space_id=space_id).first()
+            if ps == None:
+                raise Exception(f"{space_id} 停車格不存在")
+
+            ps.occupied = False
+            ps.current_car_id = None
+            ps.status = "OK"
+            ps.history = []
+            ps.save()
+            return True, "重置停車格成功"
+
+        except Exception as e:
+            return False, f"重置停車格失敗: {e}"
