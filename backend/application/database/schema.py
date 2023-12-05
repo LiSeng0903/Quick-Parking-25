@@ -35,7 +35,7 @@ class Guard(Document):
     login = BooleanField(required=True)
     name = StringField(required=True)
 
-    meta = {"collection": "guardian"}
+    meta = {"collection": "guard"}
 
 
 class Message(Document):
