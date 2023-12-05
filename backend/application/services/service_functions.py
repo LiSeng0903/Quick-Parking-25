@@ -107,6 +107,29 @@ def find_car(space_id: str, car_id: str):
 
 @connect_decorator
 def guard_get_space_info(space_id: str):
+    """
+    警衛取得某個車位的完整資訊
+
+    Args:
+        space_id (str): 停車位編號
+    Returns:
+        info (dict): 停車位資訊，內容為 {
+            "parkingSpaceId": str,
+            "spaceType": "car" || "motor" || "priority",
+            "currentCarId": str,
+            "parkTime": datetime.timedelta,
+            "status": "OK" || "WARNING" ,
+            "history": [
+                {
+                    "startTime": datetime,
+                    "carId": str,
+                    "endTime": datetime,
+                },
+                ...
+            ],
+        }
+    """
+
     return ps_func.get_ps_all_info(space_id)
 
 

@@ -202,6 +202,29 @@ def find_car(space_id: str, car_id: str):
 
 
 def get_ps_all_info(space_id: str):
+    """
+    取得某個停車位的所有資訊，並且計算其停車時間
+
+    Args:
+        space_id (str): 停車位編號
+    Returns:
+        info (dict): 停車位資訊，內容為 {
+            "parkingSpaceId": str,
+            "spaceType": "car" || "motor" || "priority",
+            "currentCarId": str,
+            "parkTime": datetime.timedelta,
+            "status": "OK" || "WARNING" ,
+            "history": [
+                {
+                    "startTime": datetime,
+                    "carId": str,
+                    "endTime": datetime,
+                },
+                ...
+            ],
+        }
+    """
+
     info = {
         "parkingSpaceId": None,
         "spaceType": None,
@@ -221,16 +244,26 @@ def get_ps_all_info(space_id: str):
     info["parkingSpaceId"] = ps["space_id"]
     info["spaceType"] = ps["space_type"]
     info["status"] = ps["status"]
-    info["history"] = ps["history"]
 
-    # 把最後一筆 history 的 end_time 補上、計算 parkTime
+    new_key_history = []
+    for his in ps["history"]:
+        new_key_history.append(
+            {
+                "startTime": his.get("start_time", None),
+                "carId": his.get("car_id", None),
+                "endTime": his.get("end_time", None),
+            }
+        )
+
+    info["history"] = new_key_history
+
+    # 計算 parkTime, currentCarId
     try:
         current_history = ps["history"][-1]  # 也許 ps["history"][-1] 沒有東西
 
         # 正有車子停在停車位上
         if current_history.get("end_time", None) == None:
             info["currentCarId"] = ps["current_car_id"]
-            info["history"][-1]["end_time"] = None
             info["parkTime"] = datetime.now() - current_history["start_time"]
     except Exception as e:
         pass
