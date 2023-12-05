@@ -38,7 +38,7 @@ const items = [
     cardDetailedText: 'ABC-1234',
   },
 ];
-const ErrorLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
+const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   return (
     <ChakraProvider>
       <Modal
@@ -53,7 +53,7 @@ const ErrorLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
             <Center>
-              <Text color={'white'}>1011</Text>
+              <Text color={'white'}>1012</Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -171,4 +171,4 @@ const ErrorLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   );
 };
 
-export default ErrorLotModalModal;
+export default ErrorLotModal;

@@ -38,7 +38,7 @@ const items = [
     cardDetailedText: 'Empty',
   },
 ];
-const NormalLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
+const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   return (
     <ChakraProvider>
       <Modal
@@ -53,7 +53,7 @@ const NormalLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#A3C561'}>
             <Center>
-              <Text color={'white'}>1013</Text>
+              <Text color={'white'}>1011</Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -169,4 +169,4 @@ const NormalLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   );
 };
 
-export default NormalLotModalModal;
+export default NormalLotModal;

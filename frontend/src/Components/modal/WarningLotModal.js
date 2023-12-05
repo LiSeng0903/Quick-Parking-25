@@ -46,7 +46,7 @@ const items = [
     cardDetailedText: 'ABC-4321',
   },
 ];
-const WarningLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
+const WarningLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   return (
     <ChakraProvider>
       <Modal
@@ -61,7 +61,7 @@ const WarningLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#EBCC7A'}>
             <Center>
-              <Text color={'white'}>1012</Text>
+              <Text color={'white'}>1013</Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -179,4 +179,4 @@ const WarningLotModalModal = ({ isOpen, onClose, initialRef, finalRef }) => {
   );
 };
 
-export default WarningLotModalModal;
+export default WarningLotModal;

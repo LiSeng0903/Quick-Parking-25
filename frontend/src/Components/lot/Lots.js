@@ -12,9 +12,9 @@ import { useDisclosure } from '@chakra-ui/react';
 import ParkingEnterModal from '../modal/ParkingModal';
 import { useState } from 'react';
 // for test car lot info modal
-import WarningLotModalModal from '../modal/WarningLotModal';
-import ErrorLotModalModal from '../modal/WarningLotModal';
-import NormalLotModalModal from '../modal/NormalLotModal';
+import NormalLotModal from '../../Components/modal/NormalLotModal';
+import WarningLotModal from '../../Components/modal/WarningLotModal';
+import ErrorLotModal from '../../Components/modal/ErrorLotModal';
 
 export default function Lots(props) {
   const lotsCnt = 20;
@@ -183,7 +183,7 @@ export default function Lots(props) {
         )}
         {/* Pop-out Test Modal Section */}
         {/* {isOpen ? (
-          <NormalLotModalModal
+          <NormalLotModal
             isOpen={isOpen}
             onClose={onClose}
             initialRef={initialRef}
