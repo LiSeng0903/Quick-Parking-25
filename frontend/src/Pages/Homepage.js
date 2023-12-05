@@ -40,12 +40,15 @@ const Homepage = () => {
   const [motorString, setMotorString] = useState('');
 
   useEffect(() => {
-    // var res = getParkingStatus()
-    // console.log(res)
-    // res.json().then(data => {
-    //   setCarString('剩餘汽車車位：' + data.car);
-    //   setMotorString('剩餘機車車位：' + data.motor);
-    // })
+    const fetchData = async () => {
+      try {
+        const data = await getParkingStatus();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData(); 
 
     // fetch('/api/parking/status').then(res =>
     //   res.json().then(data => {
