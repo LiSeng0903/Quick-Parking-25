@@ -147,3 +147,60 @@ def park_car(space_id: str, car_id: str):
             "end_time": None,
         }
     )
+
+
+@connect_decorator
+def find_car(space_id: str, car_id: str):
+    """
+    尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
+
+    回傳值無論如何都是 {"spacesId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
+    如果沒有找到車位，則會回傳有相應 key, 但 value 為 None 的 dict
+    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spacesId, floor 正常填寫；carId, parkTime 為 None 的 dict
+    如果有找到車位，且目前有車輛正在停，才會回傳完整的 dict
+
+    Args:
+        space_id (str): 停車位 ID
+        car_id (str): 車輛 ID
+    Returns:
+        info (dict): 車位資訊，內容為 {
+            "spacesId": str,
+            "floor": int,
+            "carId": str,
+            "parkTime": datetime.timedelta,
+        }
+    """
+
+    # 基本回傳資訊
+    info = {
+        "spacesId": None,
+        "floor": None,
+        "carId": None,
+        "parkTime": None,
+    }
+
+    # 尋找停車位，先以 space_id 為準，找不到再以 car_id 為準
+    ps = PSI.read_ps_by_space_id(space_id)
+    if ps == None:
+        ps = PSI.read_ps_by_current_car_id(car_id)
+    if ps == None:
+        return info
+
+    # 有找到停車格的話就先更新基本資訊
+    info["spacesId"] = ps["space_id"]
+    info["floor"] = ps["floor"]
+
+    # 如果有正在進行的停車紀錄，就更新 carId, parkTime
+    try:
+        # 確保停車位最後一筆歷史紀錄還沒有離開
+        current_history = ps["history"][-1]
+        if current_history["end_time"] != None:
+            raise Exception(f"車輛 {car_id} 已離開停車位 {space_id}")
+
+        info["carId"] = ps["current_car_id"]
+        info["parkTime"] = datetime.now() - current_history["start_time"]
+
+    except Exception as e:
+        pass
+
+    return info

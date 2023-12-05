@@ -72,3 +72,27 @@ def park_car(space_id: str, car_id: str):
 
     except Exception as e:
         return False, str(e)
+
+
+def find_car(space_id: str, car_id: str):
+    """
+    尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
+
+    回傳值無論如何都是 {"spacesId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
+    如果沒有找到車位，則會回傳有相應 key, 但 value 為 None 的 dict
+    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spacesId, floor 正常填寫；carId, parkTime 為 None 的 dict
+    如果有找到車位，且目前有車輛正在停，才會回傳完整的 dict
+
+    Args:
+        space_id (str): 停車位 ID
+        car_id (str): 車輛 ID
+    Returns:
+        info (dict): 車位資訊，內容為 {
+            "spacesId": str,
+            "floor": int,
+            "carId": str,
+            "parkTime": datetime.timedelta,
+        }
+    """
+
+    return ps_func.find_car(space_id, car_id)
