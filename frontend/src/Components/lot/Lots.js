@@ -9,53 +9,15 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
-import ParkingEnterModal from './ParkingModal';
+import ParkingEnterModal from '../modal/ParkingModal';
 import { useState } from 'react';
+// for test car lot info modal
+import WarningLotModalModal from '../modal/WarningLotModal';
 
 export default function Lots() {
   const lotsCnt = 20;
   const lotsType = 'cars';
   const mockLots = [
-    // {
-    //   lotId: '1',
-    //   isEmpty: true,
-    //   lotType: 'normal',
-    //   floor: 1,
-    //   status: true,
-    //   history: [],
-    // },
-    // {
-    //   lotId: '2',
-    //   isEmpty: false,
-    //   lotType: 'disable',
-    //   floor: 1,
-    //   status: true,
-    //   history: [],
-    // },
-    // {
-    //   lotId: '2',
-    //   isEmpty: false,
-    //   lotType: 'priority',
-    //   floor: 1,
-    //   status: true,
-    //   history: [],
-    // },
-    // {
-    //   lotId: '3',
-    //   isEmpty: false,
-    //   lotType: 'normal',
-    //   floor: 1,
-    //   status: true,
-    //   history: [],
-    // },
-    // {
-    //   lotId: '4',
-    //   isEmpty: true,
-    //   lotType: 'normal',
-    //   floor: 1,
-    //   status: true,
-    //   history: [],
-    // },
     {
       space_id: '1001',
       occupied: true,
@@ -202,27 +164,11 @@ export default function Lots() {
         height={'80vh'}
         maxWidth={'100vw'}
       >
-        {/* Pop-out Modal Section */}
-        {isOpen || !endModalOpen ? (
-          <ParkingEnterModal
-            isOpen={isOpen}
-            onClose={onClose}
-            initialRef={initialRef}
-            finalRef={finalRef}
-            endModalOpen={endModalOpen}
-            setEndModelOpen={setEndModelOpen}
-          />
-        ) : (
-          <></>
-        )}
         {/* Left Section */}
         <Box
-          //   display={'flex'}
-          //   flexDirection={'column'}
           width={'30%'}
           maxWidth={'30%'}
           overflow={'scroll'}
-          //   maxHeight={'80vh'}
           padding={5}
           marginRight={5}
         >
@@ -237,8 +183,24 @@ export default function Lots() {
             marginBottom={'5vh'}
             borderColor={isOccupiedColor}
             color={'black'}
+            // test modal
+
+            cursor={'pointer'}
           >
-            警衛室
+            <Button onClick={onOpen}>
+              {/* Pop-out Test Modal Section */}
+              {isOpen ? (
+                <WarningLotModalModal
+                  isOpenTest={isOpen}
+                  onCloseTest={onClose}
+                  initialRefTest={initialRef}
+                  finalRefTest={finalRef}
+                />
+              ) : (
+                <></>
+              )}
+              警衛室
+            </Button>
           </Box>
           <Box display={'flex'} flexDirection={'row'}>
             <Box
@@ -264,7 +226,9 @@ export default function Lots() {
                 </Wrap>
               </Stack>
               <Box
-                style={{ writingMode: 'vertical-rl' }}
+                style={{
+                  writingMode: 'vertical-rl',
+                }}
                 bg={'white'}
                 color={'black'}
               >
@@ -282,6 +246,19 @@ export default function Lots() {
                 <Wrap spacing={'3'} width={'100%'}>
                   {newMotorLots.map(lot => (
                     <WrapItem width={'2vw'} key={lot.lotId}>
+                      {/* Pop-out Modal Section */}
+                      {isOpen || !endModalOpen ? (
+                        <ParkingEnterModal
+                          isOpen={isOpen}
+                          onClose={onClose}
+                          initialRef={initialRef}
+                          finalRef={finalRef}
+                          endModalOpen={endModalOpen}
+                          setEndModelOpen={setEndModelOpen}
+                        />
+                      ) : (
+                        <></>
+                      )}
                       <Button
                         // colorScheme="red"
                         bg={isOccupiedColor}
@@ -294,7 +271,9 @@ export default function Lots() {
                 </Wrap>
               </Stack>
               <Box
-                style={{ writingMode: 'vertical-rl' }}
+                style={{
+                  writingMode: 'vertical-rl',
+                }}
                 bg={'white'}
                 color={'black'}
               >
