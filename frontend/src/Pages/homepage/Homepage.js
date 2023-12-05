@@ -27,31 +27,21 @@ import {
   LightMode,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+import { getFloorMap } from '../../axios';
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
   // let navigate = useNavigate();
-  // const routeChange = () =>{
-  //     let path = `/map`;
-  //     navigate(path);
+  // const navigateToParkingLot = () =>{
+  //   navigate('/parking-lot', state: {
+
+  //   });
   // }
   const [carString, setCarString] = useState('');
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
 
-  useEffect(() => {
-    // var res = getParkingStatus()
-    // console.log(res)
-    // res.json().then(data => {
-    //   setCarString('剩餘汽車車位：' + data.car);
-    //   setMotorString('剩餘機車車位：' + data.motor);
-    // })
-    // fetch('/api/parking/status').then(res =>
-    //   res.json().then(data => {
-    //     setCarString('剩餘汽車車位：' + data.car);
-    //     setMotorString('剩餘機車車位：' + data.motor);
-    //   })
-    // );
-  }, []);
+  
   return (
     <ChakraProvider theme={theme}>
       <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={'20vh'}>

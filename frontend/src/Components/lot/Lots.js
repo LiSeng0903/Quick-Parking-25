@@ -19,134 +19,56 @@ import ErrorLotModal from '../../Components/modal/ErrorLotModal';
 export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
-  const parkingMap = props.parkingMap;
-  console.log(parkingMap);
-  const mockLots = [
-    {
-      space_id: '1001',
-      occupied: true,
-      current_car_id: 'BEP-1255',
-      space_type: 'motor',
-      floor: 1,
-      status: 'OK',
-      zone: 'A',
-      history: [
-        {
-          start_time: {
-            $date: '2023-11-29T12:45:35.872Z',
-          },
-          end_time: {
-            $date: '2023-11-29T12:45:38.334Z',
-          },
-          car_id: 'BEP-1234',
-        },
-        {
-          start_time: {
-            $date: '2023-11-29T12:46:07.030Z',
-          },
-          car_id: 'BEP-1255',
-        },
-      ],
-    },
-    {
-      space_id: '1010',
-      occupied: false,
-      current_car_id: '',
-      space_type: 'car',
-      floor: 2,
-      status: 'OK',
-      zone: 'B',
-      history: [
-        {
-          start_time: {
-            $date: '',
-          },
-          end_time: {
-            $date: '',
-          },
-          car_id: '',
-        },
-        {
-          start_time: {
-            $date: '',
-          },
-          car_id: '',
-        },
-      ],
-    },
-    {
-      space_id: '1059',
-      occupied: true,
-      current_car_id: 'B09705059',
-      space_type: 'car',
-      floor: 1,
-      status: 'OK',
-      zone: 'B',
-      history: [
-        {
-          start_time: {
-            $date: '2023-11-29T12:45:35.872Z',
-          },
-          end_time: {
-            $date: '2023-11-29T12:45:38.334Z',
-          },
-          car_id: 'B09705059',
-        },
-        {
-          start_time: {
-            $date: '2023-11-29T12:46:07.030Z',
-          },
-          car_id: 'B09705059',
-        },
-      ],
-    },
-    {
-      space_id: '1010',
-      occupied: false,
-      current_car_id: '',
-      space_type: 'car',
-      floor: 2,
-      status: 'OK',
-      zone: 'B',
-      history: [
-        {
-          start_time: {
-            $date: '',
-          },
-          end_time: {
-            $date: '',
-          },
-          car_id: '',
-        },
-        {
-          start_time: {
-            $date: '',
-          },
-          car_id: '',
-        },
-      ],
-    },
-  ];
-  // console.log(mockLots);
+  // const parkingMap = props.parkingMap;
+  // console.log("parking map", parkingMap);
+  const parkingMap = {
+    "A":[
+      {
+        "space_id": "1001",
+        "space_type": "motor", 
+        "occupied": false
+      }
+    ],
+    "B":[
+      {
+        "space_id": "1002",
+        "space_type": "motor", 
+        "occupied": true
+      }
+    ], 
+    "C":[
+      {
+        "space_id": "1003",
+        "space_type": "car", 
+        "occupied": false
+      }
+    ],
+    "D":[
+      {
+        "space_id": "1004",
+        "space_type": "car", 
+        "occupied": false
+      }
+    ],
+    "E":[
+      {
+        "space_id": "1005",
+        "space_type": "motor", 
+        "occupied": false
+      }
+    ]
+  }
 
-  // Duplicate each element 20 times
-  const motorLots = [];
-  const carLots = [];
-  const numberOfDuplicates = 10; // mock lot 的重複次數
+  const motorLotsA = parkingMap['A'];
+  const motorLotsB = parkingMap['B'];
+  const carLotsC = parkingMap['C'];
+  const carLotsD = parkingMap['D'];
+  const motorLotsE = parkingMap['E'];
+  const allLots = [carLotsC, carLotsD, motorLotsE];
+
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
   const bgColor = '#F0EFE5';
-
-  mockLots.forEach(lot => {
-    for (let i = 0; i < numberOfDuplicates; i++) {
-      motorLots.push({ ...lot });
-      carLots.push({ ...lot });
-    }
-  });
-
-  const allLots = [carLots, carLots, carLots];
-  const newMotorLots = motorLots.slice(0, 30);
-  // console.log(duplicatedLots);
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -181,17 +103,6 @@ export default function Lots(props) {
         ) : (
           <></>
         )}
-        {/* Pop-out Test Modal Section */}
-        {/* {isOpen ? (
-          <NormalLotModal
-            isOpen={isOpen}
-            onClose={onClose}
-            initialRef={initialRef}
-            finalRef={finalRef}
-          />
-        ) : (
-          <></>
-        )} */}
         {/* Left Section */}
         <Box
           width={'30%'}
@@ -224,7 +135,7 @@ export default function Lots(props) {
             >
               <Stack direction="row" width={'65%'}>
                 <Wrap spacing={'3'} width={'100%'}>
-                  {newMotorLots.map(lot => (
+                  {motorLotsA.map(lot => (
                     <WrapItem width={'2vw'} key={lot.lotId}>
                       <Button
                         // colorScheme="red"
@@ -244,7 +155,7 @@ export default function Lots(props) {
                 bg={'white'}
                 color={'black'}
               >
-                ZONE
+                ZONE A
               </Box>
             </Box>
             <Box
@@ -256,7 +167,7 @@ export default function Lots(props) {
             >
               <Stack direction="row" width={'65%'}>
                 <Wrap spacing={'3'} width={'100%'}>
-                  {newMotorLots.map(lot => (
+                  {motorLotsB.map(lot => (
                     <WrapItem width={'2vw'} key={lot.lotId}>
                       <Button
                         // colorScheme="red"
@@ -276,7 +187,7 @@ export default function Lots(props) {
                 bg={'white'}
                 color={'black'}
               >
-                ZONE
+                ZONE B
               </Box>
             </Box>
           </Box>
