@@ -29,13 +29,13 @@ class ParkingSpace(Document):
     meta = {"collection": "parkingSpace"}
 
 
-class Manager(Document):
+class Guard(Document):
     account = StringField(required=True, unique=True)
     password = StringField(required=True)
     login = BooleanField(required=True)
     name = StringField(required=True)
 
-    meta = {"collection": "manager"}
+    meta = {"collection": "guard"}
 
 
 class Message(Document):

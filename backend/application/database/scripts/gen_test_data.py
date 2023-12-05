@@ -9,7 +9,7 @@ import json
 
 import bcrypt
 from connection import connect_to_db
-from ManagerInterface import ManagerInterface
+from GuardInterface import GuardInterface
 from MessageInterface import MessageInterface
 from mongoengine import Document, DynamicDocument
 from ParkingSpaceInterface import ParkingSpaceInterface
@@ -101,23 +101,23 @@ def gen_message_data():
         MessageInterface.create_message({"content": msg})
 
 
-def gen_manager_accounts():
+def gen_guard_accounts():
     """產生管理員帳號"""
 
     # 連接資料庫
     connect_to_db()
 
-    with open(os.path.join(cwd, "../managers.json"), "r", encoding="utf-8") as f:
-        managers = json.load(f)["managers"]
+    with open(os.path.join(cwd, "../guard_accounts.json"), "r", encoding="utf-8") as f:
+        guards = json.load(f)["guard"]
 
-    for manager in managers:
-        manager_dict = {
-            "account": manager["account"],
-            "password": bcrypt.hashpw(manager["password"].encode("utf-8"), bcrypt.gensalt()),
-            "name": manager["name"],
+    for guard in guards:
+        guard_dict = {
+            "account": guard["account"],
+            "password": bcrypt.hashpw(guard["password"].encode("utf-8"), bcrypt.gensalt()),
+            "name": guard["name"],
         }
 
-        ManagerInterface.create_manager(manager)
+        GuardInterface.create_guard(guard_dict)
 
 
 def gen_all_data():
@@ -125,10 +125,9 @@ def gen_all_data():
 
     gen_parking_space_data()
     gen_message_data()
-    gen_manager_accounts()
+    gen_guard_accounts()
 
 
 if __name__ == "__main__":
     clear_all_data()
     gen_all_data()
-    # gen_manager_accounts()
