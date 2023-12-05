@@ -16,9 +16,9 @@ const ParkingLot = () => {
   return (
     <Grid>
       {selectedFloor === 1 ? (
-        <RootLayout setSelectedFloor={setSelectedFloor} />
+        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
       ) : (
-        <OthersLayout setSelectedFloor={setSelectedFloor} />
+        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor}/>
       )}
       {/* <Box>我是停車格</Box> */}
     </Grid>

@@ -11,42 +11,20 @@ import {
   Center,
   Image,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Navbar(props) {
-  const [activeFloors, setActiveFloors] = useState([
-    true,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const toast = useToast();
-  const navigate = useNavigate();
+export default function NavBar(props) {
 
+  const navigate = useNavigate();
   const navigateToHome = () => {
     let path = `/home`;
     navigate(path);
   };
 
-  const handleButtonClick = floorNumber => {
-    props.setSelectedFloor(floorNumber);
-
-    const updatedActiveFloors = activeFloors.map(
-      (value, index) => index + 1 === floorNumber
-    );
-    setActiveFloors(updatedActiveFloors);
-
-    toast({
-      title: `這是第 ${floorNumber} 樓`,
-      duration: 5000,
-      isClosable: true,
-      position: 'top',
-      status: 'success',
-      icon: <BellIcon />,
-    });
-  };
+  const handleButtonClick = (floor) => {
+    props.setSelectedFloor(floor);
+  }
 
   return (
     <Flex as="nav" p="10px" mb="10px" alignItems="center">
@@ -74,8 +52,8 @@ export default function Navbar(props) {
             <Button
               key={index}
               variant="solid"
-              bg={activeFloors[index] ? '#9E896A' : '#EBE2D5'}
-              color={activeFloors[index] ? 'white' : '#CDB89A'}
+              bg={floorNumber === props.selectedFloor ? '#9E896A' : '#EBE2D5'}
+              color={floorNumber === props.selectedFloor ? 'white' : '#CDB89A'}
               rounded={30}
               fontSize={24}
               rightIcon={<IoCaretForwardCircle />}

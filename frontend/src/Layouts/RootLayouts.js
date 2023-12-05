@@ -19,7 +19,7 @@ export default function RootLayout(props) {
         bg="#F0EFE5"
         h="100vh"
       >
-        <Navbar setSelectedFloor={props.setSelectedFloor} />
+        <Navbar setSelectedFloor={props.setSelectedFloor} selectedFloor={props.selectedFloor}/>
         <Lots />
         <Outlet />
       </GridItem>
