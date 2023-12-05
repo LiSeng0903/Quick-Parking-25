@@ -7,7 +7,7 @@ connect_path = os.path.join(cwd, "../database/interfaces/")
 sys.path.append(db_function_path)
 sys.path.append(connect_path)
 
-import manager_functions as mng_func
+import guard_functions as grd_func
 import message_functions as msg_func
 import parking_space_functions as ps_func
 from connection import connect_decorator
@@ -106,5 +106,10 @@ def find_car(space_id: str, car_id: str):
 
 
 @connect_decorator
-def guardian_get_space_info_(space_id: str):
+def guar_get_space_info(space_id: str):
     return ps_func.get_ps_all_info(space_id)
+
+
+@connect_decorator
+def guar_login(account: str, password: str):
+    pass
