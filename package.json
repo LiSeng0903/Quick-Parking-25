@@ -1,0 +1,9 @@
+{
+  "name": "Quick-Parking-25",
+  "version": "1.0.0",
+  "description": "112-1 CNAD",
+  "main": "index.js",
+  "repository": "https://github.com/auntieyafen/Quick-Parking-25.git",
+  "author": "羅采蓁 <b09705059@ntu.edu.tw>",
+  "license": "MIT"
+}

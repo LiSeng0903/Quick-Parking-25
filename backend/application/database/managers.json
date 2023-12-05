@@ -1,0 +1,19 @@
+{
+    "managers": [
+        {
+            "account": "Pusung",
+            "password": "11111111",
+            "name": "Pusung"
+        },
+        {
+            "account": "Ali",
+            "password": "22222222",
+            "name": "阿力"
+        },
+        {
+            "account": "Kenny",
+            "password": "33333333",
+            "name": "眉毛人 kenny"
+        }
+    ]
+}
