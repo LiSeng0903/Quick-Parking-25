@@ -20,12 +20,12 @@ def getFloorMap(floor):
     return floor_data
 
 @app.route("/api/car/enterNum", methods=['POST'])
-def carEnter():
+def parkCar():
     data = request.get_json()
     car_id = data['carId']
-    space_id = data['spaceId']
-    msg = park_car(space_id, car_id)
-    return msg
+    space_id = str(data['spaceId'])
+    isSuceess, msg = park_car(space_id, car_id)
+    return isSuceess, msg
 
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
