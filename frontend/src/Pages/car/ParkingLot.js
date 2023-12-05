@@ -7,18 +7,6 @@ import { getFloorMap } from '../../axios';
 const ParkingLot = () => {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [parkingMap, setParkingMap] = useState({});
-
-  const getParkingMap = async(selectedFloor) => {
-    const returnData = await getFloorMap(selectedFloor);
-    setParkingMap(returnData);
-    console.log("return data", returnData);
-    return returnData;
-  }
-
-  // useEffect(() => {
-  //   getParkingMap(selectedFloor)
-  // }, [selectedFloor]);
-  // console.log('This is the parking lot page...');
   
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +18,7 @@ const ParkingLot = () => {
       }
     };
     fetchData(); 
+
     // fetch('/api/parking/map/' + selectedFloor).then(res =>
     //   res.json().then(data => {
     //     console.log(data);

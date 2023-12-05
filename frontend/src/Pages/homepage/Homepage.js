@@ -29,6 +29,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { getFloorMap } from '../../axios';
 import { useNavigate } from "react-router-dom";
+import { getParkingStatus } from '../../axios';
 
 const Homepage = () => {
   // let navigate = useNavigate();
