@@ -100,3 +100,90 @@ msg: 成功/失敗訊息。
    ```
    True, "車輛 XXX 已停入停車位 OOO"
    ```
+
+## `find_car( space_id, car_id )`
+
+### Input
+
+```
+space_id: str, 停車位編號
+car_id: str, 車牌號
+```
+
+`space_id`, `car_id` 擇一即可。兩者都有且不一致時，以 `space_id` 為主。
+
+### Output
+
+```
+{
+    "spacesId": str,
+    "floor": int,
+    "carId": str,
+    "parkTime": datetime.timedelta,
+}
+```
+
+## `guard_get_space_info( space_id )`
+
+### Input
+
+```
+space_id: str, 停車位編號
+```
+
+### Output
+
+```
+{
+    "parkingSpaceId": str,
+    "spaceType": "car" || "motor" || "priority",
+    "currentCarId": str,
+    "parkTime": datetime.timedelta,
+    "status": "OK" || "WARNING" ,
+    "history": [
+        {
+            "startTime": datetime,
+            "carId": str,
+            "endTime": datetime,
+        },
+        ...
+    ],
+}
+```
+
+## `guard_login( account, password )`
+
+### Input
+
+```
+account: str, 帳號
+password: str, 密碼
+```
+
+### Output
+
+```
+{
+    "success": bool, 是否可以登入
+    "message": str, 成功或失敗訊息
+}
+```
+
+## `guard_get_parking_infos()`
+
+### Input
+
+```
+None
+```
+
+### Output
+
+```
+{
+    "car": int, 車子車位剩幾個
+    "motor": int, 摩托車車位剩幾個
+    "priority": int, 優先車位剩幾個
+    "warningParkingSpaceIds": list[str], 異常狀態的車位編號
+}
+```
