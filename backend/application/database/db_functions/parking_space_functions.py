@@ -195,7 +195,7 @@ def find_car(space_id: str, car_id: str):
     try:
         # 確保停車位最後一筆歷史紀錄還沒有離開
         current_history = ps["history"][-1]
-        if current_history["end_time"] != None:
+        if current_history.get("end_time", None) != None:
             raise Exception(f"車輛 {car_id} 已離開停車位 {space_id}")
 
         info["carId"] = ps["current_car_id"]
