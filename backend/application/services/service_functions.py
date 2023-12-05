@@ -106,10 +106,29 @@ def find_car(space_id: str, car_id: str):
 
 
 @connect_decorator
-def guar_get_space_info(space_id: str):
+def guard_get_space_info(space_id: str):
     return ps_func.get_ps_all_info(space_id)
 
 
 @connect_decorator
-def guar_login(account: str, password: str):
-    pass
+def guard_login(account: str, password: str):
+    """
+    警衛登入，目前實作的方式是比較帳號密碼是否正確，正確即可登入。
+    在資料庫中並不記錄登入的狀態
+
+    Args:
+        account (str): 帳號
+        password (str): 密碼
+    Returns:
+        dict: {
+            "success": bool,
+            "message": str,
+        }
+    """
+
+    can_login, msg = grd_func.check_password(account, password)
+
+    return {
+        "success": can_login,
+        "message": msg,
+    }
