@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
-import ParkingEnterModal from './ParkingModal';
+import ParkingEnterModal from '../modal/ParkingModal';
 import { useState } from 'react';
 
 export default function LotsNoMotor() {
