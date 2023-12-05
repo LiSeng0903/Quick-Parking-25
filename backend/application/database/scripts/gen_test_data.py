@@ -117,7 +117,7 @@ def gen_guard_accounts():
             "name": guard["name"],
         }
 
-        GuardInterface.create_guard(guard)
+        GuardInterface.create_guard(guard_dict)
 
 
 def gen_all_data():
