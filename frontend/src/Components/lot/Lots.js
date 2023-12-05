@@ -16,9 +16,11 @@ import WarningLotModalModal from '../modal/WarningLotModal';
 import ErrorLotModalModal from '../modal/WarningLotModal';
 import NormalLotModalModal from '../modal/NormalLotModal';
 
-export default function Lots() {
+export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
+  const parkingMap = props.parkingMap;
+  console.log(parkingMap);
   const mockLots = [
     {
       space_id: '1001',
