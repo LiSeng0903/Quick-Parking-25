@@ -5,9 +5,11 @@ import { useState, useEffect } from 'react';
 
 const ParkingLot = () => {
   const [selectedFloor, setSelectedFloor] = useState(1);
+  const [parkingMap, setParkingMap] = useState({});
   useEffect(() => {
     fetch('/api/parking/map/' + selectedFloor).then(res =>
       res.json().then(data => {
+        setParkingMap(data);
         console.log(data);
       })
     );
@@ -16,9 +18,9 @@ const ParkingLot = () => {
   return (
     <Grid>
       {selectedFloor === 1 ? (
-        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
+        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap={parkingMap}/>
       ) : (
-        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor}/>
+        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap={parkingMap}/>
       )}
       {/* <Box>我是停車格</Box> */}
     </Grid>
