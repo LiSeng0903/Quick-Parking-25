@@ -50,7 +50,8 @@ def get_space_by_floor(floor: int):
 
 def park_car(space_id: str, car_id: str):
     """
-    停車
+    先檢查停車位存在且沒有被佔用、車子沒有停在別的停車位
+    檢查都通過的話就可以停入車位
 
     Args:
         space_id (str): 停車位 ID
@@ -60,10 +61,14 @@ def park_car(space_id: str, car_id: str):
         str: 訊息
     """
 
+    can_p, msg = ps_func.can_park(space_id, car_id)
+    if can_p == False:
+        return False, msg
+
     try:
         ps_func.park_car(space_id, car_id)
         msg = f"車輛 {car_id} 已停入停車位 {space_id}"
         return True, msg
+
     except Exception as e:
-        msg = str(e)
-        return False, msg
+        return False, str(e)
