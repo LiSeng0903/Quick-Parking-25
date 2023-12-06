@@ -12,6 +12,7 @@ const ParkingLot = () => {
     const fetchData = async () => {
       try {
         const data = await getFloorMap(selectedFloor);
+        setParkingMap(data);
         console.log(data);
       } catch (error) {
         console.error(error);
@@ -22,9 +23,9 @@ const ParkingLot = () => {
   return (
     <Grid>
       {selectedFloor === 1 ? (
-        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
+        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap = {parkingMap}/>
       ) : (
-        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
+        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap = {parkingMap}/>
       )}
       {/* <Box>我是停車格</Box> */}
     </Grid>
