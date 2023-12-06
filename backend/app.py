@@ -1,12 +1,18 @@
 import json
 from flask import Flask, jsonify, request
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from dotenv import load_dotenv
 # from app.application.services import *
 # from app.application.services.get_status import get_parking_info
 # from app.application.services.service_functions import *
 # from application.services.get_status import get_parking_info
 from app.application.services.service_functions import *
 
+load_dotenv()
+
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
+jwt = JWTManager(app)
 
 # 取得停車場概覽資料
 @app.route("/api/parking/status", methods=['GET'])
@@ -49,13 +55,18 @@ def guardLogin():
     account = data['account']
     password = data['password']
     can_login, msg = guard_login(account, password)
-    response = jsonify({'success': can_login, 'message': msg})
+    if can_login:
+        access_token = create_access_token(identity=account)
+        response = jsonify({'success': can_login, 'message': msg, 'access_token': access_token})
+    else:
+        response = jsonify({'success': can_login, 'message': msg})
     return response
 
 @app.route("/api/guard/allFloors", methods=['GET'])
 def getAllFloors():
     parking_info = guard_get_parking_info()
     return json.dumps(parking_info)
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
