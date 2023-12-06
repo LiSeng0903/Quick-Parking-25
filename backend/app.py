@@ -11,7 +11,7 @@ app = Flask(__name__)
 # 取得停車場概覽資料
 @app.route("/api/parking/status", methods=['GET'])
 def getParkingStatus():
-    status = get_parking_infos()
+    status = get_parking_info()
     return json.dumps(status)
 
 @app.route("/api/parking/map/<int:floor>", methods=['GET'])
