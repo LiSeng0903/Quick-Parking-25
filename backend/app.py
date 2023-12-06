@@ -24,8 +24,10 @@ def parkCar():
     data = request.get_json()
     car_id = data['carId']
     space_id = str(data['spaceId'])
-    isSuceess, msg = park_car(space_id, car_id)
-    return isSuceess, msg
+    isSuccess, msg = park_car(space_id, car_id)
+    response = jsonify({'success': isSuccess, 'message': msg})
+    
+    return response
 
 @app.route("/api/car/find", methods=['GET'])
 def findCar():
