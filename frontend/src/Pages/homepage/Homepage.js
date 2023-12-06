@@ -51,7 +51,6 @@ const Homepage = () => {
         setMotorString(data.motor.toString());
         setPriorityString(data.priority.toString())
         setMsgsList(data.msgs)
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -173,7 +172,20 @@ const Homepage = () => {
                             <AccordionIcon />
                           </AccordionButton>
                         </AccordionItem>
-                        <AccordionItem>
+                        {msgsList.map((msg, index) => (
+                          <AccordionItem key={index}>
+                            <AccordionButton>
+                              <Box as="span" flex="1" textAlign="left">
+                                <HStack>
+                                  <Icon as={WarningTwoIcon} />
+                                  <Text>{msg}</Text>
+                                </HStack>
+                              </Box>
+                              <AccordionIcon />
+                            </AccordionButton>
+                          </AccordionItem>
+                        ))}
+                        {/* <AccordionItem>
                           <AccordionButton>
                             <Box as="span" flex="1" textAlign="left">
                               <HStack>
@@ -195,7 +207,7 @@ const Homepage = () => {
                             </Box>
                             <AccordionIcon />
                           </AccordionButton>
-                        </AccordionItem>
+                        </AccordionItem> */}
                       </Accordion>
                     </Box>
                   </Stack>
