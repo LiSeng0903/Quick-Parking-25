@@ -65,6 +65,7 @@ export default function Lots(props) {
   const carLotsD = parkingMap['D'];
   const motorLotsE = parkingMap['E'];
   const allLots = [carLotsC, carLotsD, motorLotsE];
+  const allLotsZone = ['C', 'D', 'E'];
 
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
@@ -125,7 +126,7 @@ export default function Lots(props) {
           >
             警衛室
           </Box>
-          <Box display={'flex'} flexDirection={'row'}>
+          <Box display={'flex'} flexDirection={'row'} height={'max-content'}>
             <Box
               borderWidth="1px"
               borderRadius="lg"
@@ -133,7 +134,7 @@ export default function Lots(props) {
               justifyContent={'center'}
               borderColor={isOccupiedColor}
             >
-              <Stack direction="row" width={'65%'}>
+              <Stack direction="row" width={'80%'}>
                 <Wrap spacing={'3'} width={'100%'}>
                   {motorLotsA.map(lot => (
                     <WrapItem width={'2vw'} key={lot.lotId}>
@@ -154,6 +155,7 @@ export default function Lots(props) {
                 }}
                 bg={'white'}
                 color={'black'}
+                width={'20%'}
               >
                 ZONE A
               </Box>
@@ -193,7 +195,7 @@ export default function Lots(props) {
           </Box>
         </Box>
         {/* Right Section */}
-        <Box height={'80vh'} overflow={'scroll'}>
+        <Box height={'80vh'} overflow={'unset'}>
           {allLots.map((lots, cnt) => (
             <React.Fragment key={cnt}>
               {/* Zone Section */}
@@ -206,12 +208,12 @@ export default function Lots(props) {
                 borderColor={isOccupiedColor}
               >
                 <Box width={'100%'} bg={'white'} color={'black'}>
-                  ZONE
+                  ZONE {allLotsZone[cnt]}
                 </Box>
                 <Stack direction="column">
                   <Wrap spacing={1}>
                     {lots.map(lot => (
-                      <WrapItem key={lot.lotId} width={'3vw'} margin={'1px'}>
+                      <WrapItem key={lot.lotId} justifyContent={'space-evenly'}>
                         <Button
                           bg={lot.occupied ? isOccupiedColor : isEmptyColor}
                           width={'1vw'}
