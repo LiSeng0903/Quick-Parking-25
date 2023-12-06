@@ -69,15 +69,15 @@ def park_car(space_id: str, car_id: str):
 
     can_p, msg = ps_func.can_park(space_id, car_id)
     if can_p == False:
-        return False, msg
+        return {"success": False, "message": msg}
 
     try:
         ps_func.park_car(space_id, car_id)
         msg = f"車輛 {car_id} 已停入停車位 {space_id}"
-        return True, msg
+        return {"success": True, "message": msg}
 
     except Exception as e:
-        return False, str(e)
+        return {"success": False, "message": str(e)}
 
 
 @connect_decorator
