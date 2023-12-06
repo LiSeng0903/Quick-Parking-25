@@ -465,12 +465,12 @@ const Dashboard = () => {
                   display={'flex'}
                   flexDirection={'column'}
                   justifyContent={'center'}
-                  bg={'#F0EFE5'}
+                  bg={'#FFFFFF'}
                   roundedBottom={10}
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'blackAlpha.800'}>
+                      <Text as="b" fontSize="4xl" color={'#908472'}>
                         200
                       </Text>
                     </VStack>
@@ -502,12 +502,12 @@ const Dashboard = () => {
                   display={'flex'}
                   flexDirection={'column'}
                   justifyContent={'center'}
-                  bg={'#F0EFE5'}
+                  bg={'#FFFFFF'}
                   roundedBottom={10}
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'blackAlpha.800'}>
+                      <Text as="b" fontSize="4xl" color={'#908472'}>
                         150
                       </Text>
                     </VStack>
@@ -539,12 +539,12 @@ const Dashboard = () => {
                   display={'flex'}
                   flexDirection={'column'}
                   justifyContent={'center'}
-                  bg={'#F0EFE5'}
+                  bg={'#FFFFFF'}
                   roundedBottom={10}
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'blackAlpha.800'}>
+                      <Text as="b" fontSize="4xl" color={'#908472'}>
                         5
                       </Text>
                     </VStack>
@@ -584,7 +584,7 @@ const Dashboard = () => {
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={'center'}
-                bg={'#F0EFE5'}
+                bg={'#FFFFFF'}
               >
                 <Center>
                   <HStack>
@@ -632,8 +632,8 @@ const Dashboard = () => {
             </Card>
           </LightMode>
           <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} />
-          <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose}/>
-          <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose}/>
+          <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose} />
+          <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} />
         </Box>
       </VStack>
     </ChakraProvider>

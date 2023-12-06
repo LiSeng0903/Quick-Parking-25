@@ -66,12 +66,12 @@ const Sidebar = props => {
           <Spacer />
           <Spacer />
           <Spacer />
-          {/* <Text
+          <Text
             color={'#9E896A'}
             style={{ display: isOpen ? 'flex' : 'none', transition: 'all .3s' }}
           >
             您好！辛苦了！
-          </Text> */}
+          </Text>
           <Text
             as={'b'}
             color={'#9E896A'}
