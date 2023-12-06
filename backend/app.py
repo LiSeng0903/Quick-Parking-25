@@ -53,7 +53,7 @@ def guardLogin():
 
 @app.route("/api/guard/allFloors", methods=['GET'])
 def getAllFloors():
-    parking_infos = guard_get_parking_infos()
+    parking_infos = guard_get_parking_info()
     return parking_infos
 
 if __name__ == "__main__":
