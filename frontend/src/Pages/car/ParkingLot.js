@@ -7,13 +7,15 @@ import { getFloorMap } from '../../api';
 const ParkingLot = () => {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [parkingMap, setParkingMap] = useState({});
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getFloorMap(selectedFloor);
         setParkingMap(data);
-        console.log(data);
+        setIsDataLoaded(true);
+        console.log('parking lots in fetch', data);
       } catch (error) {
         console.error(error);
       }
@@ -23,13 +25,20 @@ const ParkingLot = () => {
   return (
     <Grid>
       {selectedFloor === 1 ? (
-        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap = {parkingMap}/>
+        isDataLoaded && (
+          <RootLayout
+            setSelectedFloor={setSelectedFloor}
+            selectedFloor={selectedFloor}
+            parkingMap={parkingMap}
+          />
+        )
       ) : (
-        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap = {parkingMap}/>
+        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor}/>
       )}
       {/* <Box>我是停車格</Box> */}
     </Grid>
   );
+  
 };
 
 export default ParkingLot;

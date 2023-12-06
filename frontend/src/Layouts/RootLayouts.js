@@ -9,6 +9,7 @@ import { Outlet } from 'react-router-dom';
 import Lots from '../Components/lot/Lots';
 
 export default function RootLayout(props) {
+  console.log('parking lots in root',props.parkingMap)
   return (
     <Grid bg="#F0EFE5">
       <GridItem

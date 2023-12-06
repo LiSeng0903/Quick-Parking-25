@@ -19,51 +19,51 @@ import ErrorLotModal from '../../Components/modal/ErrorLotModal';
 export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
-  // const parkingMap = props.parkingMap;
-  // console.log("parking map", parkingMap);
-  // const parkingMap = {
-  //   "A":[
-  //     {
-  //       "space_id": "1001",
-  //       "space_type": "motor", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "B":[
-  //     {
-  //       "space_id": "1002",
-  //       "space_type": "motor", 
-  //       "occupied": true
-  //     }
-  //   ], 
-  //   "C":[
-  //     {
-  //       "space_id": "1003",
-  //       "space_type": "car", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "D":[
-  //     {
-  //       "space_id": "1004",
-  //       "space_type": "car", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "E":[
-  //     {
-  //       "space_id": "1005",
-  //       "space_type": "motor", 
-  //       "occupied": false
-  //     }
-  //   ]
-  // }
+  const parkingMap = props.parkingMap;
+  console.log("parking map", parkingMap);
+  const parkingMap1 = {
+    "A":[
+      {
+        "space_id": "1001",
+        "space_type": "motor", 
+        "occupied": false
+      }
+    ],
+    "B":[
+      {
+        "space_id": "1002",
+        "space_type": "motor", 
+        "occupied": true
+      }
+    ], 
+    "C":[
+      {
+        "space_id": "1003",
+        "space_type": "car", 
+        "occupied": false
+      }
+    ],
+    "D":[
+      {
+        "space_id": "1004",
+        "space_type": "car", 
+        "occupied": false
+      }
+    ],
+    "E":[
+      {
+        "space_id": "1005",
+        "space_type": "motor", 
+        "occupied": false
+      }
+    ]
+  }
 
-  const motorLotsA = props.parkingMap['A'];
-  const motorLotsB = props.parkingMap['B'];
-  const carLotsC = props.parkingMap['C'];
-  const carLotsD = props.parkingMap['D'];
-  const motorLotsE = props.parkingMap['E'];
+  const motorLotsA = parkingMap['A'];
+  const motorLotsB = parkingMap['B'];
+  const carLotsC = parkingMap['C'];
+  const carLotsD = parkingMap['D'];
+  const motorLotsE = parkingMap['E'];
   const allLots = [carLotsC, carLotsD, motorLotsE];
 
   const isEmptyColor = '#A3C561';
