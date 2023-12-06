@@ -26,8 +26,7 @@ function ParkingEnterModal({
   finalRef,
   endModalOpen,
   setEndModelOpen,
-  selectedSpaceId,
-  selectedFloor
+  selectedSpaceId
 }) {
   const [carId, setCarId] = useState("");
   const handleCarIdChange = (event) => {
@@ -36,8 +35,7 @@ function ParkingEnterModal({
 
   const fetchData = async () => {
     try {
-      const response = await enterCarNum(selectedSpaceId, selectedFloor, carId);
-      console.log(selectedFloor)
+      const response = await enterCarNum(selectedSpaceId, carId);
     } catch (error) {
       console.error(error);
     }

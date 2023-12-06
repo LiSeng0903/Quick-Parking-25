@@ -102,7 +102,6 @@ export default function Lots(props) {
             setEndModelOpen={setEndModelOpen}
             setCarId = {props.setCarId}
             selectedSpaceId={selectedSpaceId}
-            selectedFloor={props.selectedFloor}
           />
         ) : (
           <></>
