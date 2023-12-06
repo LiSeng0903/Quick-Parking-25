@@ -20,6 +20,7 @@ export default function NavBar(props) {
 
   const handleButtonClick = (floor) => {
     props.setSelectedFloor(floor);
+    console.log('floor',floor)
   }
 
   return (
