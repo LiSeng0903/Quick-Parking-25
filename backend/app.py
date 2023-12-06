@@ -27,5 +27,32 @@ def parkCar():
     isSuceess, msg = park_car(space_id, car_id)
     return isSuceess, msg
 
+@app.route("/api/car/find", methods=['GET'])
+def findCar():
+    data = request.get_json()
+    space_id = str(data['spaceId'])
+    car_id = data['carId']
+    info = find_car(space_id, car_id)
+    return info
+
+@app.route("/api/guard/check/<int:carSpace>", methods=['GET'])
+def checkCar(carSpace):
+    spaceStr = str(carSpace)
+    info = guard_get_space_info(spaceStr)
+    return info
+
+@app.route("/api/guard/login", methods=['POST'])
+def guardLogin():
+    data = request.get_json()
+    account = data['account']
+    password = data['password']
+    can_login, msg = guard_login(account, password)
+    return can_login, msg
+
+@app.route("/api/guard/allFloors", methods=['GET'])
+def getAllFloors():
+    parking_infos = guard_get_parking_infos()
+    return parking_infos
+
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
