@@ -13,25 +13,34 @@ const getParkingStatus = async () => {
   }
 };
 
-
 const getFloorMap = async selectedFloor => {
   try {
-    const response = await fetch('/api/parking/map/' + selectedFloor)
+    const response = await fetch('/api/parking/map/' + selectedFloor);
     const data = await response.json();
     return data; // retrun map of selected floor
   } catch (error) {
-    console.log(`Error getting map of floor ${selectedFloor}. ${selectedFloor}`);
+    console.log(
+      `Error getting map of floor ${selectedFloor}. ${selectedFloor}`
+    );
     throw error;
   }
 };
 
-const enterCarNum = async (carId, carSpaceId) => {
+const enterCarNum = async (carSpaceId, floor, carId) => {
   try {
-    const response = await instance.post('/car/enterNum', {
-      carId,
-      carSpaceId,
+    const response = await fetch('/api/car/enterNum', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "spaceId": carSpaceId,
+        "floor": floor,
+        "carId": carId
+      }),
     });
-    if (response.data.success) {
+    const data = await response.json();
+    if (data.success) {
       console.log(
         `Car with number ${carId} entered successfully into parking space ${carSpaceId}.`
       );
@@ -42,7 +51,7 @@ const enterCarNum = async (carId, carSpaceId) => {
     }
   } catch (error) {
     console.log(
-      `Error entering car number ${carId} into parking space ${carSpaceId}. ${error}`
+      `Error entering car number ${carId} into parking space ${carSpaceId} on floor ${floor}. ${error}`
     );
     throw error;
   }

@@ -9,7 +9,6 @@ import { Outlet } from 'react-router-dom';
 import Lots from '../Components/lot/Lots';
 
 export default function RootLayout(props) {
-  console.log('parking lots in root',props.parkingMap)
   return (
     <Grid bg="#F0EFE5">
       <GridItem
@@ -21,7 +20,7 @@ export default function RootLayout(props) {
         h="100vh"
       >
         <Navbar setSelectedFloor={props.setSelectedFloor} selectedFloor={props.selectedFloor}/>
-        <Lots parkingMap={props.parkingMap}/>
+        <Lots parkingMap={props.parkingMap} selectedFloor={props.selectedFloor}/>
         <Outlet />
       </GridItem>
     </Grid>

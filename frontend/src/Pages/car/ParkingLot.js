@@ -15,7 +15,7 @@ const ParkingLot = () => {
         const data = await getFloorMap(selectedFloor);
         setParkingMap(data);
         setIsDataLoaded(true);
-        console.log('parking lots in fetch', data);
+        //console.log('parking lots in fetch', data);
       } catch (error) {
         console.error(error);
       }

@@ -20,44 +20,43 @@ export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
   const parkingMap = props.parkingMap;
-  console.log("parking map", parkingMap);
-  const parkingMap1 = {
-    "A":[
-      {
-        "space_id": "1001",
-        "space_type": "motor", 
-        "occupied": false
-      }
-    ],
-    "B":[
-      {
-        "space_id": "1002",
-        "space_type": "motor", 
-        "occupied": true
-      }
-    ], 
-    "C":[
-      {
-        "space_id": "1003",
-        "space_type": "car", 
-        "occupied": false
-      }
-    ],
-    "D":[
-      {
-        "space_id": "1004",
-        "space_type": "car", 
-        "occupied": false
-      }
-    ],
-    "E":[
-      {
-        "space_id": "1005",
-        "space_type": "motor", 
-        "occupied": false
-      }
-    ]
-  }
+  // const parkingMap = {
+  //   "A":[
+  //     {
+  //       "space_id": "1001",
+  //       "space_type": "motor", 
+  //       "occupied": false
+  //     }
+  //   ],
+  //   "B":[
+  //     {
+  //       "space_id": "1002",
+  //       "space_type": "motor", 
+  //       "occupied": true
+  //     }
+  //   ], 
+  //   "C":[
+  //     {
+  //       "space_id": "1003",
+  //       "space_type": "car", 
+  //       "occupied": false
+  //     }
+  //   ],
+  //   "D":[
+  //     {
+  //       "space_id": "1004",
+  //       "space_type": "car", 
+  //       "occupied": false
+  //     }
+  //   ],
+  //   "E":[
+  //     {
+  //       "space_id": "1005",
+  //       "space_type": "motor", 
+  //       "occupied": false
+  //     }
+  //   ]
+  // }
 
   const motorLotsA = parkingMap['A'];
   const motorLotsB = parkingMap['B'];
@@ -74,6 +73,7 @@ export default function Lots(props) {
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
+  const [selectedSpaceId, setSelectedSpaceId] = useState("");
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   // modal
@@ -100,6 +100,9 @@ export default function Lots(props) {
             finalRef={finalRef}
             endModalOpen={endModalOpen}
             setEndModelOpen={setEndModelOpen}
+            setCarId = {props.setCarId}
+            selectedSpaceId={selectedSpaceId}
+            selectedFloor={props.selectedFloor}
           />
         ) : (
           <></>
@@ -220,7 +223,10 @@ export default function Lots(props) {
                           height={'8vh'}
                           variant={'solid'}
                           // onClick={function(){console.log('onclick');}}
-                          onClick={onOpen}
+                          onClick={() => {
+                            setSelectedSpaceId(lot.space_id)
+                            onOpen()
+                          }}
                         >
                           {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
                         </Button>

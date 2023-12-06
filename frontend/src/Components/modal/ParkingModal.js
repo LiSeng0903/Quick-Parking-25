@@ -16,7 +16,8 @@ import {
   ChakraProvider,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
+import { enterCarNum } from '../../api';
 
 function ParkingEnterModal({
   isOpen,
@@ -25,7 +26,28 @@ function ParkingEnterModal({
   finalRef,
   endModalOpen,
   setEndModelOpen,
+  selectedSpaceId,
+  selectedFloor
 }) {
+  const [carId, setCarId] = useState("");
+  const handleCarIdChange = (event) => {
+    setCarId(event.target.value); 
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await enterCarNum(selectedSpaceId, selectedFloor, carId);
+      console.log(selectedFloor)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleConfirm = () => {
+    setEndModelOpen(true); 
+    fetchData();
+  };
+
   return (
     <ChakraProvider>
       {endModalOpen ? <ParkingEndModal isEndOpen={endModalOpen} /> : <></>}
@@ -67,6 +89,7 @@ function ParkingEnterModal({
                 placeholder="車號"
                 borderColor={'#9E896A'}
                 color={'gray.200'}
+                onChange={handleCarIdChange}
               />
             </FormControl>
           </ModalBody>
@@ -95,7 +118,7 @@ function ParkingEnterModal({
                 bg="#779341"
                 color="#FFFFFF"
                 rounded={30}
-                onClick={setEndModelOpen}
+                onClick={handleConfirm}
               >
                 確認
               </Button>
@@ -113,7 +136,6 @@ function ParkingEndModal({ isEndOpen }) {
     let path = `/home`;
     navigate(path);
   };
-
 
   return (
     <ChakraProvider>
