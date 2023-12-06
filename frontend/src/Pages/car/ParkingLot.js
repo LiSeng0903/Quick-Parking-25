@@ -2,7 +2,7 @@ import { Grid, Box } from '@chakra-ui/react';
 import RootLayout from '../../Layouts/RootLayouts';
 import OthersLayout from '../../Layouts/OthersLayouts';
 import { useState, useEffect } from 'react';
-import { getFloorMap } from '../../axios';
+import { getFloorMap } from '../../api';
 
 const ParkingLot = () => {
   const [selectedFloor, setSelectedFloor] = useState(1);
@@ -18,19 +18,13 @@ const ParkingLot = () => {
       }
     };
     fetchData(); 
-
-    // fetch('/api/parking/map/' + selectedFloor).then(res =>
-    //   res.json().then(data => {
-    //     console.log(data);
-    //   })
-    // );
   }, [selectedFloor]);
   return (
     <Grid>
       {selectedFloor === 1 ? (
-        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap={getParkingMap(selectedFloor)}/>
+        <RootLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
       ) : (
-        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} parkingMap={getParkingMap(selectedFloor)}/>
+        <OthersLayout setSelectedFloor={setSelectedFloor} selectedFloor={selectedFloor} />
       )}
       {/* <Box>我是停車格</Box> */}
     </Grid>

@@ -1,25 +1,26 @@
 import axios from 'axios';
 
-const instance = axios.create({ baseURL: 'http://localhost:4000/api' });
+const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
 
 const getParkingStatus = async () => {
   try {
-    const response = await instance.get('/parking/status');
-    return response.data; // return number of parking grid left
+    const response = await fetch('api/parking/status');
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.log(`Error getting parking status. ${error}`);
+    console.error(`Error getting parking status. ${error.message}`);
     throw error;
   }
 };
 
-const getFloorMap = async floor => {
+
+const getFloorMap = async selectedFloor => {
   try {
-    const response = await instance.get(`/parking/map/${floor}`, {
-      params: { floor },
-    });
-    return response.data; // retrun map of selected floor
+    const response = await fetch('/api/parking/map/' + selectedFloor)
+    const data = await response.json();
+    return data; // retrun map of selected floor
   } catch (error) {
-    console.log(`Error getting map of floor ${floor}. ${error}`);
+    console.log(`Error getting map of floor ${selectedFloor}. ${selectedFloor}`);
     throw error;
   }
 };

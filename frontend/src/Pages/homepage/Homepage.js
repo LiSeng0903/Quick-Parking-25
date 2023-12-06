@@ -27,9 +27,9 @@ import {
   LightMode,
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import { getFloorMap } from '../../axios';
+import { getFloorMap } from '../../api';
 import { useNavigate } from "react-router-dom";
-import { getParkingStatus } from '../../axios';
+import { getParkingStatus } from '../../api';
 
 const Homepage = () => {
   // let navigate = useNavigate();
@@ -41,24 +41,22 @@ const Homepage = () => {
   const [carString, setCarString] = useState('');
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
+  const [msgsList, setMsgsList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getParkingStatus();
+        setCarString(data.car.toString());
+        setMotorString(data.motor.toString());
+        setPriorityString(data.priority.toString())
+        setMsgsList(data.msgs)
         console.log(data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData(); 
-
-    // fetch('/api/parking/status').then(res =>
-    //   res.json().then(data => {
-    //     setCarString('剩餘汽車車位：' + data.car);
-    //     setMotorString('剩餘機車車位：' + data.motor);
-    //   })
-    // );
   }, []);
   
   return (
