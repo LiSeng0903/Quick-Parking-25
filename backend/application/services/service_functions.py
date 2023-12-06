@@ -14,7 +14,7 @@ from connection import connect_decorator
 
 
 @connect_decorator
-def get_parking_infos():
+def get_parking_info():
     """
     取得停車場空位資訊
 
@@ -158,7 +158,7 @@ def guard_login(account: str, password: str):
 
 
 @connect_decorator
-def guard_get_parking_infos():
+def guard_get_parking_info():
     """
     警衛取得停車場空位資訊、異常的停車位編號
 
