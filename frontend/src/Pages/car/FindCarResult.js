@@ -46,7 +46,6 @@ const FindCarResult = () => {
                   <FormLabel>車位</FormLabel>
                   <Input
                     type="text"
-                    //   borderColor={'#9E896A'}
                     color={'blackAlpha'}
                     value={'B09'}
                     variant="filled"
@@ -59,7 +58,6 @@ const FindCarResult = () => {
                   <FormLabel>停放時間</FormLabel>
                   <Input
                     type="text"
-                    //   borderColor={'#9E896A'}
                     color={'blackAlpha'}
                     value={'5hr'}
                     variant="filled"

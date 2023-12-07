@@ -6,6 +6,7 @@ import {
   Grid,
   theme,
   HStack,
+  LightMode,
 } from '@chakra-ui/react';
 import {
   createBrowserRouter,
@@ -67,13 +68,15 @@ const router = createBrowserRouter(
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
-        <Grid>
-          <HStack>
-            <RouterProvider router={router} />
-          </HStack>
-        </Grid>
-      </Box>
+      <LightMode>
+        <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
+          <Grid>
+            <HStack>
+              <RouterProvider router={router} />
+            </HStack>
+          </Grid>
+        </Box>
+      </LightMode>
     </ChakraProvider>
   );
 }
