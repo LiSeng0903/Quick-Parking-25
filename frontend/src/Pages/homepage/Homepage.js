@@ -120,7 +120,6 @@ const Homepage = () => {
                                 </Text>
                               </HStack>
                             </Box>
-                            <AccordionIcon />
                           </AccordionButton>
                         </AccordionItem>
 
@@ -145,7 +144,6 @@ const Homepage = () => {
                                 </Text>
                               </HStack>
                             </Box>
-                            <AccordionIcon />
                           </AccordionButton>
                         </AccordionItem>
                         <AccordionItem>
@@ -169,7 +167,6 @@ const Homepage = () => {
                                 </Text>
                               </HStack>
                             </Box>
-                            <AccordionIcon />
                           </AccordionButton>
                         </AccordionItem>
                         {msgsList.map((msg, index) => (
@@ -181,33 +178,9 @@ const Homepage = () => {
                                   <Text>{msg}</Text>
                                 </HStack>
                               </Box>
-                              <AccordionIcon />
                             </AccordionButton>
                           </AccordionItem>
                         ))}
-                        {/* <AccordionItem>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              <HStack>
-                                <Icon as={WarningTwoIcon} />
-                                <Text>五樓施工</Text>
-                              </HStack>
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </AccordionItem>
-
-                        <AccordionItem>
-                          <AccordionButton>
-                            <Box as="span" flex="1" textAlign="left">
-                              <HStack>
-                                <Icon as={WarningTwoIcon} />
-                                <Text>三樓很空</Text>
-                              </HStack>
-                            </Box>
-                            <AccordionIcon />
-                          </AccordionButton>
-                        </AccordionItem> */}
                       </Accordion>
                     </Box>
                   </Stack>

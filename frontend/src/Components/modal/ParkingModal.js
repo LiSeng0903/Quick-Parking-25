@@ -86,7 +86,7 @@ function ParkingEnterModal({
                 ref={initialRef}
                 placeholder="車號"
                 borderColor={'#9E896A'}
-                color={'gray.200'}
+                color={'gray.700'}
                 onChange={handleCarIdChange}
               />
             </FormControl>

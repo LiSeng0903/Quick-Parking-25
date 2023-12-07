@@ -71,7 +71,7 @@ const FindCar = () => {
                     type="spacesID"
                     value={spacesId}
                     borderColor={'#9E896A'}
-                    color={'gray.500'}
+                    color={'gray.700'}
                     placeholder="B09"
                     fontWeight={600}
                     onChange={handleInputChange}
@@ -83,7 +83,7 @@ const FindCar = () => {
                     type="carID"
                     value={carId}
                     borderColor={'#9E896A'}
-                    color={'gray.500'}
+                    color={'gray.700'}
                     placeholder="B09705059"
                     fontWeight={600}
                     onChange={handleInputChange}
