@@ -25,6 +25,7 @@ export default function LotsNoMotor(props) {
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
+  const [selectedSpaceId, setSelectedSpaceId] = useState("");
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -53,6 +54,7 @@ export default function LotsNoMotor(props) {
             finalRef={finalRef}
             endModalOpen={endModalOpen}
             setEndModelOpen={setEndModelOpen}
+            selectedSpaceId={selectedSpaceId}
           />
         ) : (
           <></>
@@ -102,7 +104,10 @@ export default function LotsNoMotor(props) {
                           width={'1vw'}
                           height={'8vh'}
                           variant={'solid'}
-                          onClick={onOpen}
+                          onClick={() => {
+                            setSelectedSpaceId(lot.space_id)
+                            onOpen()
+                          }}
                         >
                           {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
                         </Button>
