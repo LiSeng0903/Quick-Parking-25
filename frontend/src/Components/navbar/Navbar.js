@@ -7,22 +7,22 @@ import {
   ButtonGroup,
   Image,
 } from '@chakra-ui/react';
-import React, {  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavBar(props) {
-
   const navigate = useNavigate();
   const navigateToHome = () => {
     let path = `/home`;
     navigate(path);
   };
 
-  const handleButtonClick = (floor) => {
-    props.setSelectedFloor(floor);
-    console.log('floor',floor)
+  const handleButtonClick = async (floor) => {
+    await props.setSelectedFloor(floor);
+    props.fetchData(floor);
+    // console.log('floor', floor);
   }
-
+  
   return (
     <Flex as="nav" p="10px" mb="10px" alignItems="center">
       <Image

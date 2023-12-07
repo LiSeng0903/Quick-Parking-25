@@ -12,6 +12,7 @@ import ParkingEnterModal from '../modal/ParkingModal';
 import { useState } from 'react';
 
 export default function LotsNoMotor(props) {
+  console.log('parkingMap in lots others', props.parkingMap)
   const parkingMap = props.parkingMap;
   const zoneA = parkingMap['A'];
   const zoneB = parkingMap['B'];
