@@ -9,7 +9,6 @@ import {
   Accordion,
   AccordionItem,
   AccordionButton,
-  AccordionIcon,
   ChakraProvider,
   Box,
   Text,
