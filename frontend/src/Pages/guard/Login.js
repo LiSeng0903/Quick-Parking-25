@@ -43,7 +43,7 @@ const Login = () => {
 
   const isError = formData === '';
 
-  const login = async e => {
+  const login = async (e) => {
     e.preventDefault();
 
     if (!account || !password) {

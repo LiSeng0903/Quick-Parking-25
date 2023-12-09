@@ -1,3 +1,4 @@
+// NO NEED!
 import {
   Modal,
   ModalOverlay,
@@ -5,14 +6,7 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Image,
   Center,
-  ButtonGroup,
   Box,
   ChakraProvider,
   Text,
@@ -23,7 +17,6 @@ import {
   AccordionIcon,
   HStack,
   Icon,
-  Highlight,
   VStack,
   Spacer,
 } from '@chakra-ui/react';
