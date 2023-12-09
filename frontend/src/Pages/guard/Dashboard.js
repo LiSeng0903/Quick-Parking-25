@@ -16,23 +16,7 @@ import {
   VStack,
   Spacer,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Icon,
 } from '@chakra-ui/react';
-import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
-import { Chrono } from 'react-chrono';
-import NormalLotModal from '../../Components/modal/NormalLotModal';
-import WarningLotModal from '../../Components/modal/WarningLotModal';
 import ErrorLotModal from '../../Components/modal/ErrorLotModal';
 
 // 之後要改成可以回傳車車資訊進去 function
@@ -403,21 +387,21 @@ const Dashboard = () => {
   }, []);
 
   // modal setting
-  const {
-    isOpen: isNormalOpen,
-    onOpen: onNormalOpen,
-    onClose: onNormalClose,
-  } = useDisclosure();
+  // const {
+  //   isOpen: isNormalOpen,
+  //   onOpen: onNormalOpen,
+  //   onClose: onNormalClose,
+  // } = useDisclosure();
   const {
     isOpen: isErrorOpen,
     onOpen: onErrorOpen,
     onClose: onErrorClose,
   } = useDisclosure();
-  const {
-    isOpen: isWarningOpen,
-    onOpen: onWarningOpen,
-    onClose: onWarningClose,
-  } = useDisclosure();
+  // const {
+  //   isOpen: isWarningOpen,
+  //   onOpen: onWarningOpen,
+  //   onClose: onWarningClose,
+  // } = useDisclosure();
   
   // I quit to modulize.
   // const [modalContent, setModalContent] = React.useState('');
@@ -588,18 +572,7 @@ const Dashboard = () => {
               >
                 <Center>
                   <HStack>
-                    <Button
-                      bg={'#A3C561'}
-                      color={'white'}
-                      size={'lg'}
-                      // onClick={() => {
-                      //   setModalContent(<NormalModalContent />);
-                      //   onOpen();
-                      // }}
-                      onClick={onNormalOpen}
-                    >
-                      1011
-                    </Button>
+
                     <Button
                       bg={'#E46565'}
                       color={'white'}
@@ -612,28 +585,16 @@ const Dashboard = () => {
                     >
                       1012
                     </Button>
-                    <Button
-                      bg={'#EBCC7A'}
-                      color={'white'}
-                      size={'lg'}
-                      // onClick={() => {
-                      //   setModalContent(<WarningModalContent />);
-                      //   onOpen();
-                      //   console.log('isWarning');
-                      // }}
-                      onClick={onWarningOpen}
-                    >
-                      1013
-                    </Button>
+
                   </HStack>
                 </Center>
               </CardBody>
               <CardFooter bg={'#F0EFE5'} roundedBottom={10}></CardFooter>
             </Card>
           </LightMode>
-          <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} />
+          {/* <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} /> */}
           <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose} />
-          <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} />
+          {/* <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} /> */}
         </Box>
       </VStack>
     </ChakraProvider>

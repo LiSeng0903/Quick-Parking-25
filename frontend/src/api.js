@@ -34,8 +34,8 @@ const enterCarNum = async (carSpaceId, carId) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "spaceId": carSpaceId,
-        "carId": carId
+        spaceId: carSpaceId,
+        carId: carId,
       }),
     });
     const data = await response.json();
@@ -95,6 +95,37 @@ const carParkIn = async carSpaceId => {
   }
 };
 
+/**
+ * Get some hash.
+ * @param {*} account
+ * @param {*} password
+ */
+
+//  Guard Login 應該是 POST 嗎？
+const guardLogIn02 = async (account, password) => {
+  try {
+    const response = await fetch('/guard/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        account: account,
+        password: password,
+      }),
+    });
+    if (response.data.success) {
+      console.log(`Guard ${account} login successfully.`);
+      localStorage.setItem('token', response.data.access_token);
+    } else {
+      console.log(`Guard ${account} login failed.`);
+    }
+  } catch (error) {
+    console.log(`Error for guard ${account} to login. ${error}`);
+    throw error;
+  }
+};
+
 const guardLogIn = async (account, password) => {
   try {
     const response = await instance.get('/guard/login', {
@@ -110,6 +141,29 @@ const guardLogIn = async (account, password) => {
     throw error;
   }
 };
+
+// 使用存儲的 token 進行其他請求
+const fetchDataWithToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        // 將 token 加入請求的 Authorization header
+        fetch('/protected', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('受保護的資源:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    } else {
+        console.log('沒有找到 token');
+    }
+}
 
 const getGuardFloorMap = async floor => {
   try {
