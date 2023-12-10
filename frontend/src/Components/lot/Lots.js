@@ -20,11 +20,8 @@ export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
   const parkingMap = props.parkingMap;
-<<<<<<< HEAD
+
   console.log('parkingMap in lots root', props.parkingMap)
-=======
-  
->>>>>>> 1d91dfe3ed28b2361cf4433011cbf9f6eaaa7436
   // const parkingMap = {
   //   "A":[
   //     {
