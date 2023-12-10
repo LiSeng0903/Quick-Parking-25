@@ -56,14 +56,24 @@ const enterCarNum = async (carSpaceId, carId) => {
   }
 };
 
-const getCarSpace = async carId => {
+const getCarSpace = async (carId, carSpaceId) => {
   try {
-    const response = await instance.get(`/car/find/${carId}`, {
-      params: { carId },
+    const response = await fetch('/api/car/find', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        spaceId: carSpaceId,
+        carId: carId,
+      }),
     });
-    return response.data; //return carSpaceId
+    const data = await response.json();
+    console.log(data);
+    return data;
   } catch (error) {
     console.log(`Error getting parking space the car number ${carId} parked`);
+    throw error;
   }
 };
 
@@ -81,20 +91,6 @@ const carExit = async carId => {
   }
 };
 
-const carParkIn = async carSpaceId => {
-  try {
-    const response = await instance.post('/car/park', { carSpaceId });
-    if (response.data.success) {
-      console.log(`Park space ${carSpaceId} was parked successfully.`);
-    } else {
-      console.log(`Park space ${carSpaceId} was parked failed.`);
-    }
-  } catch (error) {
-    console.log(`Error for park space ${carSpaceId} be parked. ${error}`);
-    throw error;
-  }
-};
-
 /**
  * Get some hash.
  * @param {*} account
@@ -102,7 +98,7 @@ const carParkIn = async carSpaceId => {
  */
 
 //  Guard Login 應該是 POST 嗎？
-const guardLogIn02 = async (account, password) => {
+const guardLogIn = async (account, password) => {
   try {
     const response = await fetch('/guard/login', {
       method: 'POST',
@@ -126,44 +122,28 @@ const guardLogIn02 = async (account, password) => {
   }
 };
 
-const guardLogIn = async (account, password) => {
-  try {
-    const response = await instance.get('/guard/login', {
-      params: { account, password },
-    });
-    if (response.data.success) {
-      console.log(`Guard ${account} login successfully.`);
-    } else {
-      console.log(`Guard ${account} login failed.`);
-    }
-  } catch (error) {
-    console.log(`Error for guard ${account} to login. ${error}`);
-    throw error;
-  }
-};
-
 // 使用存儲的 token 進行其他請求
 const fetchDataWithToken = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        // 將 token 加入請求的 Authorization header
-        fetch('/protected', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('受保護的資源:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    } else {
-        console.log('沒有找到 token');
-    }
-}
+  const token = localStorage.getItem('token');
+  if (token) {
+    // 將 token 加入請求的 Authorization header
+    fetch('/protected', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('受保護的資源:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  } else {
+    console.log('沒有找到 token');
+  }
+};
 
 const getGuardFloorMap = async floor => {
   try {
@@ -207,7 +187,6 @@ export {
   enterCarNum,
   getCarSpace,
   carExit,
-  carParkIn,
   guardLogIn,
   getGuardFloorMap,
   getGuardCarSpace,
