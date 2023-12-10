@@ -1,6 +1,8 @@
 import {
   FormControl,
   FormLabel,
+  FormHelperText,
+  FormErrorMessage,
   Input,
   Heading,
   Button,
@@ -17,8 +19,9 @@ import {
   LightMode,
   useToast,
 } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { guardLogIn } from '../../api';
 
 const initialState = {
   account: '',
@@ -27,41 +30,42 @@ const initialState = {
 
 const Login = () => {
   const toast = useToast();
+  const navigate = useNavigate();
 
   // handle login info
   const [formData, setformData] = useState(initialState);
   const { account, password } = formData;
+
   const handleInputChange = e => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
 
-  const login = async e => {
+  const isError = formData === '';
+
+  const login = async (e) => {
     e.preventDefault();
 
-    // if (!account || !password) {
-    //   toast({
-    //     title: 'All fields are required',
-    //     status: 'error',
-    //     isClosable: true,
-    //   });
-    // }
+    if (!account || !password) {
+      toast({
+        title: 'All fields are required',
+        status: 'error',
+        isClosable: true,
+      });
+    }
 
     const userData = {
       account,
       password,
     };
-    // setIsLoading(true);
-    // try {
-    //   const data = await loginUser(userData);
-    //   console.log(data);
-    //   await dispatch(SET_LOGIN(true));
-    //   await dispatch(SET_NAME(data.name));
-    //   navigate('/dashboard');
-    //   //   setIsLoading(false);
-    // } catch (error) {
-    //   //   setIsLoading(false);
-    // }
+
+    try {
+      const data = await guardLogIn(userData);
+      console.log(data);
+      navigate('/dashboard');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -87,31 +91,41 @@ const Login = () => {
                 />
               </Center>
               <Stack>
-                <FormControl mt={2} onSubmit={login}>
+                <FormControl mt={2} isInvalid={isError} onSubmit={login}>
                   <FormLabel>請輸入帳號</FormLabel>
                   <Input
                     type="account"
                     name="account"
-                    value={account}
                     borderColor={'#9E896A'}
                     color={'gray.700'}
                     placeholder="B09"
                     fontWeight={600}
+                    value={account}
                     onChange={handleInputChange}
                   />
+                  {!isError ? (
+                    <FormHelperText>Enter the account.</FormHelperText>
+                  ) : (
+                    <FormErrorMessage>Account is required.</FormErrorMessage>
+                  )}
                 </FormControl>
                 <FormControl mb={4}>
                   <FormLabel>請輸入密碼</FormLabel>
                   <Input
                     type="password"
                     name="password"
-                    value={password}
                     borderColor={'#9E896A'}
                     color={'gray.700'}
                     placeholder="B09705059"
                     fontWeight={600}
+                    value={password}
                     onChange={handleInputChange}
                   />
+                  {!isError ? (
+                    <FormHelperText>Enter the password.</FormHelperText>
+                  ) : (
+                    <FormErrorMessage>Password is required.</FormErrorMessage>
+                  )}
                 </FormControl>
               </Stack>
             </CardBody>
