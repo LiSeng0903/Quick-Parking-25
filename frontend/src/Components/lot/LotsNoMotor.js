@@ -75,9 +75,7 @@ export default function LotsNoMotor(props) {
             alignItems={'center'}
             marginTop={'5vh'}
             marginBottom={'10vh'}
-          >
-            {/* <Box width={'80%'}>繳費機</Box> */}
-          </Box>
+          ></Box>
         </Box>
         {/* Right Section */}
         <Box>
@@ -105,11 +103,10 @@ export default function LotsNoMotor(props) {
                           height={'8vh'}
                           variant={'solid'}
                           onClick={() => {
-                            setSelectedSpaceId(lot.space_id)
-                            onOpen()
+                            setSelectedSpaceId(lot.space_id);
+                            lot.occupied ? onClose() : onOpen();
                           }}
                         >
-                          {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
                         </Button>
                       </WrapItem>
                     ))}
