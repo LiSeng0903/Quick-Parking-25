@@ -173,8 +173,9 @@ const getGuardCarSpace = async (carId, carSpaceId) => {
 
 const getAllFloors = async () => {
   try {
-    const response = await instance.get('guard/allFloors');
-    return response.data; // return information for all floors
+    const response = await fetch('/api/guard/allFloors');
+    const data = await response.json();
+    return data; // retrun map of selected floor
   } catch (error) {
     console.log(`Error getting information for all floors. ${error}`);
     throw error;

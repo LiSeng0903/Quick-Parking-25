@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import format from 'date-fns/format';
 import {
   LightMode,
@@ -18,6 +18,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import ErrorLotModal from '../../Components/modal/ErrorLotModal';
+import { getAllFloors } from '../../api';
 
 // 之後要改成可以回傳車車資訊進去 function
 const items = [
@@ -376,6 +377,26 @@ const items = [
 const Dashboard = () => {
   // time
   const [time, setTime] = React.useState(new Date());
+  const [carString, setCarString] = useState('');
+  const [motorString, setMotorString] = useState('');
+  const [priorityString, setPriorityString] = useState('');
+  const [warningSpaceIds, setWarningSpaceIds] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllFloors();
+        setCarString(data.car.toString());
+        setMotorString(data.motor.toString());
+        setPriorityString(data.priority.toString());
+        setWarningSpaceIds(data.warningParkingSpaceIds);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   React.useEffect(() => {
     const intervalID = window.setInterval(() => {
       // console.log('過一秒囉');
@@ -402,7 +423,7 @@ const Dashboard = () => {
   //   onOpen: onWarningOpen,
   //   onClose: onWarningClose,
   // } = useDisclosure();
-  
+
   // I quit to modulize.
   // const [modalContent, setModalContent] = React.useState('');
   // const initialRef = React.useRef(null);
@@ -455,7 +476,7 @@ const Dashboard = () => {
                   <Center>
                     <VStack>
                       <Text as="b" fontSize="4xl" color={'#908472'}>
-                        200
+                        {motorString}
                       </Text>
                     </VStack>
                   </Center>
@@ -492,7 +513,7 @@ const Dashboard = () => {
                   <Center>
                     <VStack>
                       <Text as="b" fontSize="4xl" color={'#908472'}>
-                        150
+                        {carString}
                       </Text>
                     </VStack>
                   </Center>
@@ -529,7 +550,7 @@ const Dashboard = () => {
                   <Center>
                     <VStack>
                       <Text as="b" fontSize="4xl" color={'#908472'}>
-                        5
+                        {priorityString}
                       </Text>
                     </VStack>
                   </Center>
@@ -572,20 +593,17 @@ const Dashboard = () => {
               >
                 <Center>
                   <HStack>
-
-                    <Button
-                      bg={'#E46565'}
-                      color={'white'}
-                      size={'lg'}
-                      // onClick={() => {
-                      //   setModalContent(<ErrorModalContent />);
-                      //   onOpen();
-                      // }}
-                      onClick={onErrorOpen}
-                    >
-                      1012
-                    </Button>
-
+                    {warningSpaceIds.map(id => (
+                      <Button
+                        key={id}
+                        bg={'#E46565'}
+                        color={'white'}
+                        size={'lg'}
+                        onClick={onErrorOpen} // You can customize the onClick handler as needed
+                      >
+                        {id}
+                      </Button>
+                    ))}
                   </HStack>
                 </Center>
               </CardBody>
