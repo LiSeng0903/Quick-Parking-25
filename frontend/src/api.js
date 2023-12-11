@@ -96,8 +96,6 @@ const carExit = async carId => {
  * @param {*} account
  * @param {*} password
  */
-
-//  Guard Login 應該是 POST 嗎？
 const guardLogIn = async (account, password) => {
   try {
     const response = await fetch('/guard/login', {

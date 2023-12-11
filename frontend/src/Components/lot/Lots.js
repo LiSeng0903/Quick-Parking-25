@@ -21,44 +21,7 @@ export default function Lots(props) {
   const lotsType = 'cars';
   const parkingMap = props.parkingMap;
 
-  console.log('parkingMap in lots root', props.parkingMap)
-  // const parkingMap = {
-  //   "A":[
-  //     {
-  //       "space_id": "1001",
-  //       "space_type": "motor", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "B":[
-  //     {
-  //       "space_id": "1002",
-  //       "space_type": "motor", 
-  //       "occupied": true
-  //     }
-  //   ], 
-  //   "C":[
-  //     {
-  //       "space_id": "1003",
-  //       "space_type": "car", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "D":[
-  //     {
-  //       "space_id": "1004",
-  //       "space_type": "car", 
-  //       "occupied": false
-  //     }
-  //   ],
-  //   "E":[
-  //     {
-  //       "space_id": "1005",
-  //       "space_type": "motor", 
-  //       "occupied": false
-  //     }
-  //   ]
-  // }
+  console.log('parkingMap in lots root', props.parkingMap);
 
   const motorLotsA = parkingMap['A'];
   const motorLotsB = parkingMap['B'];
@@ -75,7 +38,7 @@ export default function Lots(props) {
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
-  const [selectedSpaceId, setSelectedSpaceId] = useState("");
+  const [selectedSpaceId, setSelectedSpaceId] = useState('');
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   // modal
@@ -102,7 +65,7 @@ export default function Lots(props) {
             finalRef={finalRef}
             endModalOpen={endModalOpen}
             setEndModelOpen={setEndModelOpen}
-            setCarId = {props.setCarId}
+            setCarId={props.setCarId}
             selectedSpaceId={selectedSpaceId}
           />
         ) : (
@@ -147,7 +110,9 @@ export default function Lots(props) {
                         bg={isEmptyColor}
                         width={'100%'}
                         height={'3vh'}
-                        onClick={onOpen}
+                        onClick={() => {
+                          motorLotsB.occupied ? onClose() : onOpen();
+                        }}
                       ></Button>
                     </WrapItem>
                   ))}
@@ -176,11 +141,12 @@ export default function Lots(props) {
                   {motorLotsB.map(lot => (
                     <WrapItem width={'2vw'} key={lot.lotId}>
                       <Button
-                        // colorScheme="red"
                         bg={isOccupiedColor}
                         width={'100%'}
                         height={'3vh'}
-                        onClick={onOpen}
+                        onClick={() => {
+                          motorLotsB.occupied ? onClose() : onOpen();
+                        }}
                       ></Button>
                     </WrapItem>
                   ))}
@@ -223,14 +189,11 @@ export default function Lots(props) {
                           width={'1vw'}
                           height={'8vh'}
                           variant={'solid'}
-                          // onClick={function(){console.log('onclick');}}
                           onClick={() => {
-                            setSelectedSpaceId(lot.space_id)
-                            onOpen()
+                            setSelectedSpaceId(lot.space_id);
+                            lot.occupied ? onClose() : onOpen();
                           }}
-                        >
-                          {/* {lot.isEmpty ? 'isEmpty' : 'isNotEmpty'} */}
-                        </Button>
+                        ></Button>
                       </WrapItem>
                     ))}
                   </Wrap>
