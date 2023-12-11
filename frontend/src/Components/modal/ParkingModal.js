@@ -9,16 +9,27 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
   Button,
   Image,
   Center,
   ButtonGroup,
   ChakraProvider,
+  VStack,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { enterCarNum } from '../../api';
-
+/**
+ * @param {Object} param0
+ * @param {*} param0.isOpen
+ * @param {*} param0.onClose
+ * @param {*} param0.initialRef
+ * @param {*} param0.finalRef
+ * @param {*} param0.endModalOpen
+ * @param {*} param0.setEndModelOpen
+ * @param {*} param0.selectedSpaceId
+ */
 function ParkingEnterModal({
   isOpen,
   onClose,
@@ -26,12 +37,15 @@ function ParkingEnterModal({
   finalRef,
   endModalOpen,
   setEndModelOpen,
-  selectedSpaceId
+  selectedSpaceId,
 }) {
-  const [carId, setCarId] = useState("");
-  const handleCarIdChange = (event) => {
-    setCarId(event.target.value); 
+  const [carId, setCarId] = useState('');
+  const handleCarIdChange = event => {
+    setCarId(event.target.value);
+    localStorage.setItem('carID', event.target.value);
   };
+  // Store the user's parking information in localStorage
+  localStorage.setItem('spaceID', selectedSpaceId);
 
   const fetchData = async () => {
     try {
@@ -42,7 +56,7 @@ function ParkingEnterModal({
   };
 
   const handleConfirm = () => {
-    setEndModelOpen(true); 
+    setEndModelOpen(true);
     fetchData();
   };
 
@@ -135,6 +149,10 @@ function ParkingEndModal({ isEndOpen }) {
     navigate(path);
   };
 
+  // Get the parking information from localStorage.
+  const userCarID = localStorage.getItem('carID');
+  const userSpaceID = localStorage.getItem('spaceID');
+
   return (
     <ChakraProvider>
       <Modal
@@ -147,22 +165,29 @@ function ParkingEndModal({ isEndOpen }) {
         <ModalOverlay bg={'blackAlpha.900'} />
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'}>
           {/* <ModalCloseButton /> */}
+          <ModalHeader textAlign={'center'}>您已完成停車</ModalHeader>
           <ModalBody
             pb={6}
-            paddingTop={'6vh'}
+            paddingTop={'3vh'}
             display={'flex'}
             flexDirection={'column'}
             justifyContent={'center'}
           >
             <Center>
-              <Image
-                borderRadius="10px"
-                boxSize="150px"
-                src={'https://img.icons8.com/isometric/512/1FB141/ok.png'}
-                alt={'ok'}
-              />
+              <VStack>
+                <Image
+                  borderRadius="10px"
+                  boxSize="150px"
+                  src={'https://img.icons8.com/isometric/512/1FB141/ok.png'}
+                  alt={'ok'}
+                  mb={'2vh'}
+                />
+                {/* {console.log(userCarID)} */}
+                <Text>車牌號碼：{userCarID}</Text>
+                {/* {console.log(userSpaceID)} */}
+                <Text>車位號碼：{userSpaceID}</Text>
+              </VStack>
             </Center>
-            <ModalHeader textAlign={'center'}>您已完成停車</ModalHeader>
           </ModalBody>
 
           <ModalFooter justifyContent={'center'} paddingBottom={'4vh'}>
