@@ -33,6 +33,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 import { Chrono } from 'react-chrono';
+import { getGuardCarSpace } from '../../api';
 
 // 之後要改成可以回傳車車資訊進去 function
 const items = [
@@ -58,21 +59,46 @@ const initialState = {
 const Search = () => {
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  // handle search data
-  const [formData, setformData] = useState(initialState);
-  const { spacesId, carId } = formData;
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-    setformData({ ...formData, [name]: value });
+  // // handle search data
+  // const [formData, setformData] = useState(initialState);
+  // const { spacesId, carId } = formData;
+  // const handleInputChange = e => {
+  //   const { name, value } = e.target;
+  //   setformData({ ...formData, [name]: value });
+  // };
+
+  const [spaceId, setSpaceId] = useState("");
+  const [currentCarId, setCurrentCarId] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [parkTime, setparkTime] = useState(null);
+  const [parkingSpaceId, setParkingSpaceId] = useState(null);
+  const [status, setStatus] = useState(null);
+
+  const handleSpaceIdInputChange = event => {
+    setSpaceId(event.target.value);
+  };
+  
+  const fetchData = async () => {
+    try {
+      const data = await getGuardCarSpace(spaceId);
+      setCurrentCarId(data.currentCarId)
+      setHistory(data.history)
+      setparkTime(data.parkTime)
+      setParkingSpaceId(data.parkingSpaceId)
+      setStatus(data.status)
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const search = async e => {
-    e.preventDefault();
-    const userData = {
-      spacesId,
-      carId,
-    };
-  };
+
+  //const search = async e => {
+    // e.preventDefault();
+    // const userData = {
+    //   spacesId,
+    //   carId,
+    // };
+  //};
 
   return (
     <ChakraProvider>
@@ -96,7 +122,9 @@ const Search = () => {
                   />
                 </Center>
                 <Stack>
-                  <FormControl mt={2} onSubmit={search}>
+                  <FormControl mt={2} 
+                  //onSubmit={search}
+                  >
                     <FormLabel>請輸入車位</FormLabel>
                     <Input
                       type="text"
@@ -104,7 +132,7 @@ const Search = () => {
                       color={'gray.700'}
                       placeholder="B09"
                       fontWeight={600}
-                      onChange={handleInputChange}
+                      onChange={handleSpaceIdInputChange}
                     />
                   </FormControl>
                   <FormControl mb={4}>
@@ -115,7 +143,7 @@ const Search = () => {
                       color={'gray.700'}
                       placeholder="B09705059"
                       fontWeight={600}
-                      onChange={handleInputChange}
+                      // onChange={handleInputChange}
                     />
                   </FormControl>
                 </Stack>
@@ -138,7 +166,10 @@ const Search = () => {
                     bg="#9E896A"
                     color="#FFFFFF"
                     rounded={30}
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => {
+                      fetchData();
+                      setIsOpen(true);
+                    }}
                   >
                     確認
                   </Button>
@@ -155,7 +186,7 @@ const Search = () => {
             <CardHeader h={'8vh'} roundedTop={10} backgroundColor={'#A3C561'}>
               <Center>
                 <Text as={'b'} color={'white'}>
-                  1013
+                  {parkingSpaceId}
                 </Text>
               </Center>
             </CardHeader>
@@ -176,7 +207,7 @@ const Search = () => {
                     mb={4}
                     mt={2}
                   >
-                    車牌號碼 B09705038
+                    車牌號碼 {currentCarId || "null"}
                   </Text>
                   <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                     <Accordion allowToggle>
@@ -211,7 +242,7 @@ const Search = () => {
                           <Box as="span" flex="1" textAlign="left">
                             <HStack>
                               <Icon as={InfoOutlineIcon} />
-                              <Text as={'b'}>停放時間：5hr</Text>
+                              <Text as={'b'}>停放時間：{parkTime || "null"}</Text>
                             </HStack>
                           </Box>
                           <AccordionIcon />

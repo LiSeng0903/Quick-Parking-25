@@ -157,12 +157,11 @@ const getGuardFloorMap = async floor => {
   }
 };
 
-const getGuardCarSpace = async (carId, carSpaceId) => {
+const getGuardCarSpace = async carSpaceId => {
   try {
-    const response = await instance.get(`guard/check/${carSpaceId}`, {
-      params: { carId, carSpaceId },
-    });
-    return response.data; // retrun car or park grid information for guard
+    const response = await fetch('/api/guard/check/' + carSpaceId);
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.log(
       `Error getting car or park grid information for guard. ${error}`
