@@ -17,8 +17,9 @@ import {
   Image,
   LightMode,
   useToast,
+  space,
 } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { getCarSpace } from '../../api';
 
 const initialState = {
@@ -28,12 +29,12 @@ const initialState = {
 
 const FindCar = () => {
   const toast = useToast();
+  const navigate = useNavigate();
 
   // handle search data
   // const [formData, setformData] = useState(initialState);
   const [carId, setCarId] = useState(null);
   const [spaceId, setSpaceId] = useState(null);
-
   // const { spacesId, carId } = formData;
   // const handleInputChange = e => {
   //   const { name, value } = e.target;
@@ -41,27 +42,28 @@ const FindCar = () => {
   //   console.log(formData)
   // };
 
-  const handleCarIdInputChange =  (event) => {
-    setCarId(event.target.value); 
+  const handleCarIdInputChange = event => {
+    setCarId(event.target.value);
   };
 
-  const handleSpaceIdInputChange =  (event) => {
-    setSpaceId(event.target.value); 
+  const handleSpaceIdInputChange = event => {
+    setSpaceId(event.target.value);
   };
 
-  const findCar = async (e) => {
+  const findCar = async e => {
     // e.preventDefault();
     // const userData = {
     //   spacesId,
     //   carId,
     // };
-  
+
     try {
       const carSpaceData = await getCarSpace(carId, spaceId);
-  
+
       // 在這裡處理 carSpaceData，可能是顯示在介面上或者進一步的邏輯
       console.log('Car space data:', carSpaceData);
-      
+      console.log(typeof(spaceIdProp))
+      navigate('/find-car/result', { state: { carData: carSpaceData } });
       toast({
         title: 'Submitted successfully!',
         status: 'success',
@@ -70,7 +72,7 @@ const FindCar = () => {
       });
     } catch (error) {
       console.error('Error fetching car space data:', error);
-      
+
       toast({
         title: 'Error submitting!',
         status: 'error',
@@ -79,7 +81,6 @@ const FindCar = () => {
       });
     }
   };
-  
 
   return (
     <ChakraProvider>
@@ -142,18 +143,16 @@ const FindCar = () => {
                     取消
                   </Button>
                 </NavLink>
-                <NavLink to={'/find-car/result'}>
-                  <Button
-                    w="8vw"
-                    variant="solid"
-                    bg="#779341"
-                    color="#FFFFFF"
-                    rounded={30}
-                    onClick={findCar}
-                  >
-                    確認
-                  </Button>
-                </NavLink>
+                <Button
+                  w="8vw"
+                  variant="solid"
+                  bg="#779341"
+                  color="#FFFFFF"
+                  rounded={30}
+                  onClick={findCar}
+                >
+                  確認
+                </Button>
               </ButtonGroup>
             </CardFooter>
           </Card>
