@@ -16,9 +16,11 @@ import {
   Image,
   LightMode,
 } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const FindCarResult = () => {
+  const location = useLocation()
+  var carData = location.state.carData
   return (
     <ChakraProvider>
       <AbsoluteCenter>
@@ -26,7 +28,7 @@ const FindCarResult = () => {
           <Card padding={5} rounded={20} shadow={'xl'}>
             <CardHeader pb={0}>
               <Heading size="md" textAlign={'center'} color={'#9E896A'}>
-                車牌號碼 B09705059
+                車牌號碼 {carData.carId || 'null'}
               </Heading>
             </CardHeader>
 
@@ -47,7 +49,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={'B09'}
+                    value={carData.spacesId || 'null'}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
@@ -59,7 +61,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={'5hr'}
+                    value={carData.parkTime || 'null'}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
