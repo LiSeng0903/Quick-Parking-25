@@ -39,11 +39,16 @@ const Login = () => {
   const handleInputChange = e => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const isError = formData === '';
 
-  const login = async (e) => {
+  /**
+   * Submit the form
+   * @param {*} e
+   */
+  const login = async e => {
     e.preventDefault();
 
     if (!account || !password) {
@@ -58,13 +63,22 @@ const Login = () => {
       account,
       password,
     };
+    console.log('userData', JSON.stringify(userData));
 
+    alert(account);
     try {
+      console.log('Before guardLogIn');
       const data = await guardLogIn(userData);
-      console.log(data);
-      navigate('/dashboard');
+      console.log('After guardLogIn, data:', data);
+      navigate('/guard/dashboard');
+      toast({
+        title: 'Log in successfully!',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
-      console.log(error);
+      console.log('Error:', error);
     }
   };
 
@@ -91,7 +105,7 @@ const Login = () => {
                 />
               </Center>
               <Stack>
-                <FormControl mt={2} isInvalid={isError} onSubmit={login}>
+                <FormControl mt={2} isInvalid={isError}>
                   <FormLabel>請輸入帳號</FormLabel>
                   <Input
                     type="account"
@@ -150,14 +164,16 @@ const Login = () => {
                     bg="#9E896A"
                     color="#FFFFFF"
                     rounded={30}
-                    onClick={() =>
-                      toast({
-                        title: 'Log in successfully!',
-                        status: 'success',
-                        isClosable: true,
-                        position: 'top-right',
-                      })
-                    }
+                    type="submit"
+                    // onClick={() =>
+                    //   toast({
+                    //     title: 'Log in successfully!',
+                    //     status: 'success',
+                    //     isClosable: true,
+                    //     position: 'top-right',
+                    //   })
+                    // }
+                    onClick={login}
                   >
                     登入
                   </Button>

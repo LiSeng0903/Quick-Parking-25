@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       <Route path="parking-lot" element={<ParkingLot />} />
       <Route path="find-car" element={<FindCar />} />
       <Route path="find-car/result" element={<FindCarResult />} />
-      <Route path="login" element={<Login />} />
+      <Route path="guard/login" element={<Login />} />
       <Route
         path="guard/dashboard"
         element={

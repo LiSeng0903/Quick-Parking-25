@@ -96,26 +96,31 @@ const carExit = async carId => {
  * @param {*} account
  * @param {*} password
  */
-const guardLogIn = async (account, password) => {
+const guardLogIn = async userData => {
   try {
-    const response = await fetch('/guard/login', {
+    const response = await fetch('/api/guard/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        account: account,
-        password: password,
-      }),
+      body: JSON.stringify(userData),
     });
-    if (response.data.success) {
-      console.log(`Guard ${account} login successfully.`);
-      localStorage.setItem('token', response.data.access_token);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(`Guard ${userData.account} login successfully.`);
+      localStorage.setItem('token', responseData.access_token);
+      return responseData;
     } else {
-      console.log(`Guard ${account} login failed.`);
+      console.log(
+        `Guard ${userData.account} login failed.`, userData,
+        JSON.stringify(userData)
+      );
+      throw new Error(
+        `Guard ${userData.account} login failed. Status: ${response.status}`
+      );
     }
   } catch (error) {
-    console.log(`Error for guard ${account} to login. ${error}`);
+    console.log(`Error for guard ${userData.account} to login. ${error}`);
     throw error;
   }
 };
