@@ -20,8 +20,10 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { guardLogIn } from '../../api';
+import { setAuthToken } from '../../utils/util';
+import { AuthContext } from '../../protect';
 
 const initialState = {
   account: '',
@@ -31,6 +33,7 @@ const initialState = {
 const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  // const { setUser } = useContext(AuthContext);
 
   // handle login info
   const [formData, setformData] = useState(initialState);
@@ -39,11 +42,16 @@ const Login = () => {
   const handleInputChange = e => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
+    console.log(formData);
   };
 
   const isError = formData === '';
 
-  const login = async (e) => {
+  /**
+   * Submit the form
+   * @param {*} e
+   */
+  const login = async e => {
     e.preventDefault();
 
     if (!account || !password) {
@@ -58,13 +66,46 @@ const Login = () => {
       account,
       password,
     };
+    // console.log('userData', JSON.stringify(userData));
 
+    // alert(account);
     try {
+      // console.log('Before guardLogIn');
       const data = await guardLogIn(userData);
-      console.log(data);
-      navigate('/dashboard');
+      // console.log('After guardLogIn, data:', data);
+      if (data.ok === 0) {
+        console.log(data.status);
+      }
+      // If OK then store the token into localStorage
+      setAuthToken(data.access_token);
+      // console.log(data.access_token);
+      navigate('/guard/dashboard');
+
+      // fetch data after login
+      //
+      // try {
+      //   const response = await fetchDataWithToken();
+
+      //   if (response.ok !== 1) {
+      //     // If fetchDataWithToken() fails, clear the token
+      //     setAuthToken(null);
+      //   }
+      //   setUser(response.data);
+      //   navigate('/guard/dashboard');
+      // } catch (error) {
+      //   // Handle errors from fetchDataWithToken()
+      //   console.error('Error in fetchDataWithToken():', error);
+      //   setAuthToken(null);
+      // }
+
+      toast({
+        title: 'Log in successfully!',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
     } catch (error) {
-      console.log(error);
+      console.log('Error:', error);
     }
   };
 
@@ -91,7 +132,7 @@ const Login = () => {
                 />
               </Center>
               <Stack>
-                <FormControl mt={2} isInvalid={isError} onSubmit={login}>
+                <FormControl mt={2} isInvalid={isError}>
                   <FormLabel>請輸入帳號</FormLabel>
                   <Input
                     type="account"
@@ -150,14 +191,16 @@ const Login = () => {
                     bg="#9E896A"
                     color="#FFFFFF"
                     rounded={30}
-                    onClick={() =>
-                      toast({
-                        title: 'Log in successfully!',
-                        status: 'success',
-                        isClosable: true,
-                        position: 'top-right',
-                      })
-                    }
+                    type="submit"
+                    // onClick={() =>
+                    //   toast({
+                    //     title: 'Log in successfully!',
+                    //     status: 'success',
+                    //     isClosable: true,
+                    //     position: 'top-right',
+                    //   })
+                    // }
+                    onClick={login}
                   >
                     登入
                   </Button>

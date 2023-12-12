@@ -31,12 +31,6 @@ import { useNavigate } from "react-router-dom";
 import { getParkingStatus } from '../../api';
 
 const Homepage = () => {
-  // let navigate = useNavigate();
-  // const navigateToParkingLot = () =>{
-  //   navigate('/parking-lot', state: {
-
-  //   });
-  // }
   const [carString, setCarString] = useState('');
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
@@ -62,7 +56,7 @@ const Homepage = () => {
       <Grid textAlign="center" fontSize="xl" maxH="80vh" marginTop={'20vh'}>
         <HStack maxH="80vh">
           <Box ml={'15vw'}>
-            <NavLink to="/login">
+            <NavLink to="/guard/login">
               <Image
                 borderRadius="10px"
                 boxSize="400px"

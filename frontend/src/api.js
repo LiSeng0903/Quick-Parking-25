@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAuthToken } from './utils/util';
 
 const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
 
@@ -96,52 +97,60 @@ const carExit = async carId => {
  * @param {*} account
  * @param {*} password
  */
-const guardLogIn = async (account, password) => {
+const guardLogIn = async userData => {
   try {
-    const response = await fetch('/guard/login', {
+    const response = await fetch('/api/guard/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        account: account,
-        password: password,
-      }),
+      body: JSON.stringify(userData),
     });
-    if (response.data.success) {
-      console.log(`Guard ${account} login successfully.`);
-      localStorage.setItem('token', response.data.access_token);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log(`Guard ${userData.account} login successfully.`);
+      localStorage.setItem('token', responseData.access_token);
+      return responseData;
     } else {
-      console.log(`Guard ${account} login failed.`);
+      console.log(`Guard ${userData.account} login failed.`);
+      console.log(userData, JSON.stringify(userData));
+      throw new Error(
+        `Guard ${userData.account} login failed. Status: ${response.status}`
+      );
     }
   } catch (error) {
-    console.log(`Error for guard ${account} to login. ${error}`);
+    console.log(`Error for guard ${userData.account} to login. ${error}`);
     throw error;
   }
 };
 
 // 使用存儲的 token 進行其他請求
-const fetchDataWithToken = () => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    // 將 token 加入請求的 Authorization header
-    fetch('/protected', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('受保護的資源:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  } else {
-    console.log('沒有找到 token');
-  }
-};
+// const fetchDataWithToken = () => {
+//   const token = getAuthToken();
+//   if (token) {
+//     // getGuardFloorMap();
+//     console.log(token);
+//     // getGuardCarSpace();
+//     // getAllFloors();
+//     // 將 token 加入請求的 Authorization header
+
+//     // fetch('/protected', {
+//     //   method: 'GET',
+//     //   headers: {
+//     //     Authorization: `Bearer ${token}`,
+//     //   },
+//     // })
+//     //   .then(response => response.json())
+//     //   .then(data => {
+//     //     console.log('受保護的資源:', data);
+//     //   })
+//     //   .catch(error => {
+//     //     console.error('Error:', error);
+//     //   });
+//   } else {
+//     console.log('沒有找到 token');
+//   }
+// };
 
 const getGuardFloorMap = async floor => {
   try {
@@ -186,6 +195,7 @@ export {
   getCarSpace,
   carExit,
   guardLogIn,
+  // fetchDataWithToken,
   getGuardFloorMap,
   getGuardCarSpace,
   getAllFloors,
