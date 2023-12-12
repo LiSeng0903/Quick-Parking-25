@@ -139,5 +139,6 @@ def gen_all_data():
 
 
 if __name__ == "__main__":
-    clear_all_data()
-    gen_all_data()
+    # clear_all_data()
+    # gen_all_data()
+    reset_all_ps()

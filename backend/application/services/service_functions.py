@@ -99,8 +99,8 @@ def leave_car(car_id: str):
         return False, msg
 
     try:
-        ps_func.leave_car(car_id)
-        msg = f"車輛 {car_id} 已離場"
+        park_time = ps_func.leave_car(car_id)
+        msg = f"車輛 {car_id} 已離場，共停了 {park_time}"
         return True, msg
 
     except Exception as e:

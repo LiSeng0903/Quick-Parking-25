@@ -187,6 +187,10 @@ def leave_car(car_id: str):
     history[-1]["end_time"] = now()
     PSI.update_ps_history(space_id, history)
 
+    park_time = now() - history[-1]["start_time"]
+
+    return park_time
+
 
 def find_car(space_id: str, car_id: str):
     """
