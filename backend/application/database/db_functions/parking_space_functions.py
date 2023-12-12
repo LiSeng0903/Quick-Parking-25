@@ -37,7 +37,7 @@ def get_remain_space_cnt():
     return remain_space_cnt
 
 
-def get_parking_space_by_floor(floor: int):
+def get_parking_space_by_floor(floor: int, with_status:bool = False ):
     """
     回傳該層樓的停車位資訊
 
@@ -71,6 +71,9 @@ def get_parking_space_by_floor(floor: int):
             "space_type": ps["space_type"],
             "occupied": ps["occupied"],
         }
+        
+        if with_status:
+            ps_info["status"] = ps["status"]
 
         if ps["zone"] in spaces.keys():
             spaces[ps["zone"]].append(ps_info)
@@ -149,9 +152,9 @@ def find_car(space_id: str, car_id: str):
     """
     尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
 
-    回傳值無論如何都是 {"spacesId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
+    回傳值無論如何都是 {"spaceId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
     如果沒有找到車位，則會回傳有相應 key, 但 value 為 None 的 dict
-    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spacesId, floor 正常填寫；carId, parkTime 為 None 的 dict
+    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spaceId, floor 正常填寫；carId, parkTime 為 None 的 dict
     如果有找到車位，且目前有車輛正在停，才會回傳完整的 dict
 
     Args:
@@ -159,7 +162,7 @@ def find_car(space_id: str, car_id: str):
         car_id (str): 車輛 ID
     Returns:
         info (dict): 車位資訊，內容為 {
-            "spacesId": str,
+            "spaceId": str,
             "floor": int,
             "carId": str,
             "parkTime": datetime.timedelta,
@@ -168,7 +171,7 @@ def find_car(space_id: str, car_id: str):
 
     # 基本回傳資訊
     info = {
-        "spacesId": None,
+        "spaceId": None,
         "floor": None,
         "carId": None,
         "parkTime": None,
@@ -182,7 +185,7 @@ def find_car(space_id: str, car_id: str):
         return info
 
     # 有找到停車格的話就先更新基本資訊
-    info["spacesId"] = ps["space_id"]
+    info["spaceId"] = ps["space_id"]
     info["floor"] = ps["floor"]
 
     # 如果有正在進行的停車紀錄，就更新 carId, parkTime
@@ -225,37 +228,33 @@ def get_ps_all_info(space_id: str):
         }
     """
 
+    # 產生基本回傳資訊
     info = {
         "parkingSpaceId": None,
         "spaceType": None,
         "currentCarId": None,
         "parkTime": None,
         "status": "",
-        "history": [
-            {
-                "startTime": datetime,
-                "carId": str,
-                "endTime": datetime,
-            },
-        ],
+        "history": [],
     }
 
+    # 嘗試以 space_id 找到停車位
     ps = PSI.read_ps_by_space_id(space_id)
-    info["parkingSpaceId"] = ps["space_id"]
-    info["spaceType"] = ps["space_type"]
-    info["status"] = ps["status"]
+    
+    # 填入停車位資訊
+    info["parkingSpaceId"] = ps["space_id"] 
+    info["spaceType"] = ps["space_type"] 
+    info["status"] = ps["status"] 
 
-    new_key_history = []
+    # 整理 ps["history"]，並將其放入 info["history"]
     for his in ps["history"]:
-        new_key_history.append(
+        info["history"].append(
             {
                 "startTime": his.get("start_time", None),
                 "carId": his.get("car_id", None),
-                "endTime": his.get("end_time", None),
+                "endTime": his.get("end_time", None), # 停車尚未結束時，"endTime" 填入 None 
             }
         )
-
-    info["history"] = new_key_history
 
     # 計算 parkTime, currentCarId
     try:
@@ -281,10 +280,8 @@ def get_warning_ps_ids():
         list[str]: 所有狀態為 WARNING 的停車位編號
     """
 
-    warning_ids = []
+    # 取得所有狀態為 WARNING 的停車位
     warning_pss = PSI.read_ps_by_status("WARNING")
-
-    for ps in warning_pss:
-        warning_ids.append(ps["space_id"])
+    warning_ids = [ps["space_id"] for ps in warning_pss]
 
     return warning_ids
