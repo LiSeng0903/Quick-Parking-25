@@ -8,17 +8,16 @@ sys.path.append(interface_path)
 import json
 
 import bcrypt
-from connection import connect_to_db
+from connection import connect_decorator
 from GuardInterface import GuardInterface
 from MessageInterface import MessageInterface
 from mongoengine import Document, DynamicDocument
 from ParkingSpaceInterface import ParkingSpaceInterface
 
 
+@connect_decorator
 def clear_all_data():
     """刪除 mongoDB 上的所有資料"""
-
-    connect_to_db()
 
     document_classes = Document.__subclasses__()
     for document_class in document_classes:
@@ -26,10 +25,9 @@ def clear_all_data():
             document_class.objects.delete()
 
 
+@connect_decorator
 def gen_parking_space_data():
     """產生停車格的測試資料"""
-
-    connect_to_db()
 
     # 一樓
     for i in range(180):
@@ -89,6 +87,7 @@ def gen_parking_space_data():
             ParkingSpaceInterface.create_ps(new_ps)
 
 
+@connect_decorator
 def gen_message_data():
     """產生提示訊息的資料"""
 
@@ -101,11 +100,9 @@ def gen_message_data():
         MessageInterface.create_message({"content": msg})
 
 
+@connect_decorator
 def gen_guard_accounts():
     """產生管理員帳號"""
-
-    # 連接資料庫
-    connect_to_db()
 
     with open(os.path.join(cwd, "../guard_accounts.json"), "r", encoding="utf-8") as f:
         guards = json.load(f)["guard"]
