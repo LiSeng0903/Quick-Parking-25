@@ -7,6 +7,7 @@ sys.path.append(message_interface_path)
 
 from datetime import datetime
 
+from general_functions import now
 from ParkingSpaceInterface import ParkingSpaceInterface as PSI
 
 
@@ -141,7 +142,7 @@ def park_car(space_id: str, car_id: str):
     history.append(
         {
             "car_id": car_id,
-            "start_time": datetime.now(),
+            "start_time": now(),
             "end_time": None,
         }
     )
@@ -160,7 +161,7 @@ def leave_car(space_id: str):
     PSI.update_ps_occupied(space_id, False)
 
     history = PSI.read_ps_history(space_id)
-    history[-1]["end_time"] = datetime.now()
+    history[-1]["end_time"] = now()
     PSI.update_ps_history(space_id, history)
 
 
@@ -212,7 +213,7 @@ def find_car(space_id: str, car_id: str):
             raise Exception(f"車輛 {car_id} 已離開停車位 {space_id}")
 
         info["carId"] = ps["current_car_id"]
-        info["parkTime"] = datetime.now() - current_history["start_time"]
+        info["parkTime"] = now() - current_history["start_time"]
 
     except Exception as e:
         pass
@@ -279,7 +280,7 @@ def get_ps_all_info(space_id: str):
         # 正有車子停在停車位上
         if current_history.get("end_time", None) == None:
             info["currentCarId"] = ps["current_car_id"]
-            info["parkTime"] = datetime.now() - current_history["start_time"]
+            info["parkTime"] = now() - current_history["start_time"]
     except Exception as e:
         pass
 
