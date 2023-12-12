@@ -149,9 +149,9 @@ def find_car(space_id: str, car_id: str):
     """
     尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
 
-    回傳值無論如何都是 {"spacesId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
+    回傳值無論如何都是 {"spaceId": str, "floor": int, "carId": str, "parkTime": datetime.timedelta}
     如果沒有找到車位，則會回傳有相應 key, 但 value 為 None 的 dict
-    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spacesId, floor 正常填寫；carId, parkTime 為 None 的 dict
+    如果有找到車位，但目前沒有車輛停在該車位，則會回傳有相應 key, spaceId, floor 正常填寫；carId, parkTime 為 None 的 dict
     如果有找到車位，且目前有車輛正在停，才會回傳完整的 dict
 
     Args:
@@ -159,7 +159,7 @@ def find_car(space_id: str, car_id: str):
         car_id (str): 車輛 ID
     Returns:
         info (dict): 車位資訊，內容為 {
-            "spacesId": str,
+            "spaceId": str,
             "floor": int,
             "carId": str,
             "parkTime": datetime.timedelta,
@@ -168,7 +168,7 @@ def find_car(space_id: str, car_id: str):
 
     # 基本回傳資訊
     info = {
-        "spacesId": None,
+        "spaceId": None,
         "floor": None,
         "carId": None,
         "parkTime": None,
@@ -182,7 +182,7 @@ def find_car(space_id: str, car_id: str):
         return info
 
     # 有找到停車格的話就先更新基本資訊
-    info["spacesId"] = ps["space_id"]
+    info["spaceId"] = ps["space_id"]
     info["floor"] = ps["floor"]
 
     # 如果有正在進行的停車紀錄，就更新 carId, parkTime
