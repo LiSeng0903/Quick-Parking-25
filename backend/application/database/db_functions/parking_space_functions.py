@@ -149,6 +149,27 @@ def park_car(space_id: str, car_id: str):
     PSI.update_ps_history(space_id, history)
 
 
+def can_leave(car_id: str):
+    """
+    檢查車輛 car_id 是否可以離開停車位
+    總共會檢查
+    1. 車輛 car_id 是否在停車場
+
+    Args:
+        car_id (str): 車輛 ID
+    Returns:
+        bool: 是否可以離開
+        str: 訊息
+    """
+
+    # 檢查車輛是否在停車場
+    ps = PSI.read_ps_by_current_car_id(car_id)
+    if ps == None:
+        return False, f"車輛 {car_id} 不在停車場"
+
+    return True, ""
+
+
 def leave_car(car_id: str):
     """
     車子離開，更新停車位資訊，會更新
