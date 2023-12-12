@@ -225,37 +225,33 @@ def get_ps_all_info(space_id: str):
         }
     """
 
+    # 產生基本回傳資訊
     info = {
         "parkingSpaceId": None,
         "spaceType": None,
         "currentCarId": None,
         "parkTime": None,
         "status": "",
-        "history": [
-            {
-                "startTime": datetime,
-                "carId": str,
-                "endTime": datetime,
-            },
-        ],
+        "history": [],
     }
 
+    # 嘗試以 space_id 找到停車位
     ps = PSI.read_ps_by_space_id(space_id)
-    info["parkingSpaceId"] = ps["space_id"]
-    info["spaceType"] = ps["space_type"]
-    info["status"] = ps["status"]
+    
+    # 填入停車位資訊
+    info["parkingSpaceId"] = ps["space_id"] 
+    info["spaceType"] = ps["space_type"] 
+    info["status"] = ps["status"] 
 
-    new_key_history = []
+    # 整理 ps["history"]，並將其放入 info["history"]
     for his in ps["history"]:
-        new_key_history.append(
+        info["history"].append(
             {
                 "startTime": his.get("start_time", None),
                 "carId": his.get("car_id", None),
-                "endTime": his.get("end_time", None),
+                "endTime": his.get("end_time", None), # 停車尚未結束時，"endTime" 填入 None 
             }
         )
-
-    info["history"] = new_key_history
 
     # 計算 parkTime, currentCarId
     try:
