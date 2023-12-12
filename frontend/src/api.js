@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAuthToken } from './utils/util';
 
 const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
 
@@ -111,10 +112,8 @@ const guardLogIn = async userData => {
       localStorage.setItem('token', responseData.access_token);
       return responseData;
     } else {
-      console.log(
-        `Guard ${userData.account} login failed.`, userData,
-        JSON.stringify(userData)
-      );
+      console.log(`Guard ${userData.account} login failed.`);
+      console.log(userData, JSON.stringify(userData));
       throw new Error(
         `Guard ${userData.account} login failed. Status: ${response.status}`
       );
@@ -126,27 +125,32 @@ const guardLogIn = async userData => {
 };
 
 // 使用存儲的 token 進行其他請求
-const fetchDataWithToken = () => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    // 將 token 加入請求的 Authorization header
-    fetch('/protected', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('受保護的資源:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  } else {
-    console.log('沒有找到 token');
-  }
-};
+// const fetchDataWithToken = () => {
+//   const token = getAuthToken();
+//   if (token) {
+//     // getGuardFloorMap();
+//     console.log(token);
+//     // getGuardCarSpace();
+//     // getAllFloors();
+//     // 將 token 加入請求的 Authorization header
+
+//     // fetch('/protected', {
+//     //   method: 'GET',
+//     //   headers: {
+//     //     Authorization: `Bearer ${token}`,
+//     //   },
+//     // })
+//     //   .then(response => response.json())
+//     //   .then(data => {
+//     //     console.log('受保護的資源:', data);
+//     //   })
+//     //   .catch(error => {
+//     //     console.error('Error:', error);
+//     //   });
+//   } else {
+//     console.log('沒有找到 token');
+//   }
+// };
 
 const getGuardFloorMap = async floor => {
   try {
@@ -191,6 +195,7 @@ export {
   getCarSpace,
   carExit,
   guardLogIn,
+  // fetchDataWithToken,
   getGuardFloorMap,
   getGuardCarSpace,
   getAllFloors,

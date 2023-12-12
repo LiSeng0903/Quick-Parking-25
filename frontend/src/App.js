@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -14,6 +14,9 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './Redux/store.js';
+import { AuthContext } from './protect.js';
 import Homepage from './Pages/homepage/Homepage.js';
 import ParkingLot from './Pages/car/ParkingLot.js';
 import FindCar from './Pages/car/FindCar.js';
@@ -66,18 +69,21 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  const [user, setUser] = useState(null);
   return (
-    <ChakraProvider theme={theme}>
-      <LightMode>
-        <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
-          <Grid>
-            <HStack>
-              <RouterProvider router={router} />
-            </HStack>
-          </Grid>
-        </Box>
-      </LightMode>
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <LightMode>
+          <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
+            <Grid>
+              <HStack>
+                <RouterProvider router={router} />
+              </HStack>
+            </Grid>
+          </Box>
+        </LightMode>
+      </ChakraProvider>
+    </Provider>
   );
 }
 

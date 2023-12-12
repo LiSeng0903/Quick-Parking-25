@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box,
   Center,
@@ -12,11 +12,14 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from './CustomButton';
 import format from 'date-fns/format';
+import { AuthContext } from '../../protect';
+import { setAuthToken } from '../../utils/util';
 
 const Sidebar = props => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
+  // const { user, setUser } = useContext(AuthContext);
 
   const logout = async () => {
     // await logoutUser();
@@ -26,6 +29,8 @@ const Sidebar = props => {
   const goHome = () => {
     // await logoutUser();
     // await dispatch(SET_LOGIN(false));
+    setAuthToken('');
+    // setUser(null);
     navigate('/');
   };
   const [time, setTime] = React.useState(new Date());
