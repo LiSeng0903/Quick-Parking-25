@@ -149,13 +149,15 @@ def park_car(space_id: str, car_id: str):
     PSI.update_ps_history(space_id, history)
 
 
-def leave_car(space_id: str):
+def leave_car(car_id: str):
     """
     車子離開，更新停車位資訊，會更新
     1. current_car_id -> None
     2. occupied -> False
     3. history -> 更新最後一筆停車紀錄的離開時間
     """
+
+    space_id = PSI.read_ps_by_current_car_id(car_id)["space_id"]
 
     PSI.update_ps_current_car_id(space_id, None)
     PSI.update_ps_occupied(space_id, False)
