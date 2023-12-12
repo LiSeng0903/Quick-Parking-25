@@ -41,23 +41,23 @@ def gen_parking_space_data():
         }
 
         # Set type
-        if i in range(120):
+        if i in range(60):
             new_ps["space_type"] = "motor"
-        elif i in range(120, 130):
+        elif i in range(60, 70):
             new_ps["space_type"] = "priority"
-        elif i in range(130, 180):
+        elif i in range(70, 180):
             new_ps["space_type"] = "car"
 
         # Set zone
-        if i in range(60):
+        if i in range(30):
             new_ps["zone"] = "A"
-        elif i in range(60, 120):
+        elif i in range(30, 60):
             new_ps["zone"] = "B"
-        elif i in range(120, 140):
+        elif i in range(60, 100):
             new_ps["zone"] = "C"
-        elif i in range(140, 160):
+        elif i in range(100, 140):
             new_ps["zone"] = "D"
-        elif i in range(160, 180):
+        elif i in range(140, 180):
             new_ps["zone"] = "E"
 
         ParkingSpaceInterface.create_ps(new_ps)
