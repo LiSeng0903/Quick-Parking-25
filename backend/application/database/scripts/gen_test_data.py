@@ -91,9 +91,6 @@ def gen_parking_space_data():
 def gen_message_data():
     """產生提示訊息的資料"""
 
-    # 連接資料庫
-    connect_to_db()
-
     # 取得所有公告訊息
     msgs = ["五樓整修中", "四樓無障礙車位故障，請暫停使用"]
     for msg in msgs:
@@ -115,6 +112,22 @@ def gen_guard_accounts():
         }
 
         GuardInterface.create_guard(guard_dict)
+
+
+@connect_decorator
+def reset_all_ps():
+    """
+    重置所有停車格的資料，包含
+    1. occupied = False
+    2. current_car_id = None
+    3. status = "OK"
+    4. history = []
+    """
+
+    pss = ParkingSpaceInterface.read_all_ps()
+
+    for space_id in [ps["space_id"] for ps in pss]:
+        ParkingSpaceInterface.reset_ps(space_id)
 
 
 def gen_all_data():
