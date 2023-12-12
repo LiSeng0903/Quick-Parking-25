@@ -255,9 +255,9 @@ class ParkingSpaceInterface:
 
         new_histories = [
             History(
-                start_time=his["start_time"],
-                end_time=his["end_time"],
-                car_id=his["car_id"],
+                start_time=his.get("start_time", None),
+                end_time=his.get("end_time", None),
+                car_id=his.get("car_id", None),
             )
             for his in new_histories
         ]
