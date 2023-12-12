@@ -151,10 +151,7 @@ def guard_login(account: str, password: str):
 
     can_login, msg = grd_func.check_password(account, password)
 
-    return {
-        "success": can_login,
-        "message": msg,
-    }
+    return can_login, msg
 
 
 @connect_decorator
@@ -188,7 +185,7 @@ def guard_get_parking_info():
 def guard_get_space_by_floor(floor: int):
     """
     警衛取得某層樓停車位的資訊
-    
+
     Args:
         floor (int): 樓層
     Returns:
@@ -206,5 +203,5 @@ def guard_get_space_by_floor(floor: int):
                 ...
             ],
     """
-    
+
     return ps_func.get_parking_space_by_floor(floor, True)
