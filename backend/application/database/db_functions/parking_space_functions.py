@@ -37,7 +37,7 @@ def get_remain_space_cnt():
     return remain_space_cnt
 
 
-def get_parking_space_by_floor(floor: int, with_status:bool = False ):
+def get_parking_space_by_floor(floor: int, with_status: bool = False):
     """
     回傳該層樓的停車位資訊
 
@@ -71,7 +71,7 @@ def get_parking_space_by_floor(floor: int, with_status:bool = False ):
             "space_type": ps["space_type"],
             "occupied": ps["occupied"],
         }
-        
+
         if with_status:
             ps_info["status"] = ps["status"]
 
@@ -119,9 +119,9 @@ def can_park(space_id: str, car_id: str):
 def park_car(space_id: str, car_id: str):
     """
     停車，更新停車位資訊，會更新
-    1. current_car_id
-    2. occupied
-    3. history，新增一筆停車紀錄，尚未包含離開時間
+    1. current_car_id -> car_id
+    2. occupied -> True
+    3. history -> 新增一筆停車紀錄，並不包含離開時間
 
     Args:
         space_id (str): 停車位 ID
@@ -145,6 +145,22 @@ def park_car(space_id: str, car_id: str):
             "end_time": None,
         }
     )
+    PSI.update_ps_history(space_id, history)
+
+
+def leave_car(space_id: str):
+    """
+    車子離開，更新停車位資訊，會更新
+    1. current_car_id -> None
+    2. occupied -> False
+    3. history -> 更新最後一筆停車紀錄的離開時間
+    """
+
+    PSI.update_ps_current_car_id(space_id, None)
+    PSI.update_ps_occupied(space_id, False)
+
+    history = PSI.read_ps_history(space_id)
+    history[-1]["end_time"] = datetime.now()
     PSI.update_ps_history(space_id, history)
 
 
@@ -240,11 +256,11 @@ def get_ps_all_info(space_id: str):
 
     # 嘗試以 space_id 找到停車位
     ps = PSI.read_ps_by_space_id(space_id)
-    
+
     # 填入停車位資訊
-    info["parkingSpaceId"] = ps["space_id"] 
-    info["spaceType"] = ps["space_type"] 
-    info["status"] = ps["status"] 
+    info["parkingSpaceId"] = ps["space_id"]
+    info["spaceType"] = ps["space_type"]
+    info["status"] = ps["status"]
 
     # 整理 ps["history"]，並將其放入 info["history"]
     for his in ps["history"]:
@@ -252,7 +268,7 @@ def get_ps_all_info(space_id: str):
             {
                 "startTime": his.get("start_time", None),
                 "carId": his.get("car_id", None),
-                "endTime": his.get("end_time", None), # 停車尚未結束時，"endTime" 填入 None 
+                "endTime": his.get("end_time", None),  # 停車尚未結束時，"endTime" 填入 None
             }
         )
 
