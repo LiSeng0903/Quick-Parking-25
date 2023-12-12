@@ -37,7 +37,7 @@ def get_remain_space_cnt():
     return remain_space_cnt
 
 
-def get_parking_space_by_floor(floor: int):
+def get_parking_space_by_floor(floor: int, with_status:bool = False ):
     """
     回傳該層樓的停車位資訊
 
@@ -71,6 +71,9 @@ def get_parking_space_by_floor(floor: int):
             "space_type": ps["space_type"],
             "occupied": ps["occupied"],
         }
+        
+        if with_status:
+            ps_info["status"] = ps["status"]
 
         if ps["zone"] in spaces.keys():
             spaces[ps["zone"]].append(ps_info)

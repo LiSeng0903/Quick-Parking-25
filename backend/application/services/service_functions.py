@@ -182,3 +182,29 @@ def guard_get_parking_infos():
         "priority": remain_space_cnt["priority"],
         "warningParkingSpaceIds": warning_ps_ids,
     }
+
+
+@connect_decorator
+def guard_get_space_by_floor(floor: int):
+    """
+    警衛取得某層樓停車位的資訊
+    
+    Args:
+        floor (int): 樓層
+    Returns:
+        dict: 該樓層的停車位資訊。內容為 {
+            "A": [
+                {
+                    "space_id": str,
+                    "space_type": "car" || "motor" || "priority",
+                    "occupied": bool,
+                    "status": "OK" || "WARNING",
+                },
+                ...
+            ],
+            "B": [
+                ...
+            ],
+    """
+    
+    return ps_func.get_parking_space_by_floor(floor, True)
