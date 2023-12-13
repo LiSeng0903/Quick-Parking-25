@@ -314,7 +314,7 @@ def get_ps_all_info(space_id: str):
         current_history = ps["history"][-1]  # 也許 ps["history"][-1] 沒有東西
 
         # 正有車子停在停車位上
-        if current_history.get("occupied") == True:
+        if ps.get("occupied") == True:
             info["currentCarId"] = ps["current_car_id"]
             info["parkTime"] = datetime_delta_to_str(now() - current_history["start_time"])
     except Exception as e:
