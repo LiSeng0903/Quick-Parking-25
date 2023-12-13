@@ -104,6 +104,7 @@ const guardLogIn = async userData => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: JSON.stringify(userData),
     });
@@ -184,7 +185,12 @@ const getGuardCarSpace = async carSpaceId => {
 
 const getAllFloors = async () => {
   try {
-    const response = await fetch('/api/guard/allFloors');
+    const response = await fetch('/api/guard/allFloors', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+      }
+    });
     const data = await response.json();
     return data; // retrun map of selected floor
   } catch (error) {

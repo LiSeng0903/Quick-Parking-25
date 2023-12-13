@@ -252,9 +252,11 @@ const Dashboard = () => {
                 flexDirection={'column'}
                 justifyContent={'center'}
                 bg={'#FFFFFF'}
+                maxH={'30vh'}
+                overflowY={'scroll'}
               >
                 <Center>
-                  <HStack>
+                  <HStack flexWrap={'wrap'} overflowY={'scroll'}>
                     {warningSpaceIds.map(id => (
                       <Button
                         key={id}
