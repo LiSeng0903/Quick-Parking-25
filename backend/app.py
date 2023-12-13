@@ -43,6 +43,7 @@ def findCar():
     info = find_car(space_id, car_id)
     return json.dumps(info)
 
+@jwt_required()
 @app.route("/api/guard/check/<int:carSpace>", methods=['GET'])
 def checkCar(carSpace):
     spaceStr = str(carSpace)
