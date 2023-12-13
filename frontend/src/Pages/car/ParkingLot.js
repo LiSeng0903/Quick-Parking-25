@@ -50,7 +50,6 @@ const ParkingLot = ({ getFloorAPI }) => {
           fetchData={fetchData}
         />
       )}
-      {/* <Box>我是停車格</Box> */}
     </Grid>
   );
 };

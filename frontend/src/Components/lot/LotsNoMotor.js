@@ -13,7 +13,7 @@ import ParkingEnterModal from '../modal/ParkingModal';
 import { useState } from 'react';
 
 export default function LotsNoMotor(props) {
-  console.log('parkingMap in lots others', props.parkingMap)
+  console.log('parkingMap in lots others', props.parkingMap);
   const parkingMap = props.parkingMap;
   const zoneA = parkingMap['A'];
   const zoneB = parkingMap['B'];
@@ -21,12 +21,20 @@ export default function LotsNoMotor(props) {
 
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
+  const isPriorityColor = '#7A98D3';
   const bgColor = '#F0EFE5';
+  const getButtonBackgroundColor = lot => {
+    if (!lot.occupied) {
+      return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
+    } else {
+      return isOccupiedColor;
+    }
+  };
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
-  const [selectedSpaceId, setSelectedSpaceId] = useState("");
+  const [selectedSpaceId, setSelectedSpaceId] = useState('');
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -83,7 +91,7 @@ export default function LotsNoMotor(props) {
                           justifyContent={'space-evenly'}
                         >
                           <Button
-                            bg={lot.occupied ? isOccupiedColor : isEmptyColor}
+                            bg={getButtonBackgroundColor(lot)}
                             width={'1vw'}
                             height={'8vh'}
                             variant={'solid'}

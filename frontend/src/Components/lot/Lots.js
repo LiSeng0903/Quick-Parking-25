@@ -35,7 +35,15 @@ export default function Lots(props) {
 
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
+  const isPriorityColor = '#7A98D3';
   const bgColor = '#F0EFE5';
+  const getButtonBackgroundColor = lot => {
+    if (!lot.occupied) {
+      return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
+    } else {
+      return isOccupiedColor;
+    }
+  };
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -152,7 +160,7 @@ export default function Lots(props) {
                         justifyContent={'space-evenly'}
                       >
                         <Button
-                          bg={isOccupiedColor}
+                          bg={getButtonBackgroundColor(lot)}
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {
@@ -199,7 +207,7 @@ export default function Lots(props) {
                           justifyContent={'space-evenly'}
                         >
                           <Button
-                            bg={lot.occupied ? isOccupiedColor : isEmptyColor}
+                            bg={getButtonBackgroundColor(lot)}
                             width={'1vw'}
                             height={'8vh'}
                             variant={'solid'}
@@ -213,7 +221,6 @@ export default function Lots(props) {
                     </Wrap>
                   </Stack>
                 </Box>
-                {/* <Text>單行道</Text> */}
               </React.Fragment>
             ))}
           </Box>
