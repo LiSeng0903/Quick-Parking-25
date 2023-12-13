@@ -242,7 +242,7 @@ class ParkingSpaceInterface:
             if ps == None:
                 raise Exception(f"{space_id} 停車格不存在")
 
-            ps.status = status
+            ps["status"] = status
             ps.save()
             return True, "Update parking space status success"
         except Exception as e:
@@ -255,9 +255,9 @@ class ParkingSpaceInterface:
 
         new_histories = [
             History(
-                start_time=his["start_time"],
-                end_time=his["end_time"],
-                car_id=his["car_id"],
+                start_time=his.get("start_time", None),
+                end_time=his.get("end_time", None),
+                car_id=his.get("car_id", None),
             )
             for his in new_histories
         ]

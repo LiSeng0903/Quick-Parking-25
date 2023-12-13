@@ -81,6 +81,33 @@ def park_car(space_id: str, car_id: str):
 
 
 @connect_decorator
+def leave_car(car_id: str):
+    """
+    車輛離開停車場
+
+    Args:
+        car_id (str): 車輛 ID
+    Returns:
+        bool: 是否成功
+        str: 訊息
+    """
+
+    # 檢查車輛是否在停車場
+    can_leave, msg = ps_func.can_leave(car_id)
+
+    if can_leave == False:
+        return False, msg
+
+    try:
+        park_time = ps_func.leave_car(car_id)
+        msg = f"車輛 {car_id} 已離場，共停了 {park_time}"
+        return True, msg
+
+    except Exception as e:
+        return False, str(e)
+
+
+@connect_decorator
 def find_car(space_id: str, car_id: str):
     """
     尋找車輛，space_id 和 car_id 擇一即可，兩者都有且不一致時以 space_id 為主
