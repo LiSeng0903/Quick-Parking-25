@@ -143,10 +143,24 @@ const getGuardFloorMap = async floor => {
 };
 
 const getGuardCarSpace = async carSpaceId => {
+  
   try {
-    const response = await fetch('/api/guard/check/' + carSpaceId);
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
+    const response = await fetch('/api/guard/check/' + carSpaceId, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
     const data = await response.json();
-    return data;
+    return data; // return map of selected floor
   } catch (error) {
     console.log(
       `Error getting car or park grid information for guard. ${error}`
