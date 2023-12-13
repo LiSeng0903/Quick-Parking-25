@@ -130,34 +130,6 @@ const guardLogIn = async userData => {
   }
 };
 
-// 使用存儲的 token 進行其他請求
-// const fetchDataWithToken = () => {
-//   const token = getAuthToken();
-//   if (token) {
-//     // getGuardFloorMap();
-//     console.log(token);
-//     // getGuardCarSpace();
-//     // getAllFloors();
-//     // 將 token 加入請求的 Authorization header
-
-//     // fetch('/protected', {
-//     //   method: 'GET',
-//     //   headers: {
-//     //     Authorization: `Bearer ${token}`,
-//     //   },
-//     // })
-//     //   .then(response => response.json())
-//     //   .then(data => {
-//     //     console.log('受保護的資源:', data);
-//     //   })
-//     //   .catch(error => {
-//     //     console.error('Error:', error);
-//     //   });
-//   } else {
-//     console.log('沒有找到 token');
-//   }
-// };
-
 const getGuardFloorMap = async floor => {
   try {
     const response = await instance.get(`/guard/map/${floor}`, {
@@ -201,7 +173,6 @@ export {
   getCarSpace,
   carExit,
   guardLogIn,
-  // fetchDataWithToken,
   getGuardFloorMap,
   getGuardCarSpace,
   getAllFloors,
