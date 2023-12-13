@@ -8,6 +8,7 @@ import {
   theme,
   LightMode,
   Spacer,
+  Text
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -99,10 +100,13 @@ export default function Lots(props) {
               alignItems={'center'}
               // marginTop={'5vh'}
               marginBottom={'5vh'}
-              borderColor={isOccupiedColor}
-              color={'black'}
+              // borderColor={isOccupiedColor}
+              color={isOccupiedColor}
+              bg={'#D9D9D9'}
             >
-              警衛室
+              <Text fontSize={'2xl'} color={'#616161'}>
+                警衛室
+              </Text>
             </Box>
             <Box display={'flex'} flexDirection={'row'} height={'max-content'}>
               <Box
