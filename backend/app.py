@@ -35,7 +35,7 @@ def parkCar():
     
     return response
 
-@app.route("/api/car/find", methods=['GET'])
+@app.route("/api/car/find", methods=['POST'])
 def findCar():
     data = request.get_json()
     space_id = str(data['spaceId'])
