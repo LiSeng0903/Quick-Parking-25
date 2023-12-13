@@ -6,6 +6,7 @@ import {
   Button,
   ChakraProvider,
   theme,
+  LightMode,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -45,165 +46,174 @@ export default function Lots(props) {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box
-        display={'flex'}
-        flexDirection={'row'}
-        bg={bgColor}
-        // h="100vh"
-        // w={'100vw'}
-        padding={5}
-        maxHeight={'80vh'}
-        height={'80vh'}
-        maxWidth={'100vw'}
-      >
-        {/* Pop-out Modal Section */}
-        {isOpen || !endModalOpen ? (
-          <ParkingEnterModal
-            isOpen={isOpen}
-            onClose={onClose}
-            initialRef={initialRef}
-            finalRef={finalRef}
-            endModalOpen={endModalOpen}
-            setEndModelOpen={setEndModelOpen}
-            setCarId={props.setCarId}
-            selectedSpaceId={selectedSpaceId}
-          />
-        ) : (
-          <></>
-        )}
-        {/* Left Section */}
+      <LightMode>
         <Box
-          width={'30%'}
-          maxWidth={'30%'}
-          overflow={'scroll'}
+          display={'flex'}
+          flexDirection={'row'}
+          bg={bgColor}
+          // h="100vh"
+          // w={'100vw'}
           padding={5}
-          marginRight={5}
+          maxHeight={'80vh'}
+          height={'80vh'}
+          maxWidth={'100vw'}
         >
+          {/* Pop-out Modal Section */}
+          {isOpen || !endModalOpen ? (
+            <ParkingEnterModal
+              isOpen={isOpen}
+              onClose={onClose}
+              initialRef={initialRef}
+              finalRef={finalRef}
+              endModalOpen={endModalOpen}
+              setEndModelOpen={setEndModelOpen}
+              setCarId={props.setCarId}
+              selectedSpaceId={selectedSpaceId}
+            />
+          ) : (
+            <></>
+          )}
+          {/* Left Section */}
           <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            display={'flex'}
-            height={'10vh'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            // marginTop={'5vh'}
-            marginBottom={'5vh'}
-            borderColor={isOccupiedColor}
-            color={'black'}
+            width={'30%'}
+            maxWidth={'30%'}
+            overflow={'scroll'}
+            padding={5}
+            marginRight={5}
           >
-            警衛室
-          </Box>
-          <Box display={'flex'} flexDirection={'row'} height={'max-content'}>
             <Box
               borderWidth="1px"
               borderRadius="lg"
               display={'flex'}
+              height={'10vh'}
               justifyContent={'center'}
+              alignItems={'center'}
+              // marginTop={'5vh'}
+              marginBottom={'5vh'}
               borderColor={isOccupiedColor}
+              color={'black'}
             >
-              <Stack direction="row" width={'80%'}>
-                <Wrap spacing={'3'} width={'100%'}>
-                  {motorLotsA.map(lot => (
-                    <WrapItem width={'2vw'} key={lot.lotId}>
-                      <Button
-                        // colorScheme="red"
-                        bg={isEmptyColor}
-                        width={'100%'}
-                        height={'3vh'}
-                        onClick={() => {
-                          motorLotsB.occupied ? onClose() : onOpen();
-                        }}
-                      ></Button>
-                    </WrapItem>
-                  ))}
-                </Wrap>
-              </Stack>
-              <Box
-                style={{
-                  writingMode: 'vertical-rl',
-                }}
-                bg={'white'}
-                color={'black'}
-                width={'20%'}
-              >
-                ZONE A
-              </Box>
+              警衛室
             </Box>
-            <Box
-              borderWidth="1px"
-              borderRadius="lg"
-              display={'flex'}
-              justifyContent={'center'}
-              borderColor={isOccupiedColor}
-            >
-              <Stack direction="row" width={'65%'}>
-                <Wrap spacing={'3'} width={'100%'}>
-                  {motorLotsB.map(lot => (
-                    <WrapItem width={'2vw'} key={lot.lotId}>
-                      <Button
-                        bg={isOccupiedColor}
-                        width={'100%'}
-                        height={'3vh'}
-                        onClick={() => {
-                          motorLotsB.occupied ? onClose() : onOpen();
-                        }}
-                      ></Button>
-                    </WrapItem>
-                  ))}
-                </Wrap>
-              </Stack>
-              <Box
-                style={{
-                  writingMode: 'vertical-rl',
-                }}
-                bg={'white'}
-                color={'black'}
-              >
-                ZONE B
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-        {/* Right Section */}
-        <Box height={'80vh'} overflow={'unset'}>
-          {allLots.map((lots, cnt) => (
-            <React.Fragment key={cnt}>
-              {/* Zone Section */}
+            <Box display={'flex'} flexDirection={'row'} height={'max-content'}>
               <Box
                 borderWidth="1px"
                 borderRadius="lg"
-                width={'70vw'}
-                margin={'2vh'}
-                overflow={'scroll'}
+                display={'flex'}
+                justifyContent={'center'}
                 borderColor={isOccupiedColor}
               >
-                <Box width={'100%'} bg={'white'} color={'black'}>
-                  ZONE {allLotsZone[cnt]}
-                </Box>
-                <Stack direction="column">
-                  <Wrap spacing={1}>
-                    {lots.map(lot => (
-                      <WrapItem key={lot.lotId} justifyContent={'space-evenly'}>
+                <Stack direction="row" width={'60%'}>
+                  <Wrap spacing={'3'} width={'100%'}>
+                    {motorLotsA.map(lot => (
+                      <WrapItem width={'2vw'} key={lot.lotId}>
                         <Button
-                          bg={lot.occupied ? isOccupiedColor : isEmptyColor}
-                          width={'1vw'}
-                          height={'8vh'}
-                          variant={'solid'}
+                          // colorScheme="red"
+                          bg={isEmptyColor}
+                          width={'100%'}
+                          height={'3vh'}
                           onClick={() => {
-                            setSelectedSpaceId(lot.space_id);
-                            lot.occupied ? onClose() : onOpen();
+                            motorLotsB.occupied ? onClose() : onOpen();
                           }}
                         ></Button>
                       </WrapItem>
                     ))}
                   </Wrap>
                 </Stack>
+                <Box
+                  style={{
+                    writingMode: 'vertical-rl',
+                  }}
+                  bg={'white'}
+                  color={'black'}
+                  width={'20%'}
+                >
+                  ZONE A
+                </Box>
               </Box>
-              {/* <Text>單行道</Text> */}
-            </React.Fragment>
-          ))}
+              <Box
+                borderWidth="1px"
+                borderRadius="lg"
+                display={'flex'}
+                justifyContent={'center'}
+                borderColor={isOccupiedColor}
+              >
+                <Stack direction="row" width={'65%'}>
+                  <Wrap spacing={'3'} width={'100%'}>
+                    {motorLotsB.map(lot => (
+                      <WrapItem
+                        width={'2vw'}
+                        key={lot.lotId}
+                        justifyContent={'space-evenly'}
+                      >
+                        <Button
+                          bg={isOccupiedColor}
+                          width={'100%'}
+                          height={'3vh'}
+                          onClick={() => {
+                            motorLotsB.occupied ? onClose() : onOpen();
+                          }}
+                        ></Button>
+                      </WrapItem>
+                    ))}
+                  </Wrap>
+                </Stack>
+                <Box
+                  style={{
+                    writingMode: 'vertical-rl',
+                  }}
+                  bg={'white'}
+                  color={'black'}
+                >
+                  ZONE B
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          {/* Right Section */}
+          <Box height={'80vh'} overflowX={'scroll'}>
+            {allLots.map((lots, cnt) => (
+              <React.Fragment key={cnt}>
+                {/* Zone Section */}
+                <Box
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  margin={'2vh'}
+                  overflow={'scroll'}
+                  borderColor={isOccupiedColor}
+                  maxWidth={'1000px'}
+                >
+                  <Box width={'900px'} bg={'white'} color={'black'}>
+                    ZONE {allLotsZone[cnt]}
+                  </Box>
+                  <Stack direction="column">
+                    <Wrap spacing={1} width={'900px'} pl={3}>
+                      {lots.map(lot => (
+                        <WrapItem
+                          key={lot.lotId}
+                          justifyContent={'space-evenly'}
+                        >
+                          <Button
+                            bg={lot.occupied ? isOccupiedColor : isEmptyColor}
+                            width={'1vw'}
+                            height={'8vh'}
+                            variant={'solid'}
+                            onClick={() => {
+                              setSelectedSpaceId(lot.space_id);
+                              lot.occupied ? onClose() : onOpen();
+                            }}
+                          ></Button>
+                        </WrapItem>
+                      ))}
+                    </Wrap>
+                  </Stack>
+                </Box>
+                {/* <Text>單行道</Text> */}
+              </React.Fragment>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      </LightMode>
     </ChakraProvider>
   );
 }

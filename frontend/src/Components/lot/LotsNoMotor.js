@@ -5,6 +5,7 @@ import {
   WrapItem,
   Button,
   ChakraProvider,
+  Center,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -34,90 +35,73 @@ export default function LotsNoMotor(props) {
   const allLots = [zoneA, zoneB, zoneC];
   return (
     <ChakraProvider>
-      <Box
-        display={'flex'}
-        flexDirection={'row'}
-        bg={bgColor}
-        // h="100vh"
-        // w={'100vw'}
-        padding={5}
-        maxHeight={'80vh'}
-        height={'80vh'}
-        maxWidth={'100vw'}
-      >
-        {/* Pop-out Modal Section */}
-        {isOpen || !endModalOpen ? (
-          <ParkingEnterModal
-            isOpen={isOpen}
-            onClose={onClose}
-            initialRef={initialRef}
-            finalRef={finalRef}
-            endModalOpen={endModalOpen}
-            setEndModelOpen={setEndModelOpen}
-            selectedSpaceId={selectedSpaceId}
-          />
-        ) : (
-          <></>
-        )}
-        {/* Left Section */}
+      <Center>
         <Box
           display={'flex'}
-          flexDirection={'column'}
-          width={'40%'}
-          justifyContent={'center'}
+          flexDirection={'row'}
+          bg={bgColor}
+          padding={5}
+          maxHeight={'80vh'}
+          height={'80vh'}
+          maxWidth={'100vw'}
         >
-          <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            display={'flex'}
-            height={'30vh'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            marginTop={'5vh'}
-            marginBottom={'10vh'}
-          ></Box>
-        </Box>
-        {/* Right Section */}
-        <Box>
-          {allLots.map((lots, cnt) => (
-            <React.Fragment key={cnt}>
-              {/* Zone Section */}
-              <Box
-                borderWidth="1px"
-                borderRadius="lg"
-                width={'70vw'}
-                margin={'2vh'}
-                overflow={'scroll'}
-                borderColor={isOccupiedColor}
-              >
-                <Box width={'100%'} bg={'white'} color={'black'}>
-                  ZONE
-                </Box>
-                <Stack direction="column">
-                  <Wrap spacing={1}>
-                    {lots.map(lot => (
-                      <WrapItem key={lot.lotId} width={'3vw'} margin={'1px'}>
-                        <Button
-                          bg={lot.occupied ? isOccupiedColor : isEmptyColor}
-                          width={'1vw'}
-                          height={'8vh'}
-                          variant={'solid'}
-                          onClick={() => {
-                            setSelectedSpaceId(lot.space_id);
-                            lot.occupied ? onClose() : onOpen();
-                          }}
+          {/* Pop-out Modal Section */}
+          {isOpen || !endModalOpen ? (
+            <ParkingEnterModal
+              isOpen={isOpen}
+              onClose={onClose}
+              initialRef={initialRef}
+              finalRef={finalRef}
+              endModalOpen={endModalOpen}
+              setEndModelOpen={setEndModelOpen}
+              selectedSpaceId={selectedSpaceId}
+            />
+          ) : (
+            <></>
+          )}
+          {/* Lot Section */}
+          <Box overflowX={'scroll'} maxW={'1000px'}>
+            {allLots.map((lots, cnt) => (
+              <React.Fragment key={cnt}>
+                {/* Zone Section */}
+                <Box
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  margin={'2vh'}
+                  overflow={'scroll'}
+                  borderColor={isOccupiedColor}
+                  width={'900px'}
+                >
+                  <Box width={'100%'} bg={'white'} color={'black'}>
+                    ZONE
+                  </Box>
+                  <Stack direction="column">
+                    <Wrap spacing={1} width={'900px'} pl={3}>
+                      {lots.map(lot => (
+                        <WrapItem
+                          key={lot.lotId}
+                          justifyContent={'space-evenly'}
                         >
-                        </Button>
-                      </WrapItem>
-                    ))}
-                  </Wrap>
-                </Stack>
-              </Box>
-              {/* <Text>單行道</Text> */}
-            </React.Fragment>
-          ))}
+                          <Button
+                            bg={lot.occupied ? isOccupiedColor : isEmptyColor}
+                            width={'1vw'}
+                            height={'8vh'}
+                            variant={'solid'}
+                            onClick={() => {
+                              setSelectedSpaceId(lot.space_id);
+                              lot.occupied ? onClose() : onOpen();
+                            }}
+                          ></Button>
+                        </WrapItem>
+                      ))}
+                    </Wrap>
+                  </Stack>
+                </Box>
+              </React.Fragment>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      </Center>
     </ChakraProvider>
   );
 }
