@@ -7,7 +7,7 @@ sys.path.append(message_interface_path)
 
 import datetime
 
-from general_functions import now
+from general_functions import datetime_delta_to_str, now
 from ParkingSpaceInterface import ParkingSpaceInterface as PSI
 
 
@@ -189,6 +189,7 @@ def leave_car(car_id: str):
 
     park_time = now() - history[-1]["start_time"]
 
+    # TODO: isoformat
     return park_time
 
 
@@ -240,7 +241,8 @@ def find_car(space_id: str, car_id: str):
             raise Exception(f"車輛 {car_id} 已離開停車位 {space_id}")
 
         info["carId"] = ps["current_car_id"]
-        info["parkTime"] = now() - current_history["start_time"]
+        park_time = now() - current_history["start_time"]
+        info["parkTime"] = datetime_delta_to_str(park_time)
 
     except Exception as e:
         pass
@@ -292,22 +294,29 @@ def get_ps_all_info(space_id: str):
 
     # 整理 ps["history"]，並將其放入 info["history"]
     for his in ps["history"]:
-        info["history"].append(
-            {
-                "startTime": his.get("start_time", None),
-                "carId": his.get("car_id", None),
-                "endTime": his.get("end_time", None),  # 停車尚未結束時，"endTime" 填入 None
-            }
-        )
+        formated_his = {}
+
+        formated_his["carId"] = his.get("car_id", None)
+        try:
+            formated_his["startTime"] = his.get("start_time").isoformat()
+        except:
+            formated_his["startTime"] = ""
+
+        try:
+            formated_his["endTime"] = his.get("end_time").isoformat()
+        except:
+            formated_his["endTime"] = ""
+
+        info["history"].append(formated_his)
 
     # 計算 parkTime, currentCarId
     try:
         current_history = ps["history"][-1]  # 也許 ps["history"][-1] 沒有東西
 
         # 正有車子停在停車位上
-        if current_history.get("end_time", None) == None:
+        if current_history.get("occupied") == True:
             info["currentCarId"] = ps["current_car_id"]
-            info["parkTime"] = now() - current_history["start_time"]
+            info["parkTime"] = datetime_delta_to_str(now() - current_history["start_time"])
     except Exception as e:
         pass
 
