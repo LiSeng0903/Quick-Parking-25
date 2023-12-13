@@ -3,18 +3,21 @@ import RootLayout from '../../Layouts/RootLayouts';
 import OthersLayout from '../../Layouts/OthersLayouts';
 import { useState, useEffect } from 'react';
 import { getFloorMap } from '../../api';
+import { getAllFloors } from '../../api';
 import { IoConstructOutline } from 'react-icons/io5';
 
-const ParkingLot = () => {
+const ParkingLot = ({ getFloorAPI }) => {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [parkingMap, setParkingMap] = useState({});
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [parkingLotsDataLen, setParkingLotsDataLen] = useState(5)
+  const [parkingLotsDataLen, setParkingLotsDataLen] = useState(5);
 
+  // getFloorAPI = getFloorMap;
+  // getFloorAPI = getAllFloors();
   // 在 ParkingLot.js 中
   const fetchData = async floor => {
     try {
-      const data = await getFloorMap(floor);
+      const data = await getFloorAPI(floor);
       setParkingLotsDataLen(Object.keys(data).length);
       setParkingMap(data);
       setIsDataLoaded(true);
