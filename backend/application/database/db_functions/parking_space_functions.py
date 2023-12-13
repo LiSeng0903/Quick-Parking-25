@@ -5,7 +5,7 @@ cwd = os.path.dirname(os.path.abspath(__file__))
 message_interface_path = os.path.join(cwd, "../interfaces/")
 sys.path.append(message_interface_path)
 
-from datetime import datetime
+import datetime
 
 from general_functions import now
 from ParkingSpaceInterface import ParkingSpaceInterface as PSI
@@ -329,3 +329,30 @@ def get_warning_ps_ids():
     warning_ids = [ps["space_id"] for ps in warning_pss]
 
     return warning_ids
+
+
+def check_pss_status():
+    """
+    檢查停車位狀態；
+
+    Args:
+        None
+    Returns:
+        None
+    """
+
+    pss = PSI.read_all_ps()
+
+    for ps in pss:
+        # 狀態正常 & 沒有停車中的停車位 => 跳過
+        if (ps.get("status") == "OK") and (ps.get("occupied") == False):
+            continue
+
+        try:
+            if now() - ps.get("history")[-1].get("start_time") > datetime.timedelta(hours=24):
+                PSI.update_ps_status(ps.get("space_id"), "WARNING")
+            else:
+                PSI.update_ps_status(ps.get("space_id"), "OK")
+        except Exception as e:
+            print(e)
+            pass

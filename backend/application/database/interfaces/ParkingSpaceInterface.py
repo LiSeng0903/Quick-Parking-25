@@ -242,7 +242,7 @@ class ParkingSpaceInterface:
             if ps == None:
                 raise Exception(f"{space_id} 停車格不存在")
 
-            ps.status = status
+            ps["status"] = status
             ps.save()
             return True, "Update parking space status success"
         except Exception as e:
