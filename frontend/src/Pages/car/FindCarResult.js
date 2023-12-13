@@ -49,7 +49,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={carData.spacesId || 'null'}
+                    value={carData.spaceId || 'null'}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}

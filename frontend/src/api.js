@@ -104,7 +104,7 @@ const guardLogIn = async userData => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: JSON.stringify(userData),
     });
@@ -130,34 +130,6 @@ const guardLogIn = async userData => {
   }
 };
 
-// 使用存儲的 token 進行其他請求
-// const fetchDataWithToken = () => {
-//   const token = getAuthToken();
-//   if (token) {
-//     // getGuardFloorMap();
-//     console.log(token);
-//     // getGuardCarSpace();
-//     // getAllFloors();
-//     // 將 token 加入請求的 Authorization header
-
-//     // fetch('/protected', {
-//     //   method: 'GET',
-//     //   headers: {
-//     //     Authorization: `Bearer ${token}`,
-//     //   },
-//     // })
-//     //   .then(response => response.json())
-//     //   .then(data => {
-//     //     console.log('受保護的資源:', data);
-//     //   })
-//     //   .catch(error => {
-//     //     console.error('Error:', error);
-//     //   });
-//   } else {
-//     console.log('沒有找到 token');
-//   }
-// };
-
 const getGuardFloorMap = async floor => {
   try {
     const response = await instance.get(`/guard/map/${floor}`, {
@@ -171,10 +143,24 @@ const getGuardFloorMap = async floor => {
 };
 
 const getGuardCarSpace = async carSpaceId => {
+  
   try {
-    const response = await fetch('/api/guard/check/' + carSpaceId);
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
+    const response = await fetch('/api/guard/check/' + carSpaceId, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
     const data = await response.json();
-    return data;
+    return data; // return map of selected floor
   } catch (error) {
     console.log(
       `Error getting car or park grid information for guard. ${error}`
@@ -185,14 +171,22 @@ const getGuardCarSpace = async carSpaceId => {
 
 const getAllFloors = async () => {
   try {
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
     const response = await fetch('/api/guard/allFloors', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
+
     const data = await response.json();
-    return data; // retrun map of selected floor
+    return data; // return map of selected floor
   } catch (error) {
     console.log(`Error getting information for all floors. ${error}`);
     throw error;
@@ -206,7 +200,6 @@ export {
   getCarSpace,
   carExit,
   guardLogIn,
-  // fetchDataWithToken,
   getGuardFloorMap,
   getGuardCarSpace,
   getAllFloors,
