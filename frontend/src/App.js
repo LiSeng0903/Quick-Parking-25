@@ -67,7 +67,7 @@ const router = createBrowserRouter(
         element={
           <ChakraProvider>
             <Sidebar />
-            <Map getFloorAPI={getAllFloors} />
+            <Map getFloorAPI={getFloorMap} />
           </ChakraProvider>
         }
       />
