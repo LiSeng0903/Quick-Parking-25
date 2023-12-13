@@ -7,6 +7,7 @@ import {
   ChakraProvider,
   theme,
   LightMode,
+  Spacer,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -75,11 +76,11 @@ export default function Lots(props) {
           )}
           {/* Left Section */}
           <Box
-            width={'30%'}
-            maxWidth={'30%'}
+            width={'20%'}
+            maxWidth={'25%'}
             overflow={'scroll'}
             padding={5}
-            marginRight={5}
+            marginRight={10}
           >
             <Box
               borderWidth="1px"
@@ -103,10 +104,14 @@ export default function Lots(props) {
                 justifyContent={'center'}
                 borderColor={isOccupiedColor}
               >
-                <Stack direction="row" width={'60%'}>
+                <Stack direction="row" height={'540px'}>
                   <Wrap spacing={'3'} width={'100%'}>
                     {motorLotsA.map(lot => (
-                      <WrapItem width={'2vw'} key={lot.lotId}>
+                      <WrapItem
+                        width={'2vw'}
+                        key={lot.lotId}
+                        justifyContent={'space-evenly'}
+                      >
                         <Button
                           // colorScheme="red"
                           bg={isEmptyColor}
@@ -138,7 +143,7 @@ export default function Lots(props) {
                 justifyContent={'center'}
                 borderColor={isOccupiedColor}
               >
-                <Stack direction="row" width={'65%'}>
+                <Stack direction="row" height={'540px'}>
                   <Wrap spacing={'3'} width={'100%'}>
                     {motorLotsB.map(lot => (
                       <WrapItem
