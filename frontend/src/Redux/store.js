@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import authReducer from './slices/authSlice';
+import accountReducer from './slices/accountSlice';
 
 const persistConfig = {
   key: 'root',
@@ -18,10 +18,10 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = persistReducer(persistConfig, authReducer);
+const rootReducer = persistReducer(persistConfig, accountReducer);
 
 const store = configureStore({
-  reducer: { auth: rootReducer },
+  reducer: { account: rootReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

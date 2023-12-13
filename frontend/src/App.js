@@ -14,7 +14,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './Redux/store.js';
 import { AuthContext } from './protect.js';
 import Homepage from './Pages/homepage/Homepage.js';
@@ -26,6 +26,7 @@ import Dashboard from './Pages/guard/Dashboard.js';
 import Sidebar from './Components/sidebar/Sidebar.js';
 import Search from './Pages/guard/Search.js';
 import Map from './Pages/guard/Map.js';
+import ProtectedRoute from './utils/ProtectedRoute.js';
 
 // router and routes
 const router = createBrowserRouter(
@@ -41,8 +42,10 @@ const router = createBrowserRouter(
         path="guard/dashboard"
         element={
           <ChakraProvider>
-            <Sidebar />
-            <Dashboard />
+            <ProtectedRoute>
+              <Sidebar />
+              <Dashboard />
+            </ProtectedRoute>
           </ChakraProvider>
         }
       />
@@ -69,7 +72,17 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   async function loginStatus() {
+  //     const status = await getLoginStatus();
+  //     dispatch(SET_LOGIN(status));
+  //   }
+  //   loginStatus();
+  // }, [dispatch]);
+
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>

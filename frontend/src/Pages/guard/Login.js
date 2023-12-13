@@ -46,6 +46,7 @@ const Login = () => {
   };
 
   const isError = formData === '';
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   /**
    * Submit the form
@@ -54,14 +55,6 @@ const Login = () => {
   const login = async e => {
     e.preventDefault();
 
-    if (!account || !password) {
-      toast({
-        title: 'All fields are required',
-        status: 'error',
-        isClosable: true,
-      });
-    }
-
     const userData = {
       account,
       password,
@@ -69,43 +62,54 @@ const Login = () => {
     // console.log('userData', JSON.stringify(userData));
 
     // alert(account);
-    try {
-      // console.log('Before guardLogIn');
-      const data = await guardLogIn(userData);
-      // console.log('After guardLogIn, data:', data);
-      if (data.ok === 0) {
-        console.log(data.status);
-      }
-      // If OK then store the token into localStorage
-      setAuthToken(data.access_token);
-      // console.log(data.access_token);
-      navigate('/guard/dashboard');
-
-      // fetch data after login
-      //
-      // try {
-      //   const response = await fetchDataWithToken();
-
-      //   if (response.ok !== 1) {
-      //     // If fetchDataWithToken() fails, clear the token
-      //     setAuthToken(null);
-      //   }
-      //   setUser(response.data);
-      //   navigate('/guard/dashboard');
-      // } catch (error) {
-      //   // Handle errors from fetchDataWithToken()
-      //   console.error('Error in fetchDataWithToken():', error);
-      //   setAuthToken(null);
-      // }
-
+    if (!account || !password) {
       toast({
-        title: 'Log in successfully!',
-        status: 'success',
+        title: 'All fields are required',
+        status: 'error',
         isClosable: true,
-        position: 'top-right',
+        position: 'top',
       });
-    } catch (error) {
-      console.log('Error:', error);
+    } else {
+      try {
+        console.log('Before guardLogIn');
+        const data = await guardLogIn(userData);
+        console.log('After guardLogIn, data:', data);
+        if (data.success === true) {
+          console.log(data.message);
+          toast({
+            title: 'Log in successfully!',
+            status: 'success',
+            isClosable: true,
+            position: 'top',
+          });
+          // Update the isLoggedIn state
+          setIsLoggedIn(true);
+          console.log(isLoggedIn);
+        }
+        toast({
+          title: 'Log in successfully!',
+          status: 'success',
+          isClosable: true,
+          position: 'top',
+        });
+        navigate('/guard/dashboard');
+        toast({
+          title: 'Log in successfully!',
+          status: 'success',
+          isClosable: true,
+          position: 'top',
+        });
+        setAuthToken(data.access_token);
+
+      } catch (error) {
+        console.log('Error:', error);
+        toast({
+          title: "Guard account didn't exist!",
+          status: 'error',
+          isClosable: true,
+          position: 'top',
+        });
+      }
     }
   };
 
@@ -213,5 +217,10 @@ const Login = () => {
     </ChakraProvider>
   );
 };
+
+export const setLoggedIn = isLoggedIn => ({
+  type: 'SET_LOGGED_IN',
+  payload: isLoggedIn,
+});
 
 export default Login;

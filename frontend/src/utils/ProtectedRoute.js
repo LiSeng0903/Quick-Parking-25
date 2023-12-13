@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const user = useSelector(state => state.user);
+  const account = useSelector(state => state.account);
   let location = useLocation();
 
-  if (!user.state.isAuthenticated) {
+  if (!account.state.isAuthenticated) {
     return <Navigate to="/guard/login" state={{ from: location }} replace />;
   }
   return children;
