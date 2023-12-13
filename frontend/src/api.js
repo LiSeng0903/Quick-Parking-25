@@ -104,7 +104,7 @@ const guardLogIn = async userData => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
       body: JSON.stringify(userData),
     });
@@ -157,14 +157,22 @@ const getGuardCarSpace = async carSpaceId => {
 
 const getAllFloors = async () => {
   try {
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
     const response = await fetch('/api/guard/allFloors', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
+
     const data = await response.json();
-    return data; // retrun map of selected floor
+    return data; // return map of selected floor
   } catch (error) {
     console.log(`Error getting information for all floors. ${error}`);
     throw error;
