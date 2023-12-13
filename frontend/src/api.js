@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getAuthToken } from './utils/util';
+import { toast } from 'react-toastify';
 
 const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
 
@@ -106,14 +107,18 @@ const guardLogIn = async userData => {
       },
       body: JSON.stringify(userData),
     });
+    const responseData = await response.json();
     if (response.ok) {
-      const responseData = await response.json();
-      console.log(`Guard ${userData.account} login successfully.`);
-      localStorage.setItem('token', responseData.access_token);
-      return responseData;
+      if (responseData.success) {
+        console.log(`Guard ${userData.account} login successfully.`);
+        toast.success('Login Successfully...');
+        localStorage.setItem('token', responseData.access_token);
+        return responseData;
+      }
     } else {
       console.log(`Guard ${userData.account} login failed.`);
       console.log(userData, JSON.stringify(userData));
+      // return responseData;
       throw new Error(
         `Guard ${userData.account} login failed. Status: ${response.status}`
       );

@@ -36,7 +36,7 @@ const Sidebar = props => {
   const [time, setTime] = React.useState(new Date());
   React.useEffect(() => {
     const intervalID = window.setInterval(() => {
-      console.log('過一秒囉');
+      // console.log('過一秒囉');
       setTime(new Date());
     }, 1000);
     return () => {
