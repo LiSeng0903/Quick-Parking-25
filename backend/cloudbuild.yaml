@@ -1,0 +1,41 @@
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: [ 'build', '-t', 'gcr.io/tw-rd-de-julia/quick-parking-image', '.' ]
+# images:
+# - 'gcr.io/tw-rd-de-julia/quick-parking-image'
+
+steps:
+  # Install dependencies
+  - name: python:3.10
+    entrypoint: bash
+    args: 
+    - '-c'
+    - pip install -r requirements.txt --user
+    # --user flag in the pip install command ensures that the subsequent build steps can access the modules installed in this build step.
+
+  # - name: python:3.10
+  #   entrypoint: bash
+  #   args: python -m pytest tests
+
+
+# Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args: 
+    - '-c'
+    - docker build -t gcr.io/tw-rd-de-julia/quick-parking-image .
+
+
+  # Docker push to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args: 
+    - '-c'
+    - docker push gcr.io/tw-rd-de-julia/quick-parking-image
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args: 
+    - '-c'
+    - gcloud run deploy 'quick-parking' --port=5000 --image=gcr.io/tw-rd-de-julia/quick-parking-image:latest --region asia-east1 --allow-unauthenticated --project=tw-rd-de-julia
