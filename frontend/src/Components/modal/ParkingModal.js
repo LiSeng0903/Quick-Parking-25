@@ -206,7 +206,7 @@ function ParkingEndModal({ isEndOpen }) {
                 rounded={30}
                 onClick={navigateToHome}
               >
-                回首頁
+                回首頁x87
               </Button>
             </ButtonGroup>
           </ModalFooter>
