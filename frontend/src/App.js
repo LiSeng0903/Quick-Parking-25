@@ -42,10 +42,10 @@ const router = createBrowserRouter(
         path="guard/dashboard"
         element={
           <ChakraProvider>
-            <ProtectedRoute>
+            {/* <ProtectedRoute> */}
               <Sidebar />
               <Dashboard />
-            </ProtectedRoute>
+            {/* </ProtectedRoute> */}
           </ChakraProvider>
         }
       />
@@ -73,7 +73,7 @@ const router = createBrowserRouter(
 
 function App() {
   // const [user, setUser] = useState(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
   //   async function loginStatus() {
@@ -82,9 +82,8 @@ function App() {
   //   }
   //   loginStatus();
   // }, [dispatch]);
-
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <ChakraProvider theme={theme}>
         <LightMode>
           <Box textAlign="center" fontSize="xl" bg="#F0EFE5" h="100vh">
@@ -96,7 +95,7 @@ function App() {
           </Box>
         </LightMode>
       </ChakraProvider>
-    </Provider>
+    // </Provider>
   );
 }
 
