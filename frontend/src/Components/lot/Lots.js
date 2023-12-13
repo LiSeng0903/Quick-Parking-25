@@ -37,6 +37,7 @@ export default function Lots(props) {
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
   const isPriorityColor = '#7A98D3';
+  const isWarningColor = '#D9534F';
   const bgColor = '#F0EFE5';
   const getButtonBackgroundColor = lot => {
     if (!lot.occupied) {
