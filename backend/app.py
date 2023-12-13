@@ -62,6 +62,7 @@ def guardLogin():
         response = jsonify({'success': can_login, 'message': msg})
     return response
 
+@jwt_required()
 @app.route("/api/guard/allFloors", methods=['GET'])
 def getAllFloors():
     parking_info = guard_get_parking_info()
