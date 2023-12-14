@@ -12,5 +12,6 @@ const Map = ({getFloorAPI}) => {
     </ChakraProvider>
   );
 };
+// getGuardFloorMap
 
 export default Map;

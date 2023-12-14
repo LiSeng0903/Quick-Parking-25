@@ -130,14 +130,25 @@ const guardLogIn = async userData => {
   }
 };
 
-const getGuardFloorMap = async floor => {
+const getGuardFloorMap = async selectedFloor => {
   try {
-    const response = await instance.get(`/guard/map/${floor}`, {
-      params: { floor },
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
+    const response = await fetch('/api/guard/map/' + selectedFloor, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
     });
-    return response.data; // retrun map for guard of selected floor
+    const data = await response.json();
+    return data; // return map for guard of selected floor
   } catch (error) {
-    console.log(`Error getting map for guard of floor ${floor}. ${error}`);
+    console.log(`Error getting map for guard of floor ${selectedFloor}.`);
     throw error;
   }
 };

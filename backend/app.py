@@ -69,7 +69,7 @@ def getAllFloors():
     parking_info = guard_get_parking_info()
     return json.dumps(parking_info)
 
-@app.route("/api/guard/map/<int:floor>", methods=['POST'])
+@app.route("/api/guard/map/<int:floor>", methods=['GET'])
 def getGuardFloorMap(floor):
     floor_data = guard_get_space_by_floor(floor)
     return json.dumps(floor_data)
