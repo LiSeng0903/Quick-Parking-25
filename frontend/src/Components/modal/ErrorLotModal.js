@@ -24,21 +24,22 @@ import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 import { Chrono } from 'react-chrono';
 
 // 之後要改成可以回傳車車資訊進去 function
-const items = [
-  {
-    cardTitle: 'Now',
-    cardDetailedText: 'ABC-1234',
-  },
-  {
-    cardTitle: '20231012',
-    cardDetailedText: 'ABC-1234',
-  },
-  {
-    cardTitle: '20231011',
-    cardDetailedText: 'ABC-1234',
-  },
-];
-const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
+// const items = [
+//   {
+//     cardTitle: 'Now',
+//     cardDetailedText: 'ABC-1234',
+//   },
+//   {
+//     cardTitle: '20231012',
+//     cardDetailedText: 'ABC-1234',
+//   },
+//   {
+//     cardTitle: '20231011',
+//     cardDetailedText: 'ABC-1234',
+//   },
+// ];
+
+const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSpaceDetail }) => {
   return (
     <ChakraProvider>
       <Modal
@@ -53,7 +54,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
             <Center>
-              <Text color={'white'}>1012</Text>
+              <Text color={'white'}>{warningSpaceDetail.parkingSpaceId}</Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -74,7 +75,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 B09705059
+                  車牌號碼 {warningSpaceDetail.currentCarId}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>
@@ -111,7 +112,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
-                            <Text as={'b'}>停放時間：40hr</Text>
+                            <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime}</Text>
                           </HStack>
                         </Box>
                         <AccordionIcon />
