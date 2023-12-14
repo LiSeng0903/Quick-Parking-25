@@ -18,23 +18,23 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import ErrorLotModal from '../../Components/modal/ErrorLotModal';
-import { getAllFloors } from '../../api';
+import { getAllFloors, getGuardCarSpace } from '../../api';
 
 // 之後要改成可以回傳車車資訊進去 function
-const items = [
-  {
-    cardTitle: 'Now',
-    cardDetailedText: 'Occupied',
-  },
-  {
-    cardTitle: '20231012',
-    cardDetailedText: 'Empty',
-  },
-  {
-    cardTitle: '20231011',
-    cardDetailedText: 'ABC-4321',
-  },
-];
+// const items = [
+//   {
+//     cardTitle: 'Now',
+//     cardDetailedText: 'Occupied',
+//   },
+//   {
+//     cardTitle: '20231012',
+//     cardDetailedText: 'Empty',
+//   },
+//   {
+//     cardTitle: '20231011',
+//     cardDetailedText: 'ABC-4321',
+//   },
+// ];
 
 const Dashboard = () => {
   // time
@@ -43,6 +43,8 @@ const Dashboard = () => {
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
   const [warningSpaceIds, setWarningSpaceIds] = useState([]);
+  const [items, setItems] = useState([]);
+  const [warningSpaceDetail, setWarningSpaceDetail] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,12 +54,27 @@ const Dashboard = () => {
         setMotorString(data.motor.toString());
         setPriorityString(data.priority.toString());
         setWarningSpaceIds(data.warningParkingSpaceIds);
+        console.log(data)
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, []);
+
+  const onClick = async (spaceId) => {
+    try {
+      const data = await getGuardCarSpace(spaceId);
+      setItems(data.history.map(item => ({
+        cardTitle: item.startTime.replace('T', ' '),
+        cardDetailedText: item.carId,
+      })));
+      setWarningSpaceDetail(data)
+      console.log(data.parkingSpaceId)
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   React.useEffect(() => {
     const intervalID = window.setInterval(() => {
@@ -259,11 +276,14 @@ const Dashboard = () => {
                   <HStack flexWrap={'wrap'} overflowY={'scroll'}>
                     {warningSpaceIds.map(id => (
                       <Button
-                        key={id}
-                        bg={'#E46565'}
-                        color={'white'}
-                        size={'lg'}
-                        onClick={onErrorOpen} // You can customize the onClick handler as needed
+                      key={id}
+                      bg={'#E46565'}
+                      color={'white'}
+                      size={'lg'}
+                      onClick={() => {
+                        onClick(id);
+                        onErrorOpen(); // Assuming you want to open the modal when the button is clicked
+                        }}
                       >
                         {id}
                       </Button>
@@ -275,7 +295,7 @@ const Dashboard = () => {
             </Card>
           </LightMode>
           {/* <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} /> */}
-          <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose} />
+          <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose} items = {items}  warningSpaceDetail = {warningSpaceDetail}/>
           {/* <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} /> */}
         </Box>
       </VStack>
