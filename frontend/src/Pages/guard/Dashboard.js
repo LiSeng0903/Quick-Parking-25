@@ -247,7 +247,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody
                 pb={6}
-                paddingTop={'3vh'}
+                // paddingTop={'13vh'}
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={'center'}
@@ -259,7 +259,7 @@ const Dashboard = () => {
                   <HStack
                     flexWrap={'wrap'}
                     overflowY={'scroll'}
-                    marginTop="-1rem"
+                    marginTop="15vh"
                   >
                     {warningSpaceIds.map(id => (
                       <Button

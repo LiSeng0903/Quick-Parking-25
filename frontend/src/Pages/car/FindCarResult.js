@@ -71,7 +71,7 @@ const FindCarResult = () => {
               </Stack>
             </CardBody>
             <CardFooter justifyContent={'center'}>
-              <ButtonGroup
+              {/* <ButtonGroup
                 background="#E8F0D7"
                 paddingLeft={1}
                 paddingRight={1}
@@ -83,7 +83,7 @@ const FindCarResult = () => {
                   <Button w="8vw" variant="ghost" color="#779341" rounded={30}>
                     查我的車
                   </Button>
-                </NavLink>
+                </NavLink> */}
                 <NavLink to="/home">
                   <Button
                     w="8vw"
@@ -95,7 +95,7 @@ const FindCarResult = () => {
                     確認
                   </Button>
                 </NavLink>
-              </ButtonGroup>
+              {/* </ButtonGroup> */}
             </CardFooter>
           </Card>
         </LightMode>
