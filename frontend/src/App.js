@@ -37,7 +37,7 @@ const router = createBrowserRouter(
       <Route path="home" element={<Homepage />} />
       <Route
         path="parking-lot"
-        element={<ParkingLot getFloorAPI={getFloorMap} />}
+        element={<ParkingLot getFloorAPI={getFloorMap} isGuard={false}/>}
       />
       <Route path="find-car" element={<FindCar />} />
       <Route path="find-car/result" element={<FindCarResult />} />
