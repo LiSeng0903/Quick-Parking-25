@@ -136,7 +136,7 @@ const Search = () => {
                       onChange={handleSpaceIdInputChange}
                     />
                   </FormControl>
-                  <FormControl mb={4}>
+                  {/* <FormControl mb={4}>
                     <FormLabel>請輸入車牌號碼</FormLabel>
                     <Input
                       type="text"
@@ -146,7 +146,7 @@ const Search = () => {
                       fontWeight={600}
                       // onChange={handleInputChange}
                     />
-                  </FormControl>
+                  </FormControl> */}
                 </Stack>
               </CardBody>
               <CardFooter justifyContent={'center'}>
