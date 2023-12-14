@@ -81,7 +81,7 @@ const FindCarResult = () => {
               >
                 <NavLink to="/home">
                   <Button w="8vw" variant="ghost" color="#779341" rounded={30}>
-                    我要取車
+                    查我的車
                   </Button>
                 </NavLink>
                 <NavLink to="/home">
