@@ -131,6 +131,7 @@ export default function Lots(props) {
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {
+                            setSelectedSpaceId(lot.space_id);
                             motorLotsB.occupied ? onClose() : onOpen();
                           }}
                         ></Button>
@@ -169,6 +170,7 @@ export default function Lots(props) {
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {
+                            setSelectedSpaceId(lot.space_id);
                             motorLotsB.occupied ? onClose() : onOpen();
                           }}
                         ></Button>
