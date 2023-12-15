@@ -73,6 +73,7 @@ const Search = () => {
   const [parkTime, setparkTime] = useState(null);
   const [parkingSpaceId, setParkingSpaceId] = useState(null);
   const [status, setStatus] = useState(null);
+  const [isItemLoaded, setisItemLoaded] = useState(false);
 
   const handleSpaceIdInputChange = event => {
     setSpaceId(event.target.value);
@@ -86,6 +87,8 @@ const Search = () => {
         cardTitle: item.startTime.replace('T', ' '),
         cardDetailedText: item.carId,
       })));
+      setisItemLoaded(true)
+      console.log(data.history)
       setparkTime(data.parkTime)
       setParkingSpaceId(data.parkingSpaceId)
       setStatus(data.status)
@@ -270,18 +273,18 @@ const Search = () => {
                           <AccordionIcon />
                         </AccordionButton>
                         <AccordionPanel pb={4}>
+                        {isItemLoaded && (
                           <Chrono
                             items={items}
                             slideShow
                             mode="VERTICAL"
-                            // enableOutline
                             cardHeight="2px"
                             cardWidth="100px"
                             fontSizes="5px"
                             hideControls
                             titleDateFormat
-                            disableClickOnCircle="true"
-                            enableBreakPoint="false"
+                            disableClickOnCircle={true}
+                            enableBreakPoint={false}
                             item
                             theme={{
                               cardBgColor: '#FFFFFF',
@@ -292,6 +295,7 @@ const Search = () => {
                               primary: 'black',
                             }}
                           />
+                        )}
                         </AccordionPanel>
                       </AccordionItem>
                     </Accordion>

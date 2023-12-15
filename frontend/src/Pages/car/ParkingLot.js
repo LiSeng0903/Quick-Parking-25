@@ -6,7 +6,7 @@ import { getFloorMap } from '../../api';
 import { getAllFloors } from '../../api';
 import { IoConstructOutline } from 'react-icons/io5';
 
-const ParkingLot = ({ getFloorAPI }) => {
+const ParkingLot = ({ getFloorAPI, isGuard }) => {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [parkingMap, setParkingMap] = useState({});
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -40,6 +40,7 @@ const ParkingLot = ({ getFloorAPI }) => {
             selectedFloor={selectedFloor}
             parkingMap={parkingMap}
             fetchData={fetchData}
+            isGuard={isGuard}
           />
         )
       ) : (
@@ -48,6 +49,7 @@ const ParkingLot = ({ getFloorAPI }) => {
           selectedFloor={selectedFloor}
           parkingMap={parkingMap}
           fetchData={fetchData}
+          isGuard={isGuard}
         />
       )}
     </Grid>

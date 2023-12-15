@@ -23,6 +23,7 @@ export default function Lots(props) {
   const lotsCnt = 20;
   const lotsType = 'cars';
   const parkingMap = props.parkingMap;
+  const isGuard = props.isGuard;
 
   console.log('parkingMap in lots root', props.parkingMap);
 
@@ -70,20 +71,23 @@ export default function Lots(props) {
           maxWidth={'100vw'}
         >
           {/* Pop-out Modal Section */}
-          {isOpen || !endModalOpen ? (
-            <ParkingEnterModal
-              isOpen={isOpen}
-              onClose={onClose}
-              initialRef={initialRef}
-              finalRef={finalRef}
-              endModalOpen={endModalOpen}
-              setEndModelOpen={setEndModelOpen}
-              setCarId={props.setCarId}
-              selectedSpaceId={selectedSpaceId}
-            />
-          ) : (
-            <></>
-          )}
+          {
+            !isGuard ? 
+            isOpen || !endModalOpen ? (
+              <ParkingEnterModal
+                isOpen={isOpen}
+                onClose={onClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                endModalOpen={endModalOpen}
+                setEndModelOpen={setEndModelOpen}
+                setCarId={props.setCarId}
+                selectedSpaceId={selectedSpaceId}
+              />
+            ) : (
+              <></>
+            ):""
+          }
           {/* Left Section */}
           <Box
             width={'20%'}
