@@ -36,20 +36,20 @@ import { Chrono } from 'react-chrono';
 import { getGuardCarSpace } from '../../api';
 
 // 之後要改成可以回傳車車資訊進去 function
-const items = [
-  {
-    cardTitle: 'Now',
-    cardDetailedText: 'B09705059',
-  },
-  {
-    cardTitle: '20231012',
-    cardDetailedText: 'Empty',
-  },
-  {
-    cardTitle: '20231011',
-    cardDetailedText: 'Empty',
-  },
-];
+  // const items = [
+  //   {
+  //     cardTitle: 'Now',
+  //     cardDetailedText: 'B09705059',
+  //   },
+  //   {
+  //     cardTitle: '20231012',
+  //     cardDetailedText: 'Empty',
+  //   },
+  //   {
+  //     cardTitle: '20231011',
+  //     cardDetailedText: 'Empty',
+  //   },
+  // ];
 
 const initialState = {
   spacesId: '',
@@ -69,7 +69,7 @@ const Search = () => {
 
   const [spaceId, setSpaceId] = useState("");
   const [currentCarId, setCurrentCarId] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [items, setItems] = useState([]);
   const [parkTime, setparkTime] = useState(null);
   const [parkingSpaceId, setParkingSpaceId] = useState(null);
   const [status, setStatus] = useState(null);
@@ -82,7 +82,10 @@ const Search = () => {
     try {
       const data = await getGuardCarSpace(spaceId);
       setCurrentCarId(data.currentCarId)
-      setHistory(data.history)
+      setItems(data.history.map(item => ({
+        cardTitle: item.startTime.replace('T', ' '),
+        cardDetailedText: item.carId,
+      })));
       setparkTime(data.parkTime)
       setParkingSpaceId(data.parkingSpaceId)
       setStatus(data.status)
@@ -184,7 +187,7 @@ const Search = () => {
         <LightMode>
           <Card ipadding={5} rounded={20} shadow={'xl'} zIndex={3}>
             {/* <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}> */}
-            <CardHeader h={'8vh'} roundedTop={10} backgroundColor={'#A3C561'}>
+            <CardHeader h={'8vh'} roundedTop={10} backgroundColor={status === 'OK' ? '#A3C561' : '#D9534F'}>
               <Center>
                 <Text as={'b'} color={'white'}>
                   {parkingSpaceId}
@@ -213,7 +216,7 @@ const Search = () => {
                   <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                     <Accordion allowToggle>
                       <AccordionItem
-                        bg={'#5CB85C'}
+                        bg={status === 'OK' ? '#5CB85C' : '#D9534F'}
                         color={'white'}
                         rounded={10}
                         mb={2}
@@ -224,7 +227,7 @@ const Search = () => {
                           <Box as="span" flex="1" textAlign="left">
                             <HStack>
                               <Icon as={WarningTwoIcon} />
-                              <Text as={'b'}>好寶寶車車</Text>
+                              <Text as={'b'}>{status === 'OK' ? '好寶寶車車' : '停放時間異常'}</Text>
                             </HStack>
                           </Box>
                           <AccordionIcon />

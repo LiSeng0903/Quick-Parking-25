@@ -54,7 +54,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
             <Center>
-              <Text color={'white'}>{warningSpaceDetail.parkingSpaceId}</Text>
+              <Text color={'white'}>{warningSpaceDetail.parkingSpaceId || 'null'}</Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -75,7 +75,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 {warningSpaceDetail.currentCarId}
+                  車牌號碼 {warningSpaceDetail.currentCarId || 'null'}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>
@@ -112,7 +112,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
-                            <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime}</Text>
+                            <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime || 'null'}</Text>
                           </HStack>
                         </Box>
                         <AccordionIcon />
