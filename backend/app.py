@@ -1,18 +1,26 @@
+import os
+import sys
+cwd = os.getcwd()
+sys.path.append(cwd)
 import json
-from flask import Flask, jsonify, request
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from flask import Flask, jsonify, request, send_from_directory
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 from dotenv import load_dotenv
-# from app.application.services import *
-# from app.application.services.get_status import get_parking_info
-# from app.application.services.service_functions import *
-# from application.services.get_status import get_parking_info
-from app.application.services.service_functions import *
+from application.services.service_functions import *
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build')
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
 jwt = JWTManager(app)
+
+@app.route("/")
+def index():
+    return send_from_directory('../frontend/build', 'index.html')
+
+@app.route("/static/<path:filename>")
+def serve_static(filename):
+    return send_from_directory("../frontend/build/static", filename)
 
 # 取得停車場概覽資料
 @app.route("/api/parking/status", methods=['GET'])
@@ -74,9 +82,6 @@ def getGuardFloorMap(floor):
     floor_data = guard_get_space_by_floor(floor)
     return json.dumps(floor_data)
 
-@app.route("/")
-def hello_world():
-    return "Hello World!"
 
 if __name__ == "__main__":
     app.run(debug=True, port=4000)
