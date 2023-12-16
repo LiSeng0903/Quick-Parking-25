@@ -86,6 +86,7 @@ const Search = () => {
       setparkTime(data.parkTime)
       setParkingSpaceId(data.parkingSpaceId)
       setStatus(data.status)
+      console.log(data)
     } catch (error) {
       console.error(error);
     }
