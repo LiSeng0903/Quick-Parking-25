@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getAuthToken } from './utils/util';
 import { toast } from 'react-toastify';
 
-const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
+// const instance = axios.create({ baseURL: 'http://127.0.0.1:5000/api' });
 
 const getParkingStatus = async () => {
   try {
@@ -79,19 +79,19 @@ const getCarSpace = async (carId, carSpaceId) => {
   }
 };
 
-const carExit = async carId => {
-  try {
-    const response = await instance.get(`/car/exit`, { params: { carId } });
-    if (response.data.success) {
-      console.log(`Car with number ${carId} left successfully.`);
-    } else {
-      console.log(`Car with number ${carId} left failed.`);
-    }
-  } catch (error) {
-    console.log(`Error for car number ${carId} to leave. ${error}`);
-    throw error;
-  }
-};
+// const carExit = async carId => {
+//   try {
+//     const response = await instance.get(`/car/exit`, { params: { carId } });
+//     if (response.data.success) {
+//       console.log(`Car with number ${carId} left successfully.`);
+//     } else {
+//       console.log(`Car with number ${carId} left failed.`);
+//     }
+//   } catch (error) {
+//     console.log(`Error for car number ${carId} to leave. ${error}`);
+//     throw error;
+//   }
+// };
 
 /**
  * Get some hash.
@@ -130,14 +130,26 @@ const guardLogIn = async userData => {
   }
 };
 
-const getGuardFloorMap = async floor => {
+
+const getGuardFloorMap = async selectedFloor => {
   try {
-    const response = await instance.get(`/guard/map/${floor}`, {
-      params: { floor },
+    const accessToken = localStorage.getItem('token');
+    console.log(accessToken);
+    if (!accessToken) {
+      // Handle the case when the access token is not available
+      throw new Error('Access token not available');
+    }
+
+    const response = await fetch('/api/guard/map/' + selectedFloor, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
     });
-    return response.data; // retrun map for guard of selected floor
+    const data = await response.json();
+    return data; // return map for guard of selected floor
   } catch (error) {
-    console.log(`Error getting map for guard of floor ${floor}. ${error}`);
+    console.log(`Error getting map for guard of floor ${selectedFloor}.`);
     throw error;
   }
 };
@@ -198,7 +210,7 @@ export {
   getFloorMap,
   enterCarNum,
   getCarSpace,
-  carExit,
+  // carExit,
   guardLogIn,
   getGuardFloorMap,
   getGuardCarSpace,

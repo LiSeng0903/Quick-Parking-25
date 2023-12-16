@@ -27,7 +27,7 @@ import Sidebar from './Components/sidebar/Sidebar.js';
 import Search from './Pages/guard/Search.js';
 import Map from './Pages/guard/Map.js';
 import ProtectedRoute from './utils/ProtectedRoute.js';
-import { getAllFloors, getFloorMap } from './api.js';
+import { getAllFloors, getFloorMap, getGuardFloorMap } from './api.js';
 
 // router and routes
 const router = createBrowserRouter(
@@ -37,7 +37,7 @@ const router = createBrowserRouter(
       <Route path="home" element={<Homepage />} />
       <Route
         path="parking-lot"
-        element={<ParkingLot getFloorAPI={getFloorMap} />}
+        element={<ParkingLot getFloorAPI={getFloorMap} isGuard={false}/>}
       />
       <Route path="find-car" element={<FindCar />} />
       <Route path="find-car/result" element={<FindCarResult />} />
@@ -67,7 +67,7 @@ const router = createBrowserRouter(
         element={
           <ChakraProvider>
             <Sidebar />
-            <Map getFloorAPI={getFloorMap} />
+            <Map getFloorAPI={getGuardFloorMap} />
           </ChakraProvider>
         }
       />

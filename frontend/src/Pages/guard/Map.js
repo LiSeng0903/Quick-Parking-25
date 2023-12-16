@@ -7,10 +7,11 @@ const Map = ({getFloorAPI}) => {
   return (
     <ChakraProvider>
       <Box scale={'10%'}>
-        <ParkingLot getFloorAPI={getFloorAPI} />
+        <ParkingLot getFloorAPI={getFloorAPI} isGuard={true}/>
       </Box>
     </ChakraProvider>
   );
 };
+// getGuardFloorMap
 
 export default Map;

@@ -198,7 +198,7 @@ const Homepage = () => {
                             rounded={30}
                             fontSize={24}
                           >
-                            開車
+                            查詢
                           </Button>
                         </NavLink>
                         <NavLink to="/parking-lot">

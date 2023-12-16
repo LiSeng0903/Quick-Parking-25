@@ -1,14 +1,24 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  Center,
-  Box,
   ChakraProvider,
+  Heading,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Center,
+  AbsoluteCenter,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Stack,
+  ButtonGroup,
+  Image,
+  LightMode,
+  Flex,
   Text,
+  VStack,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -16,55 +26,35 @@ import {
   AccordionIcon,
   HStack,
   Icon,
-  VStack,
   Spacer,
+  useToast,
 } from '@chakra-ui/react';
-import React from 'react';
-import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 import { Chrono } from 'react-chrono';
+import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 
-// 之後要改成可以回傳車車資訊進去 function
-// const items = [
-//   {
-//     cardTitle: 'Now',
-//     cardDetailedText: 'ABC-1234',
-//   },
-//   {
-//     cardTitle: '20231012',
-//     cardDetailedText: 'ABC-1234',
-//   },
-//   {
-//     cardTitle: '20231011',
-//     cardDetailedText: 'ABC-1234',
-//   },
-// ];
-
-const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSpaceDetail }) => {
+const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, items} ) => {
+    console.log("items", items)
   return (
-    <ChakraProvider>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size={'xs'}
-      >
-        <ModalOverlay bg={'blackAlpha.900'} />
-        <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
-          <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
+        <Card ipadding={5} rounded={20} shadow={'xl'} zIndex={3}>
+          {/* <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}> */}
+          <CardHeader
+            h={'8vh'}
+            roundedTop={10}
+            backgroundColor={status === 'OK' ? '#A3C561' : '#D9534F'}
+          >
             <Center>
-              <Text color={'white'}>{warningSpaceDetail.parkingSpaceId || 'null'}</Text>
+              <Text as={'b'} color={'white'}>
+                {parkingSpaceId}
+              </Text>
             </Center>
-          </ModalHeader>
-          <ModalBody
+          </CardHeader>
+          <CardBody
             pb={6}
             paddingTop={'3vh'}
             display={'flex'}
             flexDirection={'column'}
             justifyContent={'center'}
             bg={'#F0EFE5'}
-            rounded={10}
           >
             <Center>
               <VStack>
@@ -75,12 +65,12 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 {warningSpaceDetail.currentCarId || 'null'}
+                  車牌號碼 {currentCarId || 'null'}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>
                     <AccordionItem
-                      bg={'#D9534F'}
+                      bg={status === 'OK' ? '#5CB85C' : '#D9534F'}
                       color={'white'}
                       rounded={10}
                       mb={2}
@@ -91,13 +81,13 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={WarningTwoIcon} />
-                            <Text as={'b'}>停放時間異常</Text>
+                            <Text as={'b'}>
+                              {status === 'OK' ? '好寶寶車車' : '停放時間異常'}
+                            </Text>
                           </HStack>
                         </Box>
                         <AccordionIcon />
                       </AccordionButton>
-
-                      {/* <AccordionPanel pb={2}>快去停</AccordionPanel> */}
                     </AccordionItem>
                     <Spacer />
                     <AccordionItem
@@ -112,7 +102,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
-                            <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime || 'null'}</Text>
+                            <Text as={'b'}>停放時間：{parkTime || 'null'}</Text>
                           </HStack>
                         </Box>
                         <AccordionIcon />
@@ -140,14 +130,13 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                           items={items}
                           slideShow
                           mode="VERTICAL"
-                          // enableOutline
                           cardHeight="2px"
                           cardWidth="100px"
                           fontSizes="5px"
                           hideControls
                           titleDateFormat
-                          disableClickOnCircle="true"
-                          enableBreakPoint="false"
+                          disableClickOnCircle={true}
+                          enableBreakPoint={false}
                           item
                           theme={{
                             cardBgColor: '#FFFFFF',
@@ -164,12 +153,11 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                 </Box>
               </VStack>
             </Center>
-          </ModalBody>
-          <ModalFooter bg={'#F0EFE5'} roundedBottom={10}></ModalFooter>
-        </ModalContent>
-      </Modal>
-    </ChakraProvider>
+          </CardBody>
+          <CardFooter bg={'#F0EFE5'} roundedBottom={10}></CardFooter>
+          {/* </ModalContent> */}
+        </Card>
   );
 };
 
-export default ErrorLotModal;
+export default GuardSearchDetail;

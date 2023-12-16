@@ -45,6 +45,7 @@ const Dashboard = () => {
   const [warningSpaceIds, setWarningSpaceIds] = useState([]);
   const [items, setItems] = useState([]);
   const [warningSpaceDetail, setWarningSpaceDetail] = useState({});
+  const [itemIsLoaded, setItemIsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +70,9 @@ const Dashboard = () => {
         cardTitle: item.startTime.replace('T', ' '),
         cardDetailedText: item.carId,
       })));
+      console.log("his data",data.history)
       setWarningSpaceDetail(data)
+      setItemIsLoaded(true)
       console.log(data.parkingSpaceId)
     } catch (error) {
       console.error(error);
@@ -97,6 +100,11 @@ const Dashboard = () => {
     onOpen: onErrorOpen,
     onClose: onErrorClose,
   } = useDisclosure();
+
+  const handleModalClose = () => {
+    onErrorClose();
+    setItemIsLoaded(false);
+  };
   // const {
   //   isOpen: isWarningOpen,
   //   onOpen: onWarningOpen,
@@ -264,7 +272,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody
                 pb={6}
-                paddingTop={'3vh'}
+                // paddingTop={'13vh'}
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={'center'}
@@ -276,7 +284,7 @@ const Dashboard = () => {
                   <HStack
                     flexWrap={'wrap'}
                     overflowY={'scroll'}
-                    marginTop="-1rem"
+                    // marginTop="15vh"
                   >
                     {warningSpaceIds.map(id => (
                       <Button
@@ -299,7 +307,9 @@ const Dashboard = () => {
             </Card>
           </LightMode>
           {/* <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} /> */}
-          <ErrorLotModal isOpen={isErrorOpen} onClose={onErrorClose} items = {items}  warningSpaceDetail = {warningSpaceDetail}/>
+          {
+            itemIsLoaded?<ErrorLotModal isOpen={isErrorOpen} onClose={handleModalClose} items = {items}  warningSpaceDetail = {warningSpaceDetail}/>:<></>
+          }
           {/* <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} /> */}
         </Box>
       </VStack>
