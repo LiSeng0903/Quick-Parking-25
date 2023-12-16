@@ -1,6 +1,6 @@
 import json
 from flask import Flask, jsonify, request
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 from dotenv import load_dotenv
 # from app.application.services import *
 # from app.application.services.get_status import get_parking_info
