@@ -26,6 +26,7 @@ def test_get_all_message():
         return_value=mock_all_messages
     ):
         assert get_all_message() == (True, msg_list)
+    
     err_str = "testing errors"
     with patch(
         "application.database.db_functions.message_functions.MessageInterface.read_all_messages",
