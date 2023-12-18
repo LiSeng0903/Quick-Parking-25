@@ -176,6 +176,7 @@ def leave_car(car_id: str):
     1. current_car_id -> None
     2. occupied -> False
     3. history -> 更新最後一筆停車紀錄的離開時間
+    4. status -> "OK"
     """
 
     space_id = PSI.read_ps_by_current_car_id(car_id)["space_id"]
@@ -186,6 +187,8 @@ def leave_car(car_id: str):
     history = PSI.read_ps_history(space_id)
     history[-1]["end_time"] = now()
     PSI.update_ps_history(space_id, history)
+
+    PSI.update_ps_status(space_id, "OK")
 
     park_time = now() - history[-1]["start_time"]
 
