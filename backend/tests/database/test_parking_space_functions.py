@@ -5,8 +5,10 @@ from application.database.db_functions.parking_space_functions import (
     get_remain_space_cnt, 
     get_parking_space_by_floor,
     can_park,
+    park_car,
     can_leave,
-    leave_car
+    leave_car,
+    find_car,
 )
 
 def test_get_remain_space_cnt():
@@ -131,6 +133,46 @@ def test_can_park():
     ):
         assert can_park("space_id", "car_id") == (True, "")
         
+@patch("application.database.db_functions.parking_space_functions.now")
+@patch("application.database.db_functions.parking_space_functions.PSI.update_ps_history")
+@patch("application.database.db_functions.parking_space_functions.PSI.read_ps_history")
+@patch("application.database.db_functions.parking_space_functions.PSI.update_ps_occupied")
+@patch("application.database.db_functions.parking_space_functions.PSI.update_ps_current_car_id")
+def test_park_car(mock_update_ps_current_car_id, mock_update_ps_occupied, mock_read_ps_history, mock_update_ps_history, mock_now):
+    mock_update_ps_current_car_id.return_value = None
+    mock_update_ps_occupied.return_value = None
+    mock_now.return_value = datetime(2023, 1, 1, 12, 0, 0)
+    mock_read_ps_history.return_value = [
+        {
+            "car_id": "car_id_ori",
+            "start_time": datetime(2023, 1, 1, 0, 0, 0),
+            "end_time": None,
+        }
+    ]
+    
+    updated_history = [
+        {
+            "car_id": "car_id_ori",
+            "start_time": datetime(2023, 1, 1, 0, 0, 0),
+            "end_time": None,
+        },
+        {
+            "car_id": "car_id",
+            "start_time": mock_now,
+            "end_time": None,
+        }, 
+    ]
+    
+    mock_update_ps_history.return_value = None
+    result = park_car("space_id", "car_id")
+    assert result == None
+
+    mock_update_ps_current_car_id.assert_called_once_with("space_id", "car_id")
+    mock_update_ps_occupied.assert_called_once_with("space_id", True)
+    mock_read_ps_history.assert_called_once_with("space_id")
+    mock_update_ps_history("space_id", updated_history)
+        
+        
 def test_can_leave():
     with patch(
         "application.database.db_functions.parking_space_functions.PSI.read_ps_by_current_car_id",
@@ -144,54 +186,36 @@ def test_can_leave():
     ):
         assert can_leave("car_id") == (False, "車輛 car_id 不在停車場")
         
-# def test_leave_car():
-#     history = [
-#         {"start_time": "mock_start_time1", "end_time": "mock_end_time1"},
-#         {"start_time": "mock_start_time2", "end_time": "mock_end_time2"},
-#         {"start_time": "mock_start_time3", "end_time": "mock_end_time3"}
-#     ]
-#     with patch(
-#         "application.database.db_functions.parking_space_functions.PSI.read_ps_by_current_car_id"
-#     ), patch(
-#         "application.database.db_functions.parking_space_functions.PSI.update_ps_current_car_id"
-#     ), patch(
-#         "application.database.db_functions.parking_space_functions.PSI.update_ps_occupied"
-#     ), patch(
-#         "application.database.db_functions.parking_space_functions.PSI.read_ps_history",
-#         return_value=history
-#     ), patch(
-#         "application.database.db_functions.parking_space_functions.PSI.update_ps_history"
-#     ):
-        
-# @patch('application.database.db_functions.parking_space_functions.PSI.read_ps_by_current_car_id')
-# @patch('application.database.db_functions.parking_space_functions.PSI.update_ps_current_car_id')
-# @patch('application.database.db_functions.parking_space_functions.PSI.update_ps_occupied')
-# @patch('application.database.db_functions.parking_space_functions.PSI.read_ps_history')
-# @patch('application.database.db_functions.parking_space_functions.PSI.update_ps_history')
-# def test_leave_car(mock_update_ps_history, mock_read_ps_history, mock_update_ps_occupied, mock_update_ps_current_car_id, mock_read_ps_by_current_car_id):
-#     # Mock the current time
-#     # mock_now.return_value = datetime(2023, 1, 1, 12, 0, 0)
-#     mock_now = datetime.now()
-#     # Mock the database interactions
-#     mock_read_ps_by_current_car_id.return_value = {"space_id": "123"}
-#     mock_update_ps_current_car_id.return_value = None
-#     mock_update_ps_occupied.return_value = None
-#     mock_read_ps_history.return_value = [
-#         {"start_time": datetime(2023, 1, 1, 10, 0, 0), "end_time": None},
-#         {"start_time": datetime(2023, 1, 1, 11, 0, 0), "end_time": mock_now},
-#     ]
-#     mock_update_ps_history.return_value = None
 
-#     # Call the function with the test input
-#     result = leave_car("CAR001")
+@patch('application.database.db_functions.parking_space_functions.PSI.update_ps_status')
+@patch('application.database.db_functions.parking_space_functions.PSI.read_ps_by_current_car_id')
+@patch('application.database.db_functions.parking_space_functions.PSI.update_ps_current_car_id')
+@patch('application.database.db_functions.parking_space_functions.PSI.update_ps_occupied')
+@patch('application.database.db_functions.parking_space_functions.PSI.read_ps_history')
+@patch('application.database.db_functions.parking_space_functions.PSI.update_ps_history')
+@patch('application.database.db_functions.parking_space_functions.now')
+def test_leave_car(mock_now, mock_update_ps_history, mock_read_ps_history, mock_update_ps_occupied, mock_update_ps_current_car_id, mock_read_ps_by_current_car_id, mock_update_ps_status):
+    # Mock the current time
+    mock_now.return_value = datetime(2023, 1, 1, 12, 0, 0)
+    # Mock the database interactions
+    mock_read_ps_by_current_car_id.return_value = {"space_id": "1001"}
+    mock_update_ps_current_car_id.return_value = None
+    mock_update_ps_occupied.return_value = None
+    mock_read_ps_history.return_value = [
+        {"start_time": datetime(2023, 1, 1, 10, 0, 0), "end_time": None},
+        {"start_time": datetime(2023, 1, 1, 11, 0, 0), "end_time": mock_now},
+    ]
+    mock_update_ps_history.return_value = None
+    mock_update_ps_status.return_value = None
 
-#     # Assert that the actual result is the expected result
-#     assert result == timedelta(hours=1)
 
-#     # Assert that the database functions were called with the expected arguments
-#     mock_update_ps_current_car_id.assert_called_once_with("123", None)
-#     mock_update_ps_occupied.assert_called_once_with("123", False)
-#     mock_update_ps_history.assert_called_once_with("123", [
-#         {"start_time": datetime(2023, 1, 1, 10, 0, 0), "end_time": datetime(2023, 1, 1, 12, 0, 0)},
-#         {"start_time": datetime(2023, 1, 1, 11, 0, 0), "end_time": None},
-#     ])
+    # Assert that the actual result is the expected result
+    assert leave_car("car_id") == timedelta(hours=1)
+
+    # Assert that the database functions were called with the expected arguments
+    mock_update_ps_current_car_id.assert_called_once_with("1001", None)
+    mock_update_ps_occupied.assert_called_once_with("1001", False)
+    mock_update_ps_history.assert_called_once_with("1001", [
+        {"start_time": datetime(2023, 1, 1, 10, 0, 0), "end_time": None},
+        {"start_time": datetime(2023, 1, 1, 11, 0, 0), "end_time": datetime(2023, 1, 1, 12, 0, 0)},
+    ])
