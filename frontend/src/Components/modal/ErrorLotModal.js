@@ -94,7 +94,6 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                             <Text as={'b'}>停放時間異常</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
 
                       {/* <AccordionPanel pb={2}>快去停</AccordionPanel> */}
@@ -115,7 +114,6 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                             <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime || 'null'}</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
 

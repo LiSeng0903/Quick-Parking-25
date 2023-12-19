@@ -195,8 +195,7 @@ export default function Lots(props) {
                         justifyContent={'space-evenly'}
                       >
                         <Button
-                          // colorScheme="red"
-                          bg={isEmptyColor}
+                          bg={getButtonBackgroundColor(lot)}
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {

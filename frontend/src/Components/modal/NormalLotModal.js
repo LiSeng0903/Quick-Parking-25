@@ -93,7 +93,6 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef, items, normalSp
                             <Text as={'b'}>好寶寶車車</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
                     <Spacer />
@@ -112,7 +111,6 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef, items, normalSp
                             <Text as={'b'}>停放時間：{normalSpaceDetail.parkTime || '空位'}</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
 
