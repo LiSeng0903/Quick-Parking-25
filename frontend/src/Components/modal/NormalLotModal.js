@@ -38,7 +38,7 @@ const items = [
     cardDetailedText: 'Empty',
   },
 ];
-const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
+const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef, items, normalSpaceDetail }) => {
   return (
     <ChakraProvider>
       <Modal
@@ -74,7 +74,7 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 B09705038
+                  車牌號碼 {normalSpaceDetail.currentCarId || '空位'}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>
@@ -109,7 +109,7 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
-                            <Text as={'b'}>停放時間：5hr</Text>
+                            <Text as={'b'}>停放時間：{normalSpaceDetail.parkTime || '空位'}</Text>
                           </HStack>
                         </Box>
                         <AccordionIcon />
