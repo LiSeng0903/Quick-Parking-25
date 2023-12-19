@@ -20,29 +20,12 @@ import {
 import ErrorLotModal from '../../Components/modal/ErrorLotModal';
 import { getAllFloors, getGuardCarSpace } from '../../api';
 
-// 之後要改成可以回傳車車資訊進去 function
-// const items = [
-//   {
-//     cardTitle: 'Now',
-//     cardDetailedText: 'Occupied',
-//   },
-//   {
-//     cardTitle: '20231012',
-//     cardDetailedText: 'Empty',
-//   },
-//   {
-//     cardTitle: '20231011',
-//     cardDetailedText: 'ABC-4321',
-//   },
-// ];
-
 const Dashboard = () => {
   // time
   const [time, setTime] = React.useState(new Date());
   const [carString, setCarString] = useState('');
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
-  const [useRateString, setUseRateString] = useState('');
   const [warningSpaceIds, setWarningSpaceIds] = useState([]);
   const [items, setItems] = useState([]);
   const [warningSpaceDetail, setWarningSpaceDetail] = useState({});
@@ -62,7 +45,6 @@ const Dashboard = () => {
         setCarString(data.car.toString());
         setMotorString(data.motor.toString());
         setPriorityString(data.priority.toString());
-        setUseRateString(data.useRate.toString());
         setWarningSpaceIds(data.warningParkingSpaceIds);
         console.log(data);
       } catch (error) {
@@ -77,8 +59,11 @@ const Dashboard = () => {
       const data = await getGuardCarSpace(spaceId);
       setItems(
         data.history.map(item => ({
-          cardTitle: item.startTime.replace('T', ' '),
-          cardDetailedText: item.carId,
+          cardTitle: '開始停放時間： ' + item.startTime.replace('T', ' '),
+          cardSubtitle: item.endTime
+            ? '結束停放時間： ' + item.endTime.replace('T', ' ')
+            : '停放中',
+          cardDetailedText: '車牌號碼： ' + item.carId,
         }))
       );
       console.log('his data', data.history);
@@ -333,7 +318,6 @@ const Dashboard = () => {
               <CardFooter bg={'#F0EFE5'} roundedBottom={10}></CardFooter>
             </Card>
           </LightMode>
-          {/* <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} /> */}
           {itemIsLoaded ? (
             <ErrorLotModal
               isOpen={isErrorOpen}
@@ -344,7 +328,6 @@ const Dashboard = () => {
           ) : (
             <></>
           )}
-          {/* <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} /> */}
         </Box>
       </VStack>
     </ChakraProvider>
