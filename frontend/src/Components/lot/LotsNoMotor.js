@@ -22,7 +22,7 @@ export default function LotsNoMotor(props) {
   const zoneB = parkingMap['B'];
   const zoneC = parkingMap['C'];
   const isGuard = props.isGuard;
-  console.log(isGuard)
+  console.log(isGuard);
 
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
@@ -41,30 +41,29 @@ export default function LotsNoMotor(props) {
     onOpen: onDetailOpen,
     onClose: onDetailClose,
   } = useDisclosure();
-  
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [endModalOpen, setEndModelOpen] = useState(false);
   const [selectedSpaceId, setSelectedSpaceId] = useState('');
   const [items, setItems] = useState([]);
   const [spaceDetail, setSpaceDetail] = useState({});
   const [itemIsLoaded, setItemIsLoaded] = useState(false);
-  
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const getButtonBackgroundColor = (lot) => {
+  const getButtonBackgroundColor = lot => {
     if (isGuard && lot.status === 'WARNING') {
       return isWarningColor;
     }
-  
+
     if (!lot.occupied) {
       return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
     }
-  
+
     return isOccupiedColor;
   };
-  
+
   const spaceDetailClick = async spaceId => {
     try {
       const data = await getGuardCarSpace(spaceId);
@@ -88,7 +87,6 @@ export default function LotsNoMotor(props) {
     setItemIsLoaded(false);
   };
 
-  
   // modal
 
   const allLots = [zoneA, zoneB, zoneC];
@@ -105,44 +103,40 @@ export default function LotsNoMotor(props) {
           maxWidth={'100vw'}
         >
           {/* Pop-out Modal Section */}
-          {itemIsLoaded
-            ? isGuard
-              ? spaceDetail.status === 'OK'
-                ? (console.log('Normal'),
-                  (
-                    <NormalLotModal
-                      isOpen={isDetailOpen}
-                      onClose={handleSpaceDetailClose}
-                      initialRef={initialRef}
-                      finalRef={finalRef}
-                      items={items}
-                      normalSpaceDetail={spaceDetail}
-                    />
-                  ))
-                : (console.log('Error'),
-                  (
-                    <ErrorLotModal
-                      isOpen={isDetailOpen}
-                      onClose={handleSpaceDetailClose}
-                      initialRef={initialRef}
-                      finalRef={finalRef}
-                      items={items}
-                      warningSpaceDetail={spaceDetail}
-                    />
-                  ))
-              : (isParkOpen || !endModalOpen) && (
-                  <ParkingEnterModal
-                    isOpen={isParkOpen}
-                    onClose={onParkClose}
-                    initialRef={initialRef}
-                    finalRef={finalRef}
-                    endModalOpen={endModalOpen}
-                    setEndModelOpen={setEndModelOpen}
-                    setCarId={props.setCarId}
-                    selectedSpaceId={selectedSpaceId}
-                  />
-                )
-            : <></>}
+          {itemIsLoaded && isGuard ? (
+            spaceDetail.status === 'OK' ? (
+              <NormalLotModal
+                isOpen={isDetailOpen}
+                onClose={handleSpaceDetailClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                items={items}
+                normalSpaceDetail={spaceDetail}
+              />
+            ) : (
+              <ErrorLotModal
+                isOpen={isDetailOpen}
+                onClose={handleSpaceDetailClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                items={items}
+                warningSpaceDetail={spaceDetail}
+              />
+            )
+          ) : (
+            (isParkOpen || !endModalOpen) && (
+              <ParkingEnterModal
+                isOpen={isParkOpen}
+                onClose={onParkClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                endModalOpen={endModalOpen}
+                setEndModelOpen={setEndModelOpen}
+                setCarId={props.setCarId}
+                selectedSpaceId={selectedSpaceId}
+              />
+            )
+          )}
           {/* Lot Section */}
           <Box overflowX={'scroll'} maxW={'1000px'}>
             {allLots.map((lots, cnt) => (
@@ -178,9 +172,7 @@ export default function LotsNoMotor(props) {
                                 onDetailOpen();
                               } else {
                                 onDetailClose();
-                                lots.occupied
-                                  ? onParkClose()
-                                  : onParkOpen();
+                                lot.occupied ? onParkClose() : onParkOpen();
                               }
                             }}
                           ></Button>
