@@ -20,7 +20,7 @@ export default function SecLayout(props) {
         h="100vh"
       >
         <Navbar setSelectedFloor={props.setSelectedFloor} selectedFloor={props.selectedFloor} fetchData={props.fetchData}/>
-        <LotsNoMotor parkingMap={props.parkingMap}/>
+        <LotsNoMotor parkingMap={props.parkingMap} isGuard={props.isGuard}/>
       </GridItem>
     </Grid>
   );

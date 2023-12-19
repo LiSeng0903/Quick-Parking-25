@@ -40,13 +40,20 @@ export default function Lots(props) {
   const isPriorityColor = '#7A98D3';
   const isWarningColor = '#D9534F';
   const bgColor = '#F0EFE5';
-  const getButtonBackgroundColor = lot => {
-    if (!lot.occupied) {
-      return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
-    } else {
-      return isOccupiedColor;
-    }
-  };
+
+const getButtonBackgroundColor = (lot) => {
+  if (isGuard && lot.status === 'WARNING') {
+    return isWarningColor;
+  }
+
+  if (!lot.occupied) {
+    return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
+  }
+
+  return isOccupiedColor;
+};
+
+
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();

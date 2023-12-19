@@ -18,18 +18,27 @@ export default function LotsNoMotor(props) {
   const zoneA = parkingMap['A'];
   const zoneB = parkingMap['B'];
   const zoneC = parkingMap['C'];
+  const isGuard = props.isGuard;
+  console.log(isGuard)
 
   const isEmptyColor = '#A3C561';
   const isOccupiedColor = '#9E896A';
   const isPriorityColor = '#7A98D3';
+  const isWarningColor = '#D9534F';
   const bgColor = '#F0EFE5';
-  const getButtonBackgroundColor = lot => {
+
+  const getButtonBackgroundColor = (lot) => {
+    if (isGuard && lot.status === 'WARNING') {
+      return isWarningColor;
+    }
+  
     if (!lot.occupied) {
       return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
-    } else {
-      return isOccupiedColor;
     }
+  
+    return isOccupiedColor;
   };
+  
 
   // modal setting
   const { isOpen, onOpen, onClose } = useDisclosure();
