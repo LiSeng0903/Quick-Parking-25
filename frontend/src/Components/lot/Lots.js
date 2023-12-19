@@ -78,8 +78,7 @@ const getButtonBackgroundColor = (lot) => {
           maxWidth={'100vw'}
         >
           {/* Pop-out Modal Section */}
-          {
-            !isGuard ? 
+          {!isGuard ? (
             isOpen || !endModalOpen ? (
               <ParkingEnterModal
                 isOpen={isOpen}
@@ -93,8 +92,10 @@ const getButtonBackgroundColor = (lot) => {
               />
             ) : (
               <></>
-            ):""
-          }
+            )
+          ) : (
+            ''
+          )}
           {/* Left Section */}
           <Box
             width={'20%'}
@@ -137,8 +138,7 @@ const getButtonBackgroundColor = (lot) => {
                         justifyContent={'space-evenly'}
                       >
                         <Button
-                          // colorScheme="red"
-                          bg={isEmptyColor}
+                          bg={getButtonBackgroundColor(lot)}
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {

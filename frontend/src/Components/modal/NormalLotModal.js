@@ -93,7 +93,6 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                             <Text as={'b'}>好寶寶車車</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
                     <Spacer />
@@ -112,7 +111,6 @@ const NormalLotModal = ({ isOpen, onClose, initialRef, finalRef }) => {
                             <Text as={'b'}>停放時間：5hr</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
 

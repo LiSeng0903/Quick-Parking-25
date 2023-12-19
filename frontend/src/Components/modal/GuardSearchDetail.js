@@ -86,7 +86,6 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
                             </Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
                     <Spacer />
@@ -105,7 +104,6 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
                             <Text as={'b'}>停放時間：{parkTime || 'null'}</Text>
                           </HStack>
                         </Box>
-                        <AccordionIcon />
                       </AccordionButton>
                     </AccordionItem>
 

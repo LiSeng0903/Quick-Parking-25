@@ -42,11 +42,19 @@ const Dashboard = () => {
   const [carString, setCarString] = useState('');
   const [motorString, setMotorString] = useState('');
   const [priorityString, setPriorityString] = useState('');
+  const [useRateString, setUseRateString] = useState('');
   const [warningSpaceIds, setWarningSpaceIds] = useState([]);
   const [items, setItems] = useState([]);
   const [warningSpaceDetail, setWarningSpaceDetail] = useState({});
   const [itemIsLoaded, setItemIsLoaded] = useState(false);
-
+  const totalUseRate = (
+    ((660 -
+      (parseInt(carString) +
+        parseInt(priorityString) +
+        parseInt(motorString))) /
+      660) *
+    100
+  ).toFixed(2);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,8 +62,9 @@ const Dashboard = () => {
         setCarString(data.car.toString());
         setMotorString(data.motor.toString());
         setPriorityString(data.priority.toString());
+        setUseRateString(data.useRate.toString());
         setWarningSpaceIds(data.warningParkingSpaceIds);
-        console.log(data)
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -63,17 +72,19 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const onClick = async (spaceId) => {
+  const onClick = async spaceId => {
     try {
       const data = await getGuardCarSpace(spaceId);
-      setItems(data.history.map(item => ({
-        cardTitle: item.startTime.replace('T', ' '),
-        cardDetailedText: item.carId,
-      })));
-      console.log("his data",data.history)
-      setWarningSpaceDetail(data)
-      setItemIsLoaded(true)
-      console.log(data.parkingSpaceId)
+      setItems(
+        data.history.map(item => ({
+          cardTitle: item.startTime.replace('T', ' '),
+          cardDetailedText: item.carId,
+        }))
+      );
+      console.log('his data', data.history);
+      setWarningSpaceDetail(data);
+      setItemIsLoaded(true);
+      console.log(data.parkingSpaceId);
     } catch (error) {
       console.error(error);
     }
@@ -89,12 +100,6 @@ const Dashboard = () => {
     };
   }, []);
 
-  // modal setting
-  // const {
-  //   isOpen: isNormalOpen,
-  //   onOpen: onNormalOpen,
-  //   onClose: onNormalClose,
-  // } = useDisclosure();
   const {
     isOpen: isErrorOpen,
     onOpen: onErrorOpen,
@@ -105,17 +110,6 @@ const Dashboard = () => {
     onErrorClose();
     setItemIsLoaded(false);
   };
-  // const {
-  //   isOpen: isWarningOpen,
-  //   onOpen: onWarningOpen,
-  //   onClose: onWarningClose,
-  // } = useDisclosure();
-
-  // I quit to modulize.
-  // const [modalContent, setModalContent] = React.useState('');
-  // const initialRef = React.useRef(null);
-  // const finalRef = React.useRef(null);
-  // const btnRef = React.useRef(null);
 
   return (
     <ChakraProvider>
@@ -245,6 +239,43 @@ const Dashboard = () => {
               </Card>
             </LightMode>
           </Box>
+          {/* Car Use Rate */}
+          <Box>
+            <LightMode>
+              <Card
+                ipadding={5}
+                rounded={20}
+                shadow={'xl'}
+                size={'sm'}
+                width={''}
+              >
+                <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+                  <Center>
+                    <Text as={'b'} color={'white'}>
+                      總車位使用率
+                    </Text>
+                  </Center>
+                </CardHeader>
+                <CardBody
+                  pb={6}
+                  paddingTop={'3vh'}
+                  display={'flex'}
+                  flexDirection={'column'}
+                  justifyContent={'center'}
+                  bg={'#FFFFFF'}
+                  roundedBottom={10}
+                >
+                  <Center>
+                    <VStack>
+                      <Text as="b" fontSize="4xl" color={'#908472'}>
+                        {totalUseRate + '%'}
+                      </Text>
+                    </VStack>
+                  </Center>
+                </CardBody>
+              </Card>
+            </LightMode>
+          </Box>
         </HStack>
         <Spacer />
         <Spacer />
@@ -259,11 +290,7 @@ const Dashboard = () => {
               size={'sm'}
               width={'50vw'}
             >
-              <CardHeader
-                // h={'10vh'}
-                roundedTop={10}
-                backgroundColor={'#C2B39D'}
-              >
+              <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
                 <Center>
                   <Text as={'b'} color={'white'}>
                     異常車位資訊
@@ -272,7 +299,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardBody
                 pb={6}
-                // paddingTop={'13vh'}
+                paddingTop={'10vh'}
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={'center'}
@@ -288,13 +315,13 @@ const Dashboard = () => {
                   >
                     {warningSpaceIds.map(id => (
                       <Button
-                      key={id}
-                      bg={'#E46565'}
-                      color={'white'}
-                      size={'lg'}
-                      onClick={() => {
-                        onClick(id);
-                        onErrorOpen(); // Assuming you want to open the modal when the button is clicked
+                        key={id}
+                        bg={'#E46565'}
+                        color={'white'}
+                        size={'lg'}
+                        onClick={() => {
+                          onClick(id);
+                          onErrorOpen(); // Assuming you want to open the modal when the button is clicked
                         }}
                       >
                         {id}
@@ -307,9 +334,16 @@ const Dashboard = () => {
             </Card>
           </LightMode>
           {/* <NormalLotModal isOpen={isNormalOpen} onClose={onNormalClose} /> */}
-          {
-            itemIsLoaded?<ErrorLotModal isOpen={isErrorOpen} onClose={handleModalClose} items = {items}  warningSpaceDetail = {warningSpaceDetail}/>:<></>
-          }
+          {itemIsLoaded ? (
+            <ErrorLotModal
+              isOpen={isErrorOpen}
+              onClose={handleModalClose}
+              items={items}
+              warningSpaceDetail={warningSpaceDetail}
+            />
+          ) : (
+            <></>
+          )}
           {/* <WarningLotModal isOpen={isWarningOpen} onClose={onWarningClose} /> */}
         </Box>
       </VStack>
