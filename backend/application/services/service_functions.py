@@ -232,3 +232,22 @@ def guard_get_space_by_floor(floor: int):
     """
 
     return ps_func.get_parking_space_by_floor(floor, True)
+
+
+@connect_decorator
+def leave_car(car_id: str):
+    """
+    車輛離開停車場
+
+    Args:
+        car_id (str): 車輛 ID
+    Returns:
+        bool: 是否成功
+        str: 訊息
+    """
+
+    try:
+        ps_func.leave_car(car_id)
+        return True, f"車輛 {car_id} 已離場"
+    except Exception as e:
+        return False, str(e)
