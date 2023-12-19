@@ -30,6 +30,9 @@ COPY backend/requirements.txt .
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Execute unit test code
+RUN python -m pytest backend/tests
+
 # Copy the current directory contents into the container at /app
 COPY backend/ .
 

@@ -6,8 +6,8 @@ message_interface_path = os.path.join(cwd, "../interfaces/")
 sys.path.append(message_interface_path)
 
 import datetime
-
-from general_functions import datetime_delta_to_str, now
+from application.database.db_functions.general_functions import datetime_delta_to_str, now
+# from general_functions import datetime_delta_to_str, now
 from ParkingSpaceInterface import ParkingSpaceInterface as PSI
 
 

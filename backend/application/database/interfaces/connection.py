@@ -21,7 +21,7 @@ def connect_to_db():
     """
 
     try:
-        mongoengine.connect(Config.DB_NAME, host=Config.DB_URL)
+        mongoengine.connect(Config.DB_NAME, host=Config.DB_URL, uuidRepresentation='standard')
         return True
     except Exception as e:
         print(e)
