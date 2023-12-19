@@ -57,10 +57,17 @@ const Dashboard = () => {
   const onClick = async spaceId => {
     try {
       const data = await getGuardCarSpace(spaceId);
+      // 讓現在在停放的排前面
+      const sortedHistory = data.history.slice().sort((a, b) => {
+        if (!a.endTime && !b.endTime) return 0; // 如果都沒有結束時間，保持原始順序
+        if (!a.endTime) return -1; // a 沒有結束時間，排在最前面
+        if (!b.endTime) return 1; // b 沒有結束時間，排在後面
+        return new Date(b.endTime) - new Date(a.endTime); // 比較結束時間，時間較晚的排在前面
+      });
       setItems(
-        data.history.map(item => ({
-          cardTitle: '開始停放時間： ' + item.startTime.replace('T', ' '),
-          cardSubtitle: item.endTime
+        sortedHistory.map(item => ({
+          cardSubtitle: '開始停放時間： ' + item.startTime.replace('T', ' '),
+          cardTitle: item.endTime
             ? '結束停放時間： ' + item.endTime.replace('T', ' ')
             : '停放中',
           cardDetailedText: '車牌號碼： ' + item.carId,
