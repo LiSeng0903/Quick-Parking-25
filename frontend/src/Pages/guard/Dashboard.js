@@ -66,11 +66,12 @@ const Dashboard = () => {
       });
       setItems(
         sortedHistory.map(item => ({
-          cardSubtitle: '開始停放時間： ' + item.startTime.replace('T', ' '),
-          cardTitle: item.endTime
+          cardDetailedText:
+            '開始停放時間： ' + item.startTime.replace('T', ' '),
+          cardSubtitle: item.endTime
             ? '結束停放時間： ' + item.endTime.replace('T', ' ')
             : '停放中',
-          cardDetailedText: '車牌號碼： ' + item.carId,
+          cardTitle: '車牌號碼： ' + item.carId,
         }))
       );
       console.log('his data', data.history);
