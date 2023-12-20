@@ -39,7 +39,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
             <Center>
               <Text color={'white'}>
-                {warningSpaceDetail.parkingSpaceId || 'null'}
+                {warningSpaceDetail.parkingSpaceId || '找不到車位'}
               </Text>
             </Center>
           </ModalHeader>
@@ -101,7 +101,7 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
                             <Text as={'b'}>
-                              停放時間：{warningSpaceDetail.parkTime || 'null'}
+                              停放時間：{warningSpaceDetail.parkTime || ' '}
                             </Text>
                           </HStack>
                         </Box>

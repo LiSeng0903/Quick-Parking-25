@@ -49,7 +49,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={carData.spaceId || 'null'}
+                    value={carData.spaceId || '找不到車位'}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
@@ -71,19 +71,6 @@ const FindCarResult = () => {
               </Stack>
             </CardBody>
             <CardFooter justifyContent={'center'}>
-              {/* <ButtonGroup
-                background="#E8F0D7"
-                paddingLeft={1}
-                paddingRight={1}
-                paddingTop={1}
-                paddingBottom={1}
-                rounded={40}
-              >
-                <NavLink to="/home">
-                  <Button w="8vw" variant="ghost" color="#779341" rounded={30}>
-                    查我的車
-                  </Button>
-                </NavLink> */}
               <NavLink to="/home">
                 <Button
                   w="8vw"

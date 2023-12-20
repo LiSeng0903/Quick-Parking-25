@@ -196,14 +196,6 @@ const Login = () => {
                     color="#FFFFFF"
                     rounded={30}
                     type="submit"
-                    // onClick={() =>
-                    //   toast({
-                    //     title: 'Log in successfully!',
-                    //     status: 'success',
-                    //     isClosable: true,
-                    //     position: 'top-right',
-                    //   })
-                    // }
                     onClick={login}
                   >
                     登入
