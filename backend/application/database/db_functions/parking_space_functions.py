@@ -290,11 +290,29 @@ def get_ps_all_info(space_id: str):
 
     # 嘗試以 space_id 找到停車位
     ps = PSI.read_ps_by_space_id(space_id)
+    if ps == None:
+        return info
 
     # 填入停車位資訊
     info["parkingSpaceId"] = ps["space_id"]
     info["spaceType"] = ps["space_type"]
     info["status"] = ps["status"]
+
+    # 計算當天使用率
+    today_usage = datetime.timedelta(0)
+    try:
+        for his in ps["history"]:
+            today = now().replace(hour=0, minute=0, second=0, microsecond=0)
+            if his.get("end_time") == None:
+                print(his["start_time"])
+                today_usage += now() - max(today, (his["start_time"]))
+            elif his["end_time"].date() == now().date():
+                print(his["end_time"])
+                today_usage += his["end_time"] - max(today, (his["start_time"]))
+    except Exception as e:
+        today_usage = datetime.timedelta(0)
+
+    info["useRate"] = f"{today_usage / (now() - today)*100:.1f}%"
 
     # 整理 ps["history"]，並將其放入 info["history"]
     for his in ps["history"]:
@@ -323,19 +341,6 @@ def get_ps_all_info(space_id: str):
             info["parkTime"] = datetime_delta_to_str(now() - current_history["start_time"])
     except Exception as e:
         pass
-
-    # 計算當天使用率
-    today_usage = datetime.timedelta(0)
-    for his in ps["history"]:
-        today = now().replace(hour=0, minute=0, second=0, microsecond=0)
-        if his.get("end_time") == None:
-            print(his["start_time"])
-            today_usage += now() - max(today, (his["start_time"]))
-        elif his["end_time"].date() == now().date():
-            print(his["end_time"])
-            today_usage += his["end_time"] - max(today, (his["start_time"]))
-
-    info["useRate"] = f"{today_usage / (now() - today)*100:.1f}%"
 
     return info
 
