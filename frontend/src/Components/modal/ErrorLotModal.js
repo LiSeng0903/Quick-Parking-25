@@ -23,22 +23,6 @@ import React from 'react';
 import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 import { Chrono } from 'react-chrono';
 
-// 之後要改成可以回傳車車資訊進去 function
-// const items = [
-//   {
-//     cardTitle: 'Now',
-//     cardDetailedText: 'ABC-1234',
-//   },
-//   {
-//     cardTitle: '20231012',
-//     cardDetailedText: 'ABC-1234',
-//   },
-//   {
-//     cardTitle: '20231011',
-//     cardDetailedText: 'ABC-1234',
-//   },
-// ];
-
 const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSpaceDetail }) => {
   return (
     <ChakraProvider>
@@ -54,7 +38,9 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
         <ModalContent bg={'#FBFBF9'} color={'#9E896A'} rounded={10}>
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#D9534F'}>
             <Center>
-              <Text color={'white'}>{warningSpaceDetail.parkingSpaceId || 'null'}</Text>
+              <Text color={'white'}>
+                {warningSpaceDetail.parkingSpaceId || 'null'}
+              </Text>
             </Center>
           </ModalHeader>
           <ModalBody
@@ -111,12 +97,32 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                         <Box as="span" flex="1" textAlign="left">
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
-                            <Text as={'b'}>停放時間：{warningSpaceDetail.parkTime || 'null'}</Text>
+                            <Text as={'b'}>
+                              停放時間：{warningSpaceDetail.parkTime || 'null'}
+                            </Text>
                           </HStack>
                         </Box>
                       </AccordionButton>
                     </AccordionItem>
-
+                    <AccordionItem
+                      bg={'white'}
+                      color={'#898989'}
+                      rounded={10}
+                      mb={2}
+                      w={'18vw'}
+                      shadow={'base'}
+                    >
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          <HStack>
+                            <Icon as={InfoOutlineIcon} />
+                            <Text as={'b'}>
+                              車位使用率：{warningSpaceDetail.useRate}
+                            </Text>
+                          </HStack>
+                        </Box>
+                      </AccordionButton>
+                    </AccordionItem>
                     <AccordionItem
                       bg={'white'}
                       rounded={10}

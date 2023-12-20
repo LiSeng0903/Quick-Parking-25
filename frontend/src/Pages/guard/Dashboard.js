@@ -66,12 +66,13 @@ const Dashboard = () => {
       });
       setItems(
         sortedHistory.map(item => ({
-          cardDetailedText:
-            '開始停放時間： ' + item.startTime.replace('T', ' '),
-          cardSubtitle: item.endTime
-            ? '結束停放時間： ' + item.endTime.replace('T', ' ')
-            : '停放中',
           cardTitle: '車牌號碼： ' + item.carId,
+          cardDetailedText: [
+            item.endTime
+              ? '結束停放時間： ' + item.endTime.replace('T', ' ')
+              : '🚗 停放中',
+            '開始停放時間： ' + item.startTime.replace('T', ' '),
+          ],
         }))
       );
       console.log('his data', data.history);
@@ -131,7 +132,7 @@ const Dashboard = () => {
                 size={'sm'}
                 width={''}
               >
-                <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+                <CardHeader roundedTop={10} backgroundColor={'#9E896A'}>
                   <Center>
                     <Text as={'b'} color={'white'}>
                       剩餘機車車位
@@ -149,7 +150,7 @@ const Dashboard = () => {
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'#908472'}>
+                      <Text as="b" fontSize="4xl" color={'#806031'}>
                         {motorString}
                       </Text>
                     </VStack>
@@ -168,7 +169,7 @@ const Dashboard = () => {
                 size={'sm'}
                 width={''}
               >
-                <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+                <CardHeader roundedTop={10} backgroundColor={'#9E896A'}>
                   <Center>
                     <Text as={'b'} color={'white'}>
                       剩餘汽車車位
@@ -186,7 +187,7 @@ const Dashboard = () => {
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'#908472'}>
+                      <Text as="b" fontSize="4xl" color={'#806031'}>
                         {carString}
                       </Text>
                     </VStack>
@@ -205,7 +206,7 @@ const Dashboard = () => {
                 size={'sm'}
                 width={''}
               >
-                <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+                <CardHeader roundedTop={10} backgroundColor={'#9E896A'}>
                   <Center>
                     <Text as={'b'} color={'white'}>
                       剩餘優先車位
@@ -223,7 +224,7 @@ const Dashboard = () => {
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'#908472'}>
+                      <Text as="b" fontSize="4xl" color={'#806031'}>
                         {priorityString}
                       </Text>
                     </VStack>
@@ -242,7 +243,7 @@ const Dashboard = () => {
                 size={'sm'}
                 width={''}
               >
-                <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+                <CardHeader roundedTop={10} backgroundColor={'#9E896A'}>
                   <Center>
                     <Text as={'b'} color={'white'}>
                       總車位使用率
@@ -260,7 +261,7 @@ const Dashboard = () => {
                 >
                   <Center>
                     <VStack>
-                      <Text as="b" fontSize="4xl" color={'#908472'}>
+                      <Text as="b" fontSize="4xl" color={'#806031'}>
                         {totalUseRate + '%'}
                       </Text>
                     </VStack>
@@ -283,7 +284,7 @@ const Dashboard = () => {
               size={'sm'}
               width={'50vw'}
             >
-              <CardHeader roundedTop={10} backgroundColor={'#C2B39D'}>
+              <CardHeader roundedTop={10} backgroundColor={'#9E896A'}>
                 <Center>
                   <Text as={'b'} color={'white'}>
                     異常車位資訊

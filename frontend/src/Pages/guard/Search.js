@@ -8,7 +8,6 @@ import {
   Input,
   Button,
   Center,
-  AbsoluteCenter,
   Card,
   CardHeader,
   CardBody,
@@ -17,57 +16,13 @@ import {
   ButtonGroup,
   Image,
   LightMode,
-  Flex,
-  Text,
-  VStack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  HStack,
-  Icon,
-  Spacer,
-  useToast,
 } from '@chakra-ui/react';
-import { NavLink } from 'react-router-dom';
-import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
-import { Chrono } from 'react-chrono';
 import { getGuardCarSpace } from '../../api';
 import GuardSearchDetail from '../../Components/modal/GuardSearchDetail';
-// 之後要改成可以回傳車車資訊進去 function
-  // const items = [
-  //   {
-  //     cardTitle: 'Now',
-  //     cardDetailedText: 'B09705059',
-  //   },
-  //   {
-  //     cardTitle: '20231012',
-  //     cardDetailedText: 'Empty',
-  //   },
-  //   {
-  //     cardTitle: '20231011',
-  //     cardDetailedText: 'Empty',
-  //   },
-  // ];
-
-const initialState = {
-  spacesId: '',
-  carId: '',
-};
 
 const Search = () => {
-  const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  // // handle search data
-  // const [formData, setformData] = useState(initialState);
-  // const { spacesId, carId } = formData;
-  // const handleInputChange = e => {
-  //   const { name, value } = e.target;
-  //   setformData({ ...formData, [name]: value });
-  // };
-
-  const [spaceId, setSpaceId] = useState("");
+  const [spaceId, setSpaceId] = useState('');
   const [currentCarId, setCurrentCarId] = useState(null);
   const [items, setItems] = useState([]);
   const [parkTime, setparkTime] = useState(null);
@@ -76,37 +31,42 @@ const Search = () => {
   const [itemIsLoaded, setItemIsLoaded] = useState(false);
 
   const handleSpaceIdInputChange = event => {
-    setItemIsLoaded(false)
+    setItemIsLoaded(false);
     setSpaceId(event.target.value);
   };
-  
+
   const fetchData = async () => {
     try {
       const data = await getGuardCarSpace(spaceId);
-      setCurrentCarId(data.currentCarId)
-      setItems(data.history.map(item => ({
-        cardTitle: item.startTime.replace('T', ' '),
-        cardDetailedText: item.carId,
-      })));
-      setItemIsLoaded(true)
-      console.log(data.history)
-      setparkTime(data.parkTime)
-      setParkingSpaceId(data.parkingSpaceId)
-      setStatus(data.status)
-      console.log(data)
+      // 讓現在在停放的排前面
+      const sortedHistory = data.history.slice().sort((a, b) => {
+        if (!a.endTime && !b.endTime) return 0; // 如果都沒有結束時間，保持原始順序
+        if (!a.endTime) return -1; // a 沒有結束時間，排在最前面
+        if (!b.endTime) return 1; // b 沒有結束時間，排在後面
+        return new Date(b.endTime) - new Date(a.endTime); // 比較結束時間，時間較晚的排在前面
+      });
+      setCurrentCarId(data.currentCarId);
+      setItems(
+        sortedHistory.map(item => ({
+          cardTitle: '車牌號碼： ' + item.carId,
+          cardDetailedText: [
+            item.endTime
+              ? '結束停放時間： ' + item.endTime.replace('T', ' ')
+              : '🚗 停放中',
+            '開始停放時間： ' + item.startTime.replace('T', ' '),
+          ],
+        }))
+      );
+      setItemIsLoaded(true);
+      console.log(data.history);
+      setparkTime(data.parkTime);
+      setParkingSpaceId(data.parkingSpaceId);
+      setStatus(data.status);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
-
-
-  //const search = async e => {
-    // e.preventDefault();
-    // const userData = {
-    //   spacesId,
-    //   carId,
-    // };
-  //};
 
   return (
     <ChakraProvider>
@@ -130,8 +90,9 @@ const Search = () => {
                   />
                 </Center>
                 <Stack>
-                  <FormControl mt={2} 
-                  //onSubmit={search}
+                  <FormControl
+                    mt={2}
+                    //onSubmit={search}
                   >
                     <FormLabel>請輸入車位</FormLabel>
                     <Input
@@ -189,8 +150,17 @@ const Search = () => {
       </Box>
       <Box style={{ display: isOpen ? 'flex' : 'none' }} ml={'5vw'}>
         <LightMode>
-          {itemIsLoaded?
-          <GuardSearchDetail status = {status} parkingSpaceId ={parkingSpaceId} currentCarId = {currentCarId} parkTime = {parkTime} items = {items}/>: <></>}
+          {itemIsLoaded ? (
+            <GuardSearchDetail
+              status={status}
+              parkingSpaceId={parkingSpaceId}
+              currentCarId={currentCarId}
+              parkTime={parkTime}
+              items={items}
+            />
+          ) : (
+            <></>
+          )}
         </LightMode>
       </Box>
     </ChakraProvider>
