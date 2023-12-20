@@ -378,7 +378,7 @@ def check_pss_status():
             continue
 
         try:
-            if now() - ps.get("history")[-1].get("start_time") > datetime.timedelta(hours=24):
+            if now(False) - ps.get("history")[-1].get("start_time") > datetime.timedelta(hours=40):
                 PSI.update_ps_status(ps.get("space_id"), "WARNING")
             else:
                 PSI.update_ps_status(ps.get("space_id"), "OK")
