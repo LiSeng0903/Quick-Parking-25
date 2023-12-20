@@ -8,7 +8,7 @@ import {
   theme,
   LightMode,
   Spacer,
-  Text
+  Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
@@ -18,6 +18,7 @@ import { useState } from 'react';
 import NormalLotModal from '../../Components/modal/NormalLotModal';
 import WarningLotModal from '../../Components/modal/WarningLotModal';
 import ErrorLotModal from '../../Components/modal/ErrorLotModal';
+import { getGuardCarSpace } from '../../api';
 
 export default function Lots(props) {
   const lotsCnt = 20;
@@ -40,22 +41,64 @@ export default function Lots(props) {
   const isPriorityColor = '#7A98D3';
   const isWarningColor = '#D9534F';
   const bgColor = '#F0EFE5';
+
+  // modal setting
+  const {
+    isOpen: isParkOpen,
+    onOpen: onParkOpen,
+    onClose: onParkClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDetailOpen,
+    onOpen: onDetailOpen,
+    onClose: onDetailClose,
+  } = useDisclosure();
+
+  const [endModalOpen, setEndModelOpen] = useState(false);
+  const [selectedSpaceId, setSelectedSpaceId] = useState('');
+  const [items, setItems] = useState([]);
+  const [spaceDetail, setSpaceDetail] = useState({});
+  const [itemIsLoaded, setItemIsLoaded] = useState(false);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+
   const getButtonBackgroundColor = lot => {
+    if (isGuard && lot.status === 'WARNING') {
+      return isWarningColor;
+    }
+
     if (!lot.occupied) {
       return lot.space_type === 'priority' ? isPriorityColor : isEmptyColor;
-    } else {
-      return isOccupiedColor;
+    }
+
+    return isOccupiedColor;
+  };
+
+  const spaceDetailClick = async spaceId => {
+    try {
+      const data = await getGuardCarSpace(spaceId);
+      setItems(
+        data.history.map(item => ({
+          cardTitle: item.startTime.replace('T', ' '),
+          cardDetailedText: item.carId,
+        }))
+      );
+      console.log('data', data);
+      setSpaceDetail(data);
+      setItemIsLoaded(true);
+      console.log(data.parkingSpaceId);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  // modal setting
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [endModalOpen, setEndModelOpen] = useState(false);
-  const [selectedSpaceId, setSelectedSpaceId] = useState('');
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
-  // modal
+  const handleSpaceDetailClose = () => {
+    onDetailClose();
+    setItemIsLoaded(false);
+  };
 
+  // modal
+  console.log('isGuard', isGuard);
   return (
     <ChakraProvider theme={theme}>
       <LightMode>
@@ -71,12 +114,31 @@ export default function Lots(props) {
           maxWidth={'100vw'}
         >
           {/* Pop-out Modal Section */}
-          {
-            !isGuard ? 
-            isOpen || !endModalOpen ? (
+          {itemIsLoaded && isGuard ? (
+            spaceDetail.status === 'OK' ? (
+              <NormalLotModal
+                isOpen={isDetailOpen}
+                onClose={handleSpaceDetailClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                items={items}
+                normalSpaceDetail={spaceDetail}
+              />
+            ) : (
+              <ErrorLotModal
+                isOpen={isDetailOpen}
+                onClose={handleSpaceDetailClose}
+                initialRef={initialRef}
+                finalRef={finalRef}
+                items={items}
+                warningSpaceDetail={spaceDetail}
+              />
+            )
+          ) : (
+            (isParkOpen || !endModalOpen) && (
               <ParkingEnterModal
-                isOpen={isOpen}
-                onClose={onClose}
+                isOpen={isParkOpen}
+                onClose={onParkClose}
                 initialRef={initialRef}
                 finalRef={finalRef}
                 endModalOpen={endModalOpen}
@@ -84,10 +146,8 @@ export default function Lots(props) {
                 setCarId={props.setCarId}
                 selectedSpaceId={selectedSpaceId}
               />
-            ) : (
-              <></>
-            ):""
-          }
+            )
+          )}
           {/* Left Section */}
           <Box
             width={'20%'}
@@ -130,13 +190,21 @@ export default function Lots(props) {
                         justifyContent={'space-evenly'}
                       >
                         <Button
-                          // colorScheme="red"
-                          bg={isEmptyColor}
+                          bg={getButtonBackgroundColor(lot)}
                           width={'100%'}
                           height={'3vh'}
                           onClick={() => {
                             setSelectedSpaceId(lot.space_id);
-                            motorLotsB.occupied ? onClose() : onOpen();
+                            if (isGuard) {
+                              spaceDetailClick(lot.space_id);
+                              onDetailOpen();
+                            } else {
+                              console.log("occupied", lot)
+                              onDetailClose();
+                              lot.occupied
+                                ? onParkClose()
+                                : onParkOpen();
+                            }
                           }}
                         ></Button>
                       </WrapItem>
@@ -175,7 +243,16 @@ export default function Lots(props) {
                           height={'3vh'}
                           onClick={() => {
                             setSelectedSpaceId(lot.space_id);
-                            motorLotsB.occupied ? onClose() : onOpen();
+                            if (isGuard) {
+                              spaceDetailClick(lot.space_id);
+                              onDetailOpen();
+                            } else {
+                              console.log("occupied", lot)
+                              onDetailClose();
+                              lot.occupied
+                                ? onParkClose()
+                                : onParkOpen();
+                            }
                           }}
                         ></Button>
                       </WrapItem>
@@ -224,7 +301,16 @@ export default function Lots(props) {
                             variant={'solid'}
                             onClick={() => {
                               setSelectedSpaceId(lot.space_id);
-                              lot.occupied ? onClose() : onOpen();
+                              if (isGuard) {
+                                spaceDetailClick(lot.space_id);
+                                onDetailOpen();
+                              } else {
+                                console.log("occupied",lot.occupied)
+                                onDetailClose();
+                                lot.occupied
+                                  ? onParkClose()
+                                  : onParkOpen();
+                              }
                             }}
                           ></Button>
                         </WrapItem>

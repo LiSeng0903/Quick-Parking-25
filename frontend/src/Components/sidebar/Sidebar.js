@@ -24,6 +24,7 @@ const Sidebar = props => {
   const logout = async () => {
     // await logoutUser();
     // await dispatch(SET_LOGIN(false));
+    localStorage.clear();
     navigate('/');
   };
   const goHome = () => {
