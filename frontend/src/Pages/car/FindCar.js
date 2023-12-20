@@ -110,7 +110,7 @@ const FindCar = () => {
                     // value={formData.spacesId}
                     borderColor={'#9E896A'}
                     color={'gray.700'}
-                    placeholder="B09"
+                    placeholder="例如：1011"
                     fontWeight={600}
                     onChange={handleSpaceIdInputChange}
                   />
@@ -122,7 +122,7 @@ const FindCar = () => {
                     // value={formData.carId}
                     borderColor={'#9E896A'}
                     color={'gray.700'}
-                    placeholder="B09705059"
+                    placeholder="例如：NTUIMgood"
                     fontWeight={600}
                     onChange={handleCarIdInputChange}
                   />
