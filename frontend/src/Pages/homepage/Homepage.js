@@ -80,7 +80,7 @@ const Homepage = () => {
                       color="#779341"
                       marginLeft={2}
                     >
-                      OOXX
+                      Group 25
                     </Heading>
                     <Heading
                       size="2xl"

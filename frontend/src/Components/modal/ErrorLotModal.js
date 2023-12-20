@@ -61,7 +61,10 @@ const ErrorLotModal = ({ isOpen, onClose, initialRef, finalRef, items, warningSp
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 {warningSpaceDetail.currentCarId || 'null'}
+                  {warningSpaceDetail.currentCarId ? (
+                    '車牌號碼 ' +
+                    warningSpaceDetail.currentCarId
+                  ) : '空位'}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>

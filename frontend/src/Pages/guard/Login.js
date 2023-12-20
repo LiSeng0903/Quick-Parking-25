@@ -143,7 +143,7 @@ const Login = () => {
                     name="account"
                     borderColor={'#9E896A'}
                     color={'gray.700'}
-                    placeholder="B09"
+                    placeholder="Username"
                     fontWeight={600}
                     value={account}
                     onChange={handleInputChange}
@@ -161,7 +161,7 @@ const Login = () => {
                     name="password"
                     borderColor={'#9E896A'}
                     color={'gray.700'}
-                    placeholder="B09705059"
+                    placeholder="Password"
                     fontWeight={600}
                     value={password}
                     onChange={handleInputChange}

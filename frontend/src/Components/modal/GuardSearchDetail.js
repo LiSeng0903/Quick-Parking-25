@@ -45,7 +45,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
         <Center>
           <VStack>
             <Text as="b" fontSize="lg" color={'blackAlpha.800'} mb={4} mt={2}>
-              車牌號碼 {currentCarId || 'null'}
+              {currentCarId ? ('車牌號碼 ' + currentCarId) : '空位'}
             </Text>
             <Box h="25vh" overflow="scroll" pb={5} pt={2}>
               <Accordion allowToggle>
@@ -80,7 +80,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
                     <Box as="span" flex="1" textAlign="left">
                       <HStack>
                         <Icon as={InfoOutlineIcon} />
-                        <Text as={'b'}>停放時間：{parkTime || 'null'}</Text>
+                        <Text as={'b'}>停放時間：{parkTime || ' '}</Text>
                       </HStack>
                     </Box>
                   </AccordionButton>

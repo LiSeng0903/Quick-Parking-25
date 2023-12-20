@@ -46,7 +46,7 @@ const NormalLotModal = ({
           <ModalHeader h={'15vh'} roundedTop={10} backgroundColor={'#A3C561'}>
             <Center>
               <Text color={'white'}>
-                {normalSpaceDetail.parkingSpaceId || 'null'}
+                {normalSpaceDetail.parkingSpaceId || ' '}
               </Text>
             </Center>
           </ModalHeader>
@@ -68,7 +68,9 @@ const NormalLotModal = ({
                   mb={4}
                   mt={2}
                 >
-                  車牌號碼 {normalSpaceDetail.currentCarId || '空位'}
+                  {normalSpaceDetail.currentCarId
+                    ? '車牌號碼 ' + normalSpaceDetail.currentCarId
+                    : '空位'}
                 </Text>
                 <Box h="25vh" overflow="scroll" pb={5} pt={2}>
                   <Accordion allowToggle>
@@ -103,7 +105,7 @@ const NormalLotModal = ({
                           <HStack>
                             <Icon as={InfoOutlineIcon} />
                             <Text as={'b'}>
-                              停放時間：{normalSpaceDetail.parkTime || '空位'}
+                              停放時間：{normalSpaceDetail.parkTime || ' '}
                             </Text>
                           </HStack>
                         </Box>

@@ -28,7 +28,7 @@ const FindCarResult = () => {
           <Card padding={5} rounded={20} shadow={'xl'}>
             <CardHeader pb={0}>
               <Heading size="md" textAlign={'center'} color={'#9E896A'}>
-                車牌號碼 {carData.carId || 'null'}
+                {carData.carId ? ('車牌號碼 ' + carData.carId) : '找不到車車'}
               </Heading>
             </CardHeader>
 
@@ -61,7 +61,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={carData.parkTime || 'null'}
+                    value={carData.parkTime || ' '}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
@@ -84,17 +84,17 @@ const FindCarResult = () => {
                     查我的車
                   </Button>
                 </NavLink> */}
-                <NavLink to="/home">
-                  <Button
-                    w="8vw"
-                    variant="solid"
-                    bg="#779341"
-                    color="#FFFFFF"
-                    rounded={30}
-                  >
-                    確認
-                  </Button>
-                </NavLink>
+              <NavLink to="/home">
+                <Button
+                  w="8vw"
+                  variant="solid"
+                  bg="#779341"
+                  color="#FFFFFF"
+                  rounded={30}
+                >
+                  確認
+                </Button>
+              </NavLink>
               {/* </ButtonGroup> */}
             </CardFooter>
           </Card>
