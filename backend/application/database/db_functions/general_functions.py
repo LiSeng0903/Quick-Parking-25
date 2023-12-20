@@ -1,10 +1,13 @@
 import datetime
 
 
-def now():
+def now(add_eight=True):
     """取得目前的時間"""
 
-    return datetime.datetime.now()
+    if add_eight:
+        return datetime.datetime.now() + datetime.timedelta(hours=8)
+    else:
+        return datetime.datetime.now()
 
 
 def datetime_delta_to_str(dt):

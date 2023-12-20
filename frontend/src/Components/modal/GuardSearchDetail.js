@@ -19,8 +19,8 @@ import { Chrono } from 'react-chrono';
 import { InfoOutlineIcon, WarningTwoIcon, AddIcon } from '@chakra-ui/icons';
 
 const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, items, useRate} ) => {
-    console.log("items", items)
-    console.log()
+    console.log("itemssss", items)
+    console.log("p", status)
   return (
     <Card ipadding={5} rounded={20} shadow={'xl'} zIndex={3}>
       <CardHeader
@@ -30,7 +30,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
       >
         <Center>
           <Text as={'b'} color={'white'}>
-            {parkingSpaceId}
+            {parkingSpaceId? parkingSpaceId : '查無車位'}
           </Text>
         </Center>
       </CardHeader>
@@ -45,7 +45,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
         <Center>
           <VStack>
             <Text as="b" fontSize="lg" color={'blackAlpha.800'} mb={4} mt={2}>
-              車牌號碼 {currentCarId || 'null'}
+            {currentCarId ? `車牌號碼 ${currentCarId}` : parkingSpaceId ? '空位' : ''}
             </Text>
             <Box h="25vh" overflow="scroll" pb={5} pt={2}>
               <Accordion allowToggle>
@@ -62,7 +62,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
                       <HStack>
                         <Icon as={WarningTwoIcon} />
                         <Text as={'b'}>
-                          {status === 'OK' ? '好寶寶車車' : '停放時間異常'}
+                          {status === 'OK' ? '好寶寶車車' : parkingSpaceId? '停放時間異常':'查詢錯誤'}
                         </Text>
                       </HStack>
                     </Box>
@@ -80,7 +80,7 @@ const GuardSearchDetail = ( {status, parkingSpaceId, currentCarId, parkTime, ite
                     <Box as="span" flex="1" textAlign="left">
                       <HStack>
                         <Icon as={InfoOutlineIcon} />
-                        <Text as={'b'}>停放時間：{parkTime || 'null'}</Text>
+                        <Text as={'b'}>停放時間：{parkTime || ' '}</Text>
                       </HStack>
                     </Box>
                   </AccordionButton>

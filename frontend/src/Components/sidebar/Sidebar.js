@@ -31,7 +31,6 @@ const Sidebar = props => {
     // await logoutUser();
     // await dispatch(SET_LOGIN(false));
     setAuthToken('');
-    // setUser(null);
     navigate('/');
   };
   const [time, setTime] = React.useState(new Date());

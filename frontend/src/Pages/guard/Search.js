@@ -29,6 +29,7 @@ const Search = () => {
   const [parkingSpaceId, setParkingSpaceId] = useState(null);
   const [status, setStatus] = useState(null);
   const [itemIsLoaded, setItemIsLoaded] = useState(false);
+  const [useRate, setUseRate] = useState(null);
 
   const handleSpaceIdInputChange = event => {
     setItemIsLoaded(false);
@@ -62,7 +63,8 @@ const Search = () => {
       setparkTime(data.parkTime);
       setParkingSpaceId(data.parkingSpaceId);
       setStatus(data.status);
-      console.log(data);
+      setUseRate(data.useRate);
+      console.log('看我這裡！！', data);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +101,7 @@ const Search = () => {
                       type="text"
                       borderColor={'#9E896A'}
                       color={'gray.700'}
-                      placeholder="B09"
+                      placeholder="例如：1011"
                       fontWeight={600}
                       onChange={handleSpaceIdInputChange}
                     />
@@ -110,7 +112,7 @@ const Search = () => {
                       type="text"
                       borderColor={'#9E896A'}
                       color={'gray.700'}
-                      placeholder="B09705059"
+                      placeholder="NTUIMgood"
                       fontWeight={600}
                       // onChange={handleInputChange}
                     />
@@ -157,6 +159,7 @@ const Search = () => {
               currentCarId={currentCarId}
               parkTime={parkTime}
               items={items}
+              useRate={useRate}
             />
           ) : (
             <></>

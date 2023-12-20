@@ -59,6 +59,9 @@ class ParkingSpaceInterface:
             dict: 停車格資料，內容與 schema 規範的相同。如果沒有找到的話會回傳 None
         """
 
+        if space_id == None:
+            return None
+
         ps_mongo_object = ParkingSpace.objects(space_id=space_id).first()
 
         if ps_mongo_object == None:
@@ -78,6 +81,9 @@ class ParkingSpaceInterface:
         Returns:
             dict: 停車格資料，內容與 schema 規範的相同。如果沒有找到的話會回傳 None。
         """
+
+        if car_id == None:
+            return None
 
         ps_mongo_object = ParkingSpace.objects(current_car_id=car_id).first()
 

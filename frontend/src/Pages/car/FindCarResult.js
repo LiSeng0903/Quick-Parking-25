@@ -15,11 +15,36 @@ import {
   ButtonGroup,
   Image,
   LightMode,
+  useToast,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const FindCarResult = () => {
+  const toast = useToast();
   const location = useLocation()
+  console.log("locate data", location.state.bothFilled)
+  var bothFilled = location.state.bothFilled
+
+  useEffect(() => {
+    if (bothFilled) {
+      console.log("both true");
+      toast({
+        title: 'The result is searched by parking space.',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
+    } else {
+      toast({
+        title: 'Submitted successfully!',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  }, [bothFilled]);
+  
   var carData = location.state.carData
   return (
     <ChakraProvider>
@@ -28,7 +53,7 @@ const FindCarResult = () => {
           <Card padding={5} rounded={20} shadow={'xl'}>
             <CardHeader pb={0}>
               <Heading size="md" textAlign={'center'} color={'#9E896A'}>
-                車牌號碼 {carData.carId || 'null'}
+                {carData.carId ? ('車牌號碼 ' + carData.carId) : '找不到車車'}
               </Heading>
             </CardHeader>
 
@@ -49,7 +74,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={carData.spaceId || 'null'}
+                    value={carData.spaceId || '找不到車位'}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
@@ -61,7 +86,7 @@ const FindCarResult = () => {
                   <Input
                     type="text"
                     color={'blackAlpha'}
-                    value={carData.parkTime || 'null'}
+                    value={carData.parkTime || ' '}
                     variant="filled"
                     fontWeight={600}
                     cursor={'default'}
@@ -71,30 +96,17 @@ const FindCarResult = () => {
               </Stack>
             </CardBody>
             <CardFooter justifyContent={'center'}>
-              {/* <ButtonGroup
-                background="#E8F0D7"
-                paddingLeft={1}
-                paddingRight={1}
-                paddingTop={1}
-                paddingBottom={1}
-                rounded={40}
-              >
-                <NavLink to="/home">
-                  <Button w="8vw" variant="ghost" color="#779341" rounded={30}>
-                    查我的車
-                  </Button>
-                </NavLink> */}
-                <NavLink to="/home">
-                  <Button
-                    w="8vw"
-                    variant="solid"
-                    bg="#779341"
-                    color="#FFFFFF"
-                    rounded={30}
-                  >
-                    確認
-                  </Button>
-                </NavLink>
+              <NavLink to="/home">
+                <Button
+                  w="8vw"
+                  variant="solid"
+                  bg="#779341"
+                  color="#FFFFFF"
+                  rounded={30}
+                >
+                  確認
+                </Button>
+              </NavLink>
               {/* </ButtonGroup> */}
             </CardFooter>
           </Card>
