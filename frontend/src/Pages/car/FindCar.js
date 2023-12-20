@@ -115,7 +115,7 @@ const FindCar = () => {
                     onChange={handleSpaceIdInputChange}
                   />
                 </FormControl>
-                {/* <FormControl mb={4}>
+                <FormControl mb={4}>
                   <FormLabel>請輸入車牌號碼</FormLabel>
                   <Input
                     type="carID"
@@ -126,7 +126,7 @@ const FindCar = () => {
                     fontWeight={600}
                     onChange={handleCarIdInputChange}
                   />
-                </FormControl> */}
+                </FormControl>
               </Stack>
             </CardBody>
             <CardFooter justifyContent={'center'}>
