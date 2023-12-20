@@ -15,11 +15,36 @@ import {
   ButtonGroup,
   Image,
   LightMode,
+  useToast,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const FindCarResult = () => {
+  const toast = useToast();
   const location = useLocation()
+  console.log("locate data", location.state.bothFilled)
+  var bothFilled = location.state.bothFilled
+
+  useEffect(() => {
+    if (bothFilled) {
+      console.log("both true");
+      toast({
+        title: 'The result is searched by parking space.',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
+    } else {
+      toast({
+        title: 'Submitted successfully!',
+        status: 'success',
+        isClosable: true,
+        position: 'top-right',
+      });
+    }
+  }, [bothFilled]);
+  
   var carData = location.state.carData
   return (
     <ChakraProvider>

@@ -56,29 +56,40 @@ const FindCar = () => {
     //   spacesId,
     //   carId,
     // };
-
-    try {
-      const carSpaceData = await getCarSpace(carId, spaceId);
-
-      // 在這裡處理 carSpaceData，可能是顯示在介面上或者進一步的邏輯
-      console.log('Car space data:', carSpaceData);
-      console.log(typeof(spaceIdProp))
-      navigate('/find-car/result', { state: { carData: carSpaceData } });
+    if (!carId && !spaceId) {
       toast({
-        title: 'Submitted successfully!',
-        status: 'success',
-        isClosable: true,
-        position: 'top-right',
-      });
-    } catch (error) {
-      console.error('Error fetching car space data:', error);
-
-      toast({
-        title: 'Error submitting!',
+        title: 'At least one feild is required!',
         status: 'error',
         isClosable: true,
         position: 'top-right',
       });
+    } else {
+      
+      try {
+        const carSpaceData = await getCarSpace(carId, spaceId);
+
+        // 在這裡處理 carSpaceData，可能是顯示在介面上或者進一步的邏輯
+        console.log('Car space data:', carSpaceData);
+        // toast({
+        //   title: 'Submitted successfully!',
+        //   status: 'success',
+        //   isClosable: true,
+        //   position: 'top-right',
+        // });
+        var bothFilled = false
+        if(carId && spaceId){
+          bothFilled = true
+        }
+        navigate('/find-car/result', { state: { carData: carSpaceData, bothFilled: bothFilled} });
+      } catch (error) {
+        console.error('Error fetching car space data:', error);
+        toast({
+          title: 'Error submitting!',
+          status: 'error',
+          isClosable: true,
+          position: 'top-right',
+        });
+      }
     }
   };
 
