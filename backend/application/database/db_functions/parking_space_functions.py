@@ -284,6 +284,7 @@ def get_ps_all_info(space_id: str):
         "currentCarId": None,
         "parkTime": None,
         "status": "",
+        "useRate": 0,
         "history": [],
     }
 
@@ -322,6 +323,19 @@ def get_ps_all_info(space_id: str):
             info["parkTime"] = datetime_delta_to_str(now() - current_history["start_time"])
     except Exception as e:
         pass
+
+    # 計算當天使用率
+    today_usage = datetime.timedelta(0)
+    for his in ps["history"]:
+        today = now().replace(hour=0, minute=0, second=0, microsecond=0)
+        if his.get("end_time") == None:
+            print(his["start_time"])
+            today_usage += now() - max(today, (his["start_time"]))
+        elif his["end_time"].date() == now().date():
+            print(his["end_time"])
+            today_usage += his["end_time"] - max(today, (his["start_time"]))
+
+    info["useRate"] = f"{today_usage / (now() - today)*100:.1f}%"
 
     return info
 
