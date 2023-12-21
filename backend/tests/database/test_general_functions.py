@@ -3,20 +3,21 @@ import datetime
 import pytest
 from application.database.db_functions.general_functions import datetime_delta_to_str, now
 
-# def test_now():
-#     # Get the current datetime when the function is called
-#     current_time = datetime.datetime.now()
 
-#     # Call the now function
-#     result = now()
+def test_now():
+    # Get the current datetime when the function is called
+    current_time = datetime.datetime.now()
 
-#     # Check if the result is a datetime object
-#     assert isinstance(result, datetime.datetime)
+    # Call the now function
+    result = now(False)
 
-#     # Check if the result is close to the current time (within a small tolerance)
-#     # This accounts for any slight delay between calling datetime.datetime.now() and the now function
-#     time_difference = result - current_time
-#     assert abs(time_difference.total_seconds()) < 1.0
+    # Check if the result is a datetime object
+    assert isinstance(result, datetime.datetime)
+
+    # Check if the result is close to the current time (within a small tolerance)
+    # This accounts for any slight delay between calling datetime.datetime.now() and the now function
+    time_difference = result - current_time
+    assert abs(time_difference.total_seconds()) < 1.0
 
 
 def test_datetime_delta_to_str():
