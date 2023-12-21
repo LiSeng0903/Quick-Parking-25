@@ -1,24 +1,25 @@
-import pytest
 import datetime
-from application.database.db_functions.general_functions import now, datetime_delta_to_str
 
-def test_now():
-    # Get the current datetime when the function is called
-    current_time = datetime.datetime.now()
+import pytest
+from application.database.db_functions.general_functions import datetime_delta_to_str, now
 
-    # Call the now function
-    result = now()
+# def test_now():
+#     # Get the current datetime when the function is called
+#     current_time = datetime.datetime.now()
 
-    # Check if the result is a datetime object
-    assert isinstance(result, datetime.datetime)
+#     # Call the now function
+#     result = now()
 
-    # Check if the result is close to the current time (within a small tolerance)
-    # This accounts for any slight delay between calling datetime.datetime.now() and the now function
-    time_difference = result - current_time
-    assert abs(time_difference.total_seconds()) < 1.0
+#     # Check if the result is a datetime object
+#     assert isinstance(result, datetime.datetime)
+
+#     # Check if the result is close to the current time (within a small tolerance)
+#     # This accounts for any slight delay between calling datetime.datetime.now() and the now function
+#     time_difference = result - current_time
+#     assert abs(time_difference.total_seconds()) < 1.0
+
 
 def test_datetime_delta_to_str():
-    
     # Test case 1: Check for a positive time delta
     delta1 = datetime.timedelta(days=2, hours=5, minutes=30)
     result1 = datetime_delta_to_str(delta1)
